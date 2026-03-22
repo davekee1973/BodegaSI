@@ -619,6 +619,8 @@ function agregarLinea(form){
   const wrap=document.getElementById(form[0]+'-lines');
   const ubOpts=UBS.map(u=>`<option value="${u.codigo}">${u.codigo}${u.descripcion?' — '+u.descripcion:''}</option>`).join('');
   const lbl=form==='entrada'?'Ubicación destino *':'Ubicación origen *';
+  const ubPlaceholder=form==='salida'?'Primero selecciona un SKU':'Seleccionar...';
+  const ubOptsInicial=form==='salida'?'':`<option value="">Seleccionar...</option>${ubOpts}`;
   const div=document.createElement('div');
   div.className='line-row';div.id=`${form}-line-${idx}`;
   div.innerHTML=`
@@ -631,8 +633,8 @@ function agregarLinea(form){
       </div>
       <div class="form-group">
         <label>${lbl}</label>
-        <select id="lub-${form}-${idx}" onchange="refreshHint('${form}',${idx})">
-          <option value="">Seleccionar...</option>${ubOpts}
+        <select id="lub-${form}-${idx}" onchange="refreshHint('${form}',${idx})" ${form==='salida'?'disabled':''}>
+          <option value="">${ubPlaceholder}</option>${ubOptsInicial}
         </select>
       </div>
       <div class="form-group">
@@ -705,6 +707,8 @@ function resetMulti(form){
   document.getElementById(form[0]+'-lines').innerHTML='';
   ['ref','usr','obs'].forEach(f=>{ const el=document.getElementById(form[0]+'-'+f); if(el) el.value=''; });
   actualizarResumen(form);
+  // Agregar primera línea vacía automáticamente
+  setTimeout(()=>agregarLinea(form),80);
 }
 
 function recogerLineas(form){
@@ -888,10 +892,43 @@ function renderLineDd(cid,form,idx,q){
     clr.classList.add('visible');
     pill.innerHTML=`<strong>${item.dataset.sku}</strong> — ${item.dataset.nombre}${item.dataset.unidad?' · '+item.dataset.unidad:''}`;
     pill.classList.add('visible');dd.classList.remove('open');
-    refreshHint(form,idx);actualizarResumen(form);
-    setTimeout(()=>document.getElementById(`lub-${form}-${idx}`)?.focus(),60);
+    actualizarResumen(form);
+    if(form==='salida'){
+      cargarUbicacionesLineaSalida(form,idx,item.dataset.sku);
+    } else {
+      refreshHint(form,idx);
+      setTimeout(()=>document.getElementById(`lub-${form}-${idx}`)?.focus(),60);
+    }
   }));
   dd.classList.add('open');
+}
+
+// Carga solo ubicaciones con stock del SKU dado en el select de la línea de salida
+async function cargarUbicacionesLineaSalida(form,idx,sku){
+  const sel=document.getElementById(`lub-${form}-${idx}`);
+  const hint=document.getElementById(`lhint-${form}-${idx}`);
+  if(!sel) return;
+  sel.innerHTML='<option value="">Cargando...</option>';
+  sel.disabled=true;
+  try{
+    // Filtrar desde INV local (ya cargado) para no hacer llamada extra
+    const ubs=INV.filter(i=>i.sku===sku&&i.stockActual>0);
+    if(!ubs.length){
+      sel.innerHTML='<option value="">Sin stock en ninguna ubicación</option>';
+      hint.textContent='Este SKU no tiene stock disponible';
+      hint.className='line-hint err';
+      return;
+    }
+    sel.innerHTML='<option value="">Seleccionar...</option>'
+      +ubs.map(u=>`<option value="${u.ubicacion}">${u.ubicacion} — ${u.stockActual} ${u.unidad}</option>`).join('');
+    sel.disabled=false;
+    hint.textContent=`${ubs.length} ubicación${ubs.length>1?'es':'} con stock`;
+    hint.className='line-hint ok';
+    setTimeout(()=>sel.focus(),60);
+  }catch(e){
+    sel.innerHTML='<option value="">Error al cargar</option>';
+    hint.textContent=e.message;hint.className='line-hint err';
+  }
 }
 
 function limpiarAcLinea(cid,form,idx){
@@ -904,6 +941,12 @@ function limpiarAcLinea(cid,form,idx){
   document.getElementById(`${cid}-dd`).classList.remove('open');
   const hint=document.getElementById(`lhint-${form}-${idx}`);
   if(hint){hint.textContent='';hint.className='line-hint';}
+  // Resetear select de ubicación en salida
+  const sel=document.getElementById(`lub-${form}-${idx}`);
+  if(sel&&form==='salida'){
+    sel.innerHTML='<option value="">Primero selecciona un SKU</option>';
+    sel.disabled=true;
+  }
   actualizarResumen(form);
 }
 
