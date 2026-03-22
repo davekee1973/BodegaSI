@@ -322,6 +322,24 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
           </div>
         </div>
       </div>
+
+      <!-- CONSULTA POR SKU -->
+      <div class="ub-panel">
+        <div class="ub-panel-header">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span style="font-size:13px;font-weight:600;">Consultar SKU</span>
+          <div id="dash-sku-ac" class="ac-wrap" style="flex:1;max-width:320px"></div>
+          <button class="btn btn-ghost" onclick="limpiarBusquedaSku()" style="padding:7px 12px;font-size:12px">Limpiar</button>
+        </div>
+        <div class="ub-results" id="sku-results">
+          <div id="sku-info-header" style="margin-bottom:14px"></div>
+          <div class="ub-grid">
+            <div><div class="ub-section-label">Ubicaciones con stock</div><div id="sku-stock-content"></div></div>
+            <div><div class="ub-section-label">Últimos movimientos</div><div id="sku-movs-content"></div></div>
+          </div>
+        </div>
+      </div>
+
       <div class="row-section">
         <div class="card" style="flex:2"><div class="card-title">Alertas de stock mínimo</div><div id="alertas-table"><div class="empty">Cargando...</div></div></div>
         <div class="card" style="flex:1"><div class="card-title">Últimos movimientos</div><div id="ultimos-movs"><div class="empty">Cargando...</div></div></div>
@@ -563,6 +581,7 @@ async function cargarSkus(){
   const kf=document.getElementById('k-sku-filter');
   if(kf) kf.innerHTML='<option value="">Todos los SKUs</option>'+SKUS.map(s=>`<option value="${s.sku}">${s.sku}</option>`).join('');
   inicAcTraspaso();
+  inicDashSkuAc();
 }
 async function cargarUbicaciones(){
   UBS=await apiGet('getUbicaciones');
@@ -608,6 +627,126 @@ function buscarUbicacion(){
   panel.classList.add('visible');
 }
 function limpiarBusquedaUb(){document.getElementById('dash-ub-select').value='';document.getElementById('ub-results').classList.remove('visible');}
+
+// ── CONSULTA POR SKU EN DASHBOARD ──────────────────────────
+let dashSkuAcState={sku:null,focusIdx:-1};
+
+function inicDashSkuAc(){
+  const cid='dash-sku-ac';
+  const c=document.getElementById(cid);if(!c)return;
+  c.innerHTML=`
+    <div class="ac-input-row">
+      <input type="text" class="ac-input" placeholder="Escribe SKU o nombre..." autocomplete="off" id="${cid}-input" style="background:var(--bg)"/>
+      <button type="button" class="ac-clear" id="${cid}-clear">×</button>
+    </div>
+    <div class="ac-pill" id="${cid}-pill"></div>
+    <div class="ac-dropdown" id="${cid}-dd"></div>`;
+  const inp=document.getElementById(cid+'-input');
+  const clr=document.getElementById(cid+'-clear');
+  const dd=document.getElementById(cid+'-dd');
+  let dbt=null;
+  inp.addEventListener('input',()=>{clearTimeout(dbt);dbt=setTimeout(()=>renderDashSkuDd(inp.value),120);});
+  inp.addEventListener('keydown',e=>{
+    const items=dd.querySelectorAll('.ac-item');if(!items.length)return;
+    if(e.key==='ArrowDown'){e.preventDefault();dashSkuAcState.focusIdx=Math.min(dashSkuAcState.focusIdx+1,items.length-1);focusDd(items,dashSkuAcState.focusIdx);}
+    else if(e.key==='ArrowUp'){e.preventDefault();dashSkuAcState.focusIdx=Math.max(dashSkuAcState.focusIdx-1,0);focusDd(items,dashSkuAcState.focusIdx);}
+    else if(e.key==='Enter'){e.preventDefault();const fi=dashSkuAcState.focusIdx>=0?dashSkuAcState.focusIdx:0;items[fi]?.click();}
+    else if(e.key==='Escape')dd.classList.remove('open');
+  });
+  inp.addEventListener('focus',()=>{if(inp.value.length>=1)renderDashSkuDd(inp.value);});
+  clr.addEventListener('click',limpiarBusquedaSku);
+  document.addEventListener('click',e=>{if(!c.contains(e.target))dd.classList.remove('open');});
+}
+
+function renderDashSkuDd(q){
+  const dd=document.getElementById('dash-sku-ac-dd');
+  dashSkuAcState.focusIdx=-1;
+  if(!q){dd.classList.remove('open');return;}
+  const res=buscarSkus(q);
+  dd.innerHTML=!res.length?'<div class="ac-empty">Sin resultados</div>'
+    :res.map(s=>'<div class="ac-item" data-sku="'+s.sku+'" data-nombre="'+s.nombre+'" data-unidad="'+(s.unidad||'')+'" data-cat="'+(s.categoria||'')+'">'
+      +'<span class="ac-item-sku">'+hl(s.sku,q)+'</span>'
+      +'<span class="ac-item-nombre">'+hl(s.nombre,q)+'</span>'
+      +(s.categoria?'<span class="ac-item-cat">'+s.categoria+'</span>':'')
+      +'</div>').join('');
+  dd.querySelectorAll('.ac-item').forEach(item=>item.addEventListener('click',()=>{
+    dashSkuAcState.sku=item.dataset.sku;
+    const inp=document.getElementById('dash-sku-ac-input');
+    const clr=document.getElementById('dash-sku-ac-clear');
+    const pill=document.getElementById('dash-sku-ac-pill');
+    inp.value=item.dataset.sku;inp.classList.add('has-value');
+    clr.classList.add('visible');
+    pill.innerHTML='<strong>'+item.dataset.sku+'</strong> — '+item.dataset.nombre+(item.dataset.unidad?' · '+item.dataset.unidad:'');
+    pill.classList.add('visible');
+    dd.classList.remove('open');
+    buscarSku(item.dataset.sku, item.dataset.nombre, item.dataset.unidad, item.dataset.cat);
+  }));
+  dd.classList.add('open');
+}
+
+function buscarSku(sku, nombre, unidad, categoria){
+  const panel=document.getElementById('sku-results');
+
+  // Header con info del producto
+  document.getElementById('sku-info-header').innerHTML=
+    '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
+    +'<span class="td-mono" style="font-size:13px;font-weight:500;color:var(--accent)">'+sku+'</span>'
+    +'<span style="font-size:13px;">'+nombre+'</span>'
+    +(unidad?'<span style="font-size:12px;color:var(--muted)">'+unidad+'</span>':'')
+    +(categoria?'<span style="font-size:11px;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:4px">'+categoria+'</span>':'')
+    +'</div>';
+
+  // Ubicaciones con stock
+  const stockSku=INV.filter(i=>i.sku===sku);
+  const totalStock=stockSku.reduce((a,i)=>a+i.stockActual,0);
+  const sc=document.getElementById('sku-stock-content');
+  if(!stockSku.length){
+    sc.innerHTML='<div style="font-size:12px;color:var(--muted);padding:8px 0">Sin stock en ninguna ubicación.</div>';
+  } else {
+    sc.innerHTML='<div style="font-size:11px;color:var(--muted);margin-bottom:8px">Stock total: <strong style="color:var(--text);font-family:var(--mono)">'+totalStock.toLocaleString('es-CL')+'</strong> '+unidad+'</div>'
+      +'<table style="width:100%"><thead><tr><th>Ubicación</th><th style="text-align:right">Stock</th><th>Estado</th></tr></thead><tbody>'
+      +stockSku.sort((a,b)=>b.stockActual-a.stockActual).map(i=>
+        '<tr>'
+        +'<td class="td-mono" style="font-size:12px">'+i.ubicacion+'</td>'
+        +'<td style="text-align:right;font-family:var(--mono);font-weight:500" class="'+(i.alerta?'stock-low':'stock-ok')+'">'+i.stockActual+'</td>'
+        +'<td>'+(i.alerta?'<span class="badge badge-alerta">Bajo mínimo</span>':'<span class="badge badge-ok">OK</span>')+'</td>'
+        +'</tr>'
+      ).join('')
+      +'</tbody></table>';
+  }
+
+  // Últimos movimientos
+  const movsKardex=KARDEX.filter(m=>m.sku===sku).slice(0,10);
+  const mc=document.getElementById('sku-movs-content');
+  if(!movsKardex.length){
+    mc.innerHTML='<div style="font-size:12px;color:var(--muted);padding:8px 0">Sin movimientos registrados.</div>';
+  } else {
+    mc.innerHTML=movsKardex.map(m=>
+      '<div class="ub-mov-item">'
+      +'<div>'
+      +'<div style="font-size:12px;font-weight:500">'+(m.origen||m.destino)+' · <span style="font-family:var(--mono)">'+m.cantidad+'</span></div>'
+      +'<div style="font-size:11px;color:var(--muted)">'+m.fecha+(m.referencia?' · '+m.referencia:'')+(m.lote?' · '+m.lote:'')+'</div>'
+      +'</div>'
+      +'<span class="badge badge-'+m.tipo.toLowerCase()+'">'+m.tipo+'</span>'
+      +'</div>'
+    ).join('');
+  }
+
+  panel.classList.add('visible');
+}
+
+function limpiarBusquedaSku(){
+  dashSkuAcState={sku:null,focusIdx:-1};
+  const inp=document.getElementById('dash-sku-ac-input');
+  const clr=document.getElementById('dash-sku-ac-clear');
+  const pill=document.getElementById('dash-sku-ac-pill');
+  const dd=document.getElementById('dash-sku-ac-dd');
+  if(inp){inp.value='';inp.classList.remove('has-value');}
+  if(clr)clr.classList.remove('visible');
+  if(pill){pill.innerHTML='';pill.classList.remove('visible');}
+  if(dd)dd.classList.remove('open');
+  document.getElementById('sku-results').classList.remove('visible');
+}
 
 // ══════════════════════════════════════════════════
 //  MULTI-LÍNEA — cada línea tiene SKU + ubicación propia
