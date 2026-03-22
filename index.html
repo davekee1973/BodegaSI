@@ -467,6 +467,15 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
             <option value="">Todos los tipos</option>
             <option value="ENTRADA">Entrada</option><option value="SALIDA">Salida</option><option value="TRASPASO">Traspaso</option>
           </select>
+        </div>
+        <div class="filter-row" style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap">Desde</span>
+            <input type="date" id="k-fecha-desde" onchange="filtrarKardex()" style="width:150px"/>
+            <span style="font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap">Hasta</span>
+            <input type="date" id="k-fecha-hasta" onchange="filtrarKardex()" style="width:150px"/>
+            <button class="btn btn-ghost" onclick="limpiarFechasKardex()" style="padding:6px 12px;font-size:12px">Limpiar fechas</button>
+          </div>
           <span id="k-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
           <button class="btn btn-success" onclick="exportarExcel()" style="padding:8px 14px;font-size:12px">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Exportar Excel
@@ -1205,12 +1214,34 @@ function filtrarKardex(){
   const sku=document.getElementById('k-sku-filter').value;
   const ub=document.getElementById('k-ub-filter').value;
   const tipo=document.getElementById('k-tipo-filter').value;
+  const desde=document.getElementById('k-fecha-desde').value;
+  const hasta=document.getElementById('k-fecha-hasta').value;
+
+  // Convertir fechas a objetos Date para comparar
+  // Las fechas del kardex vienen como "dd/MM/yyyy HH:mm"
+  const parseFecha=str=>{
+    if(!str) return null;
+    const [d,m,y]=str.split('/');
+    const [fecha,hora]=(y||'').split(' ');
+    const [hh,mm]=(hora||'00:00').split(':');
+    return new Date(fecha,Number(m)-1,Number(d),Number(hh),Number(mm));
+  };
+  const desdeDate=desde?new Date(desde+'T00:00:00'):null;
+  const hastaDate=hasta?new Date(hasta+'T23:59:59'):null;
+
   kardexFiltrado=KARDEX.filter(m=>{
-    if(sku&&m.sku!==sku)return false;
-    if(ub&&m.origen!==ub&&m.destino!==ub)return false;
-    if(tipo&&m.tipo!==tipo)return false;
+    if(sku&&m.sku!==sku) return false;
+    if(ub&&m.origen!==ub&&m.destino!==ub) return false;
+    if(tipo&&m.tipo!==tipo) return false;
+    if(desdeDate||hastaDate){
+      const fm=parseFecha(m.fecha);
+      if(!fm) return false;
+      if(desdeDate&&fm<desdeDate) return false;
+      if(hastaDate&&fm>hastaDate) return false;
+    }
     return true;
   });
+
   const tb=document.getElementById('k-tbody'),em=document.getElementById('k-empty');
   document.getElementById('k-count').textContent=kardexFiltrado.length+' movimientos';
   if(!kardexFiltrado.length){tb.innerHTML='';em.style.display='block';return;}
@@ -1231,6 +1262,12 @@ function filtrarKardex(){
   </tr>`).join('');
 }
 function renderKardex(){kardexFiltrado=[...KARDEX];filtrarKardex();}
+
+function limpiarFechasKardex(){
+  document.getElementById('k-fecha-desde').value='';
+  document.getElementById('k-fecha-hasta').value='';
+  filtrarKardex();
+}
 
 // ── EXPORTAR ──
 function exportarExcel(){
