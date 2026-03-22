@@ -251,8 +251,48 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   .stat-value { font-size: 22px; }
   .nav-item { padding: 8px 8px; min-width: 52px; font-size: 9px; }
 }
+/* ── LOGIN ── */
+.login-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;align-items:center;justify-content:center;}
+.login-screen.visible{display:flex;}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 40px;width:100%;max-width:380px;box-shadow:0 8px 40px rgba(0,0,0,0.08);}
+.login-logo{font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text);margin-bottom:4px;}
+.login-sub{font-size:12px;color:var(--muted);font-family:var(--mono);margin-bottom:28px;}
+.login-error{background:var(--danger-bg);border:1px solid #f5bfbb;border-radius:var(--radius);padding:9px 12px;font-size:12px;color:var(--danger);margin-bottom:14px;display:none;}
+.login-error.visible{display:block;}
+.user-pill{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--surface2);border-radius:var(--radius);font-size:12px;cursor:pointer;}
+.user-pill:hover{background:var(--border);}
+.perfil-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;font-family:var(--mono);}
+.perfil-admin{background:#eef1ff;color:#2a5cff;}
+.perfil-operador{background:var(--success-bg);color:var(--success);}
+.perfil-lectura{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+.nav-item.disabled{opacity:0.35;pointer-events:none;}
 </style>
 </head>
+<!-- PANTALLA DE LOGIN -->
+<div class="login-screen visible" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Bodega</div>
+    <div class="login-sub">Control de inventario</div>
+    <div class="login-error" id="login-error"></div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Usuario</label>
+        <input type="text" id="login-usuario" placeholder="tu.usuario" autocomplete="username"
+          onkeydown="if(event.key==='Enter')document.getElementById('login-pwd').focus()"/>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password"
+          onkeydown="if(event.key==='Enter')submitLogin()"/>
+      </div>
+      <button class="btn btn-primary" onclick="submitLogin()" id="btn-login" style="width:100%;justify-content:center;margin-top:4px">
+        Ingresar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="shell" id="app-shell" style="display:none">
 <body>
 <div class="shell">
 <aside class="sidebar">
@@ -295,6 +335,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
       <button class="btn btn-ghost" onclick="recargarTodo()" id="btn-reload">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Actualizar
       </button>
+      <div class="user-pill" onclick="cerrarSesion()" title="Cerrar sesión">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="topbar-usuario">—</span>
+        <span id="topbar-perfil-badge" class="perfil-badge"></span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </div>
     </div>
   </div>
 
@@ -545,7 +591,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
     <div class="detalle-section"><div class="detalle-section-title">Stock actual</div><div id="dp-stock"><div class="empty">Cargando...</div></div></div>
     <div class="detalle-section"><div class="detalle-section-title">Últimos movimientos</div><div id="dp-movs"><div class="empty">Cargando...</div></div></div>
   </div>
-</div>
+</div><!-- /app-shell -->
 
 <div id="toast"></div>
 
@@ -554,8 +600,76 @@ const API='https://script.google.com/macros/s/AKfycbxTZyfX4ZMW0yhLfV0xC14JLL-qKs
 let SKUS=[],UBS=[],UBS_TODAS=[],INV=[],KARDEX=[],kardexFiltrado=[];
 let modalModo='nueva',modalCodigoOriginal='';
 let lineCounters={entrada:0,salida:0};
-let lineAC={entrada:{},salida:{}};  // lineAC[form][idx] = { sku, nombre, unidad, focusIdx }
-const ACt={sku:null,focusIdx:-1};   // autocomplete traspaso
+let lineAC={entrada:{},salida:{}};
+const ACt={sku:null,focusIdx:-1};
+let dashSkuAcState={sku:null,focusIdx:-1};
+
+// ── SESIÓN Y PERFILES ─────────────────────────────────────
+let SESSION=null;
+const PERFILES={
+  admin:    {label:'Admin',    items:['dashboard','entrada','salida','traspaso','inventario','kardex','ubicaciones']},
+  operador: {label:'Operador', items:['dashboard','entrada','salida','traspaso','inventario','kardex']},
+  lectura:  {label:'Lectura',  items:['dashboard','inventario','kardex']},
+};
+
+async function submitLogin(){
+  const usr=document.getElementById('login-usuario').value.trim();
+  const pwd=document.getElementById('login-pwd').value.trim();
+  const errEl=document.getElementById('login-error');
+  const btn=document.getElementById('btn-login');
+  if(!usr||!pwd){errEl.textContent='Completa usuario y contraseña.';errEl.classList.add('visible');return;}
+  errEl.classList.remove('visible');
+  btn.disabled=true;btn.innerHTML='<span class="loader"></span> Ingresando...';
+  try{
+    const res=await apiPost({accion:'login',usuario:usr,password:pwd});
+    SESSION={usuario:res.usuario,perfil:res.perfil};
+    sessionStorage.setItem('bodega_session',JSON.stringify(SESSION));
+    iniciarApp();
+  }catch(e){
+    errEl.textContent=e.message;errEl.classList.add('visible');
+    btn.disabled=false;btn.innerHTML='Ingresar';
+  }
+}
+
+function iniciarApp(){
+  document.getElementById('login-screen').classList.remove('visible');
+  document.getElementById('app-shell').style.display='flex';
+  document.getElementById('topbar-usuario').textContent=SESSION.usuario;
+  const badge=document.getElementById('topbar-perfil-badge');
+  const p=PERFILES[SESSION.perfil]||PERFILES.lectura;
+  badge.textContent=p.label;
+  badge.className='perfil-badge perfil-'+SESSION.perfil;
+  aplicarPermisos();
+  recargarTodo();
+}
+
+function aplicarPermisos(){
+  const p=PERFILES[SESSION.perfil]||PERFILES.lectura;
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const m=( n.getAttribute('onclick')||'').match(/'(\w+)'/);
+    const view=m?m[1]:null;
+    n.classList.toggle('disabled',view&&!p.items.includes(view));
+  });
+}
+
+function cerrarSesion(){
+  SESSION=null;
+  sessionStorage.removeItem('bodega_session');
+  document.getElementById('app-shell').style.display='none';
+  document.getElementById('login-screen').classList.add('visible');
+  document.getElementById('login-usuario').value='';
+  document.getElementById('login-pwd').value='';
+  document.getElementById('login-error').classList.remove('visible');
+}
+
+function puedeMover(){return SESSION&&(SESSION.perfil==='admin'||SESSION.perfil==='operador');}
+function esAdmin(){return SESSION&&SESSION.perfil==='admin';}
+
+// Restaurar sesión al recargar
+window.addEventListener('load',()=>{
+  const saved=sessionStorage.getItem('bodega_session');
+  if(saved){try{SESSION=JSON.parse(saved);iniciarApp();}catch(e){cerrarSesion();}}
+});
 
 const TITLES={dashboard:'Dashboard',entrada:'Entrada de stock',salida:'Salida de stock',traspaso:'Traspaso entre ubicaciones',inventario:'Inventario actual',kardex:'Kardex de movimientos',ubicaciones:'Administrador de ubicaciones'};
 
@@ -638,7 +752,6 @@ function buscarUbicacion(){
 function limpiarBusquedaUb(){document.getElementById('dash-ub-select').value='';document.getElementById('ub-results').classList.remove('visible');}
 
 // ── CONSULTA POR SKU EN DASHBOARD ──────────────────────────
-let dashSkuAcState={sku:null,focusIdx:-1};
 
 function inicDashSkuAc(){
   const cid='dash-sku-ac';
@@ -902,6 +1015,7 @@ function recogerLineas(form){
 }
 
 async function submitEntrada(){
+  if(!puedeMover()){toast('Sin permisos para registrar movimientos','err');return;}
   const lineas=recogerLineas('entrada');if(!lineas) return;
   const btn=document.getElementById('btn-entrada');
   btn.disabled=true;btn.innerHTML='<span class="loader"></span> Registrando...';
@@ -917,6 +1031,7 @@ async function submitEntrada(){
 }
 
 async function submitSalida(){
+  if(!puedeMover()){toast('Sin permisos para registrar movimientos','err');return;}
   const lineas=recogerLineas('salida');if(!lineas) return;
   const btn=document.getElementById('btn-salida');
   btn.disabled=true;btn.innerHTML='<span class="loader"></span> Registrando...';
@@ -969,6 +1084,7 @@ function mostrarStockTraspaso(){
 
 async function submitTraspaso(e){
   e.preventDefault();
+  if(!puedeMover()){toast('Sin permisos para registrar movimientos','err');return;}
   if(!ACt.sku){toast('Selecciona un SKU primero','err');return;}
   const btn=document.getElementById('btn-traspaso');
   btn.disabled=true;btn.innerHTML='<span class="loader"></span> Registrando...';
@@ -1333,6 +1449,7 @@ function abrirModalEditar(codigo,zona,desc){
 }
 function cerrarModal(){document.getElementById('modal-ub').classList.remove('open');}
 async function guardarUbicacion(){
+  if(!esAdmin()){toast('Solo administradores pueden gestionar ubicaciones','err');return;}
   const codigo=document.getElementById('m-codigo').value.trim().toUpperCase();
   if(!codigo){toast('El código es obligatorio','err');return;}
   const btn=document.getElementById('btn-modal-guardar');
