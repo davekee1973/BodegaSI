@@ -17,30 +17,20 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
-
-/* LOGIN */
 .login-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;align-items:center;justify-content:center;}
 .login-screen.visible{display:flex;}
 .login-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 40px;width:100%;max-width:400px;}
 .login-logo{font-size:16px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;}
-.login-sub{font-size:12px;color:var(--muted);font-family:var(--mono);margin-bottom:6px;}
-.login-bodega-sel{margin-bottom:20px;padding:10px 14px;background:var(--accent-bg);border:1px solid rgba(42,92,255,0.2);border-radius:var(--radius);font-size:12px;color:var(--accent);}
+.login-sub{font-size:12px;color:var(--muted);font-family:var(--mono);margin-bottom:20px;}
 .login-error{background:var(--danger-bg);border:1px solid #f5bfbb;border-radius:var(--radius);padding:9px 12px;font-size:12px;color:var(--danger);margin-bottom:14px;display:none;}
 .login-error.visible{display:block;}
-
-/* SHELL */
-.shell{display:none;min-height:100vh;flex-direction:column;}
+.shell{display:none;min-height:100vh;}
 .shell.visible{display:flex;}
-
-/* TOPBAR */
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .topbar-left{display:flex;align-items:center;gap:14px;}
 .topbar-brand{font-size:13px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;}
-.bodega-switcher{display:flex;align-items:center;gap:6px;padding:4px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:500;}
-.bodega-switcher:hover{background:var(--border);}
+.bodega-pill{display:flex;align-items:center;gap:6px;padding:4px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-weight:500;}
 .bodega-dot{width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0;}
-.bodega-dot.consignacion{background:var(--warning);}
-.bodega-dot.consolidado{background:var(--accent);}
 .topbar-right{display:flex;align-items:center;gap:8px;}
 .user-pill{display:flex;align-items:center;gap:7px;padding:5px 11px;background:var(--surface2);border-radius:var(--radius);font-size:12px;cursor:pointer;}
 .user-pill:hover{background:var(--border);}
@@ -48,32 +38,25 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14
 .perfil-admin{background:#eef1ff;color:#2a5cff;}
 .perfil-operador{background:var(--success-bg);color:var(--success);}
 .perfil-lectura{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
-
-/* BODY LAYOUT */
 .body-layout{display:flex;flex:1;min-height:0;}
-
-/* SIDEBAR */
 .sidebar{width:210px;background:var(--text);display:flex;flex-direction:column;flex-shrink:0;}
-.nav{padding:12px 0;flex:1;}
+.nav{padding:12px 0;flex:1;overflow-y:auto;}
 .nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:13px;transition:all 0.15s;border-left:2px solid transparent;}
 .nav-item:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.05);}
 .nav-item.active{color:#fff;border-left-color:var(--accent);background:rgba(42,92,255,0.12);}
 .nav-item.disabled{opacity:0.3;pointer-events:none;}
 .nav-item svg{width:15px;height:15px;flex-shrink:0;}
 .nav-section{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:14px 18px 5px;}
-
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:auto;}
-.content{padding:24px;flex:1;}
+.content{padding:22px;flex:1;}
 .view{display:none;}.view.active{display:block;}
-
-/* CARDS / TABLES */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:18px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:16px;}
 .card-title{font-size:13px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;}
 .stat-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
 .stat-value{font-size:24px;font-weight:600;margin-top:4px;font-family:var(--mono);}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:2px;}
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead th{text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;padding:0 10px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
@@ -82,45 +65,35 @@ tbody tr:last-child{border-bottom:none;}
 tbody tr:hover{background:var(--surface2);}
 td{padding:10px;vertical-align:middle;}
 .td-mono{font-family:var(--mono);font-size:12px;}
-
-/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;font-family:var(--mono);}
 .badge-entrada{background:var(--success-bg);color:var(--success);}
 .badge-salida{background:var(--danger-bg);color:var(--danger);}
 .badge-traspaso{background:var(--accent-bg);color:var(--accent);}
+.badge-ajuste{background:var(--warning-bg);color:var(--warning);}
 .badge-alerta{background:var(--warning-bg);color:var(--warning);}
 .badge-ok{background:var(--success-bg);color:var(--success);}
 .badge-activo{background:var(--success-bg);color:var(--success);}
 .badge-inactivo{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
-.badge-bodega{background:var(--accent-bg);color:var(--accent);}
-.badge-consignacion{background:var(--warning-bg);color:var(--warning);}
-
-/* FORMS */
 .form-grid{display:grid;gap:12px;}
 .form-grid-2{grid-template-columns:1fr 1fr;}
 .form-grid-3{grid-template-columns:1fr 1fr 1fr;}
+.form-grid-4{grid-template-columns:1fr 1fr 1fr 1fr;}
 .form-group{display:flex;flex-direction:column;gap:5px;}
 label{font-size:12px;font-weight:500;color:var(--muted);}
 input,select,textarea{font-family:var(--sans);font-size:13px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;transition:border-color 0.15s,box-shadow 0.15s;outline:none;width:100%;}
 input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,92,255,0.1);}
-
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--radius);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all 0.15s;}
 .btn-primary{background:var(--accent);color:#fff;}.btn-primary:hover{background:#1a4de8;}
 .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}.btn-ghost:hover{background:var(--surface2);color:var(--text);}
 .btn-success{background:var(--success);color:#fff;}.btn-success:hover{background:#157a40;}
-.btn-warning{background:var(--warning);color:#fff;}
+.btn-danger{background:var(--danger);color:#fff;}.btn-danger:hover{background:#a02f25;}
 .btn-sm{padding:5px 11px;font-size:12px;}
 .btn:disabled{opacity:0.45;cursor:not-allowed;}
-
-/* FILTER ROW */
 .filter-row{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
 .filter-row select{width:auto;min-width:130px;}
 .search-bar{position:relative;flex:1;max-width:260px;}
 .search-bar input{padding-left:32px;}
 .search-bar svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);width:13px;height:13px;}
-
-/* MULTI-LÍNEA */
 .ml-header{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:16px;}
 .ml-divider{display:flex;align-items:center;gap:10px;margin:16px 0 12px;}
 .ml-divider-line{flex:1;border-top:1px solid var(--border);}
@@ -138,8 +111,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 .ml-summary{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-top:12px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
 .ml-summary-item{font-size:12px;color:var(--muted);}
 .ml-summary-item strong{color:var(--text);font-family:var(--mono);}
-
-/* AUTOCOMPLETE */
 .ac-wrap{position:relative;}
 .ac-input-row{display:flex;align-items:center;}
 .ac-input.has-value{border-radius:var(--radius) 0 0 var(--radius)!important;border-right:none!important;}
@@ -158,8 +129,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 .ac-pill{display:none;align-items:center;gap:5px;margin-top:4px;padding:4px 8px;background:var(--success-bg);border:1px solid #9de0b8;border-radius:var(--radius);font-size:11px;color:var(--success);}
 .ac-pill.visible{display:flex;}
 .ac-pill strong{font-family:var(--mono);}
-
-/* TOAST */
 #toast{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:7px;}
 .toast-msg{padding:11px 16px;border-radius:var(--radius);font-size:13px;font-weight:500;min-width:250px;animation:slideUp 0.2s ease;box-shadow:0 4px 20px rgba(0,0,0,0.12);}
 .toast-ok{background:var(--success-bg);color:var(--success);border:1px solid #9de0b8;}
@@ -171,38 +140,37 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 @keyframes spin{to{transform:rotate(360deg);}}
 .empty{text-align:center;padding:36px;color:var(--muted);font-size:13px;}
 .info-box{background:var(--accent-bg);border:1px solid rgba(42,92,255,0.15);border-radius:var(--radius);padding:9px 12px;font-size:12px;color:var(--accent);margin-bottom:14px;}
-.warn-box{background:var(--warning-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:9px 12px;font-size:12px;color:var(--warning);margin-bottom:14px;}
 .stock-low{color:var(--warning);font-weight:600;}.stock-ok{color:var(--success);}
-
-/* MODAL */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:500;align-items:center;justify-content:center;}
 .modal-backdrop.open{display:flex;}
-.modal{background:var(--surface);border-radius:var(--radius-lg);padding:26px;width:100%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:26px;width:100%;max-width:540px;box-shadow:0 20px 60px rgba(0,0,0,0.2);max-height:90vh;overflow-y:auto;}
 .modal-title{font-size:15px;font-weight:600;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
 .modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;padding:0;line-height:1;}
 .modal-close:hover{color:var(--text);}
 .modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
-
-/* PANEL DETALLE */
 .detail-panel{display:none;position:fixed;top:0;right:0;width:460px;height:100vh;background:var(--surface);border-left:1px solid var(--border);box-shadow:-8px 0 32px rgba(0,0,0,0.1);z-index:400;flex-direction:column;overflow:hidden;}
 .detail-panel.open{display:flex;}
 .detail-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .detail-body{padding:18px 22px;overflow-y:auto;flex:1;}
 .detail-section{margin-bottom:22px;}
 .detail-section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
-
-/* TOGGLE */
 .toggle{position:relative;width:38px;height:20px;flex-shrink:0;}
 .toggle input{opacity:0;width:0;height:0;position:absolute;}
 .toggle-track{position:absolute;inset:0;background:var(--border);border-radius:10px;cursor:pointer;transition:background 0.2s;}
 .toggle input:checked+.toggle-track{background:var(--success);}
 .toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 0.2s;}
 .toggle input:checked+.toggle-track::after{transform:translateX(18px);}
-
-/* CONSOLIDADO */
-.bodega-group-header{font-size:12px;font-weight:600;color:var(--muted);padding:8px 10px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
-
-/* RESPONSIVE */
+/* Valorización */
+.valorizacion-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:16px;}
+.val-stat{background:var(--accent-bg);border:1px solid rgba(42,92,255,0.15);border-radius:var(--radius);padding:12px 16px;text-align:center;}
+.val-stat-label{font-size:11px;color:var(--accent);font-weight:500;text-transform:uppercase;letter-spacing:0.06em;}
+.val-stat-value{font-size:20px;font-weight:600;font-family:var(--mono);color:var(--accent);margin-top:4px;}
+/* Upload zone */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius-lg);padding:32px;text-align:center;cursor:pointer;transition:all 0.15s;}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:var(--accent-bg);}
+.upload-zone svg{color:var(--muted);margin-bottom:8px;}
+.upload-zone p{font-size:13px;color:var(--muted);}
+.upload-zone strong{color:var(--accent);}
 @media(max-width:768px){
   .sidebar{width:100%;position:fixed;bottom:0;left:0;right:0;z-index:100;flex-direction:row;height:56px;}
   .nav{display:flex;flex-direction:row;padding:0;overflow-x:auto;scrollbar-width:none;}
@@ -215,7 +183,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   .main{padding-bottom:56px;}
   .content{padding:14px;}
   .stats{grid-template-columns:1fr 1fr;}
-  .form-grid-2,.form-grid-3{grid-template-columns:1fr;}
+  .form-grid-2,.form-grid-3,.form-grid-4{grid-template-columns:1fr;}
   .line-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;}
   .line-grid>:nth-child(1){grid-column:1/-1;}
   .line-grid>:nth-child(4){grid-column:1/-1;}
@@ -225,429 +193,395 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   .filter-row{flex-direction:column;align-items:stretch;}
   .filter-row select,.filter-row .btn{width:100%;}
   .search-bar{max-width:100%;}
-  .topbar{padding:0 14px;}
-  .topbar-brand{display:none;}
-}
-@media(max-width:420px){
-  .stat{padding:10px 12px;}.stat-value{font-size:20px;}
-  .nav-item{min-width:46px;font-size:9px;}
 }
 </style>
 </head>
 <body>
 
-<!-- ── LOGIN ── -->
+<!-- LOGIN -->
 <div class="login-screen visible" id="login-screen">
   <div class="login-box">
     <div class="login-logo">Bodega SI</div>
     <div class="login-sub">Sistema de inventario</div>
-    <div style="margin:16px 0 20px">
+    <div style="margin-bottom:18px">
       <div class="form-group">
         <label>Bodega</label>
-        <select id="login-bodega"><option value="">Cargando bodegas...</option></select>
+        <select id="login-bodega"><option value="">Cargando...</option></select>
       </div>
     </div>
     <div class="login-error" id="login-error"></div>
     <div class="form-grid">
-      <div class="form-group"><label>Usuario</label>
-        <input type="text" id="login-usuario" placeholder="tu.usuario" autocomplete="username"/></div>
-      <div class="form-group"><label>Contraseña</label>
-        <input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password"
-          onkeydown="if(event.key==='Enter')submitLogin()"/></div>
-      <button class="btn btn-primary" onclick="submitLogin()" id="btn-login" style="width:100%;justify-content:center">
-        Ingresar
-      </button>
-    </div>
-    <div style="margin-top:14px;font-size:11px;color:var(--muted);text-align:center">
-      También puedes
-      <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="loginConsolidado()">
-        entrar al dashboard consolidado
-      </span>
+      <div class="form-group"><label>Usuario</label><input type="text" id="login-usuario" placeholder="tu.usuario" autocomplete="username"/></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')submitLogin()"/></div>
+      <button class="btn btn-primary" onclick="submitLogin()" id="btn-login" style="width:100%;justify-content:center">Ingresar</button>
     </div>
   </div>
 </div>
 
-<!-- ── APP ── -->
+<!-- APP -->
 <div class="shell" id="app-shell">
-  <div class="topbar">
-    <div class="topbar-left">
-      <span class="topbar-brand">Bodega SI</span>
-      <div class="bodega-switcher" onclick="abrirSwitcherBodega()" id="bodega-switcher">
-        <div class="bodega-dot" id="bodega-dot"></div>
-        <span id="bodega-nombre-topbar">—</span>
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  <div style="display:flex;flex-direction:column;width:100%">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-brand">Bodega SI</span>
+        <div class="bodega-pill" id="bodega-pill">
+          <div class="bodega-dot" id="bodega-dot"></div>
+          <span id="bodega-nombre-top">—</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost btn-sm" onclick="recargarTodo()" id="btn-reload">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Actualizar
+        </button>
+        <div class="user-pill" onclick="cerrarSesion()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="top-usuario">—</span>
+          <span id="top-perfil" class="perfil-badge"></span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </div>
       </div>
     </div>
-    <div class="topbar-right">
-      <button class="btn btn-ghost btn-sm" onclick="recargarTodo()" id="btn-reload">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-        Actualizar
-      </button>
-      <div class="user-pill" onclick="cerrarSesion()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span id="topbar-usuario">—</span>
-        <span id="topbar-perfil" class="perfil-badge"></span>
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-      </div>
-    </div>
-  </div>
-
-  <div class="body-layout">
-    <aside class="sidebar">
-      <nav class="nav" id="main-nav">
-        <div class="nav-section">Operaciones</div>
-        <div class="nav-item active" onclick="goTo('dashboard')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard
-        </div>
-        <div class="nav-item" onclick="goTo('entrada')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Entrada
-        </div>
-        <div class="nav-item" onclick="goTo('salida')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Salida
-        </div>
-        <div class="nav-item" onclick="goTo('traspaso')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>Traspaso
-        </div>
-        <div class="nav-item" onclick="goTo('traspaso-externo')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4-4 4M3 12h18"/></svg>Entre bodegas
-        </div>
-        <div class="nav-section">Consultas</div>
-        <div class="nav-item" onclick="goTo('inventario')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Inventario
-        </div>
-        <div class="nav-item" onclick="goTo('kardex')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Kardex
-        </div>
-        <div class="nav-item" onclick="goTo('consolidado')" id="nav-consolidado">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>Consolidado
-        </div>
-        <div class="nav-section">Administración</div>
-        <div class="nav-item" onclick="goTo('ubicaciones')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Ubicaciones
-        </div>
-        <div class="nav-item" onclick="goTo('admin-bodegas')" id="nav-admin-bodegas">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Bodegas
-        </div>
-      </nav>
-    </aside>
-
-    <div class="main">
-      <div class="content">
-
-        <!-- DASHBOARD -->
-        <div class="view active" id="view-dashboard">
-          <div class="stats">
-            <div class="stat"><div class="stat-label">SKUs activos</div><div class="stat-value" id="st-skus">—</div></div>
-            <div class="stat"><div class="stat-label">Ubicaciones</div><div class="stat-value" id="st-ubs">—</div></div>
-            <div class="stat"><div class="stat-label">Registros</div><div class="stat-value" id="st-inv">—</div></div>
-            <div class="stat"><div class="stat-label">Alertas</div><div class="stat-value" id="st-alertas" style="color:var(--warning)">—</div></div>
+    <div class="body-layout">
+      <aside class="sidebar">
+        <nav class="nav">
+          <div class="nav-section">Operaciones</div>
+          <div class="nav-item active" onclick="goTo('dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard
           </div>
-          <!-- Consulta ubicación -->
-          <div class="card">
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span style="font-size:13px;font-weight:600">Consultar ubicación</span>
-              <select id="dash-ub-select" onchange="buscarUbicacion()" style="max-width:260px;width:auto"><option value="">Seleccionar...</option></select>
-              <button class="btn btn-ghost btn-sm" onclick="limpiarUb()">Limpiar</button>
+          <div class="nav-item" onclick="goTo('entrada')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Entrada
+          </div>
+          <div class="nav-item" onclick="goTo('salida')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Salida
+          </div>
+          <div class="nav-item" onclick="goTo('traspaso')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>Traspaso
+          </div>
+          <div class="nav-section">Consultas</div>
+          <div class="nav-item" onclick="goTo('inventario')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Inventario
+          </div>
+          <div class="nav-item" onclick="goTo('valorizacion')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Valorización
+          </div>
+          <div class="nav-item" onclick="goTo('kardex')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Kardex
+          </div>
+          <div class="nav-section">Administración</div>
+          <div class="nav-item" onclick="goTo('productos')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Productos
+          </div>
+          <div class="nav-item" onclick="goTo('ubicaciones')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Ubicaciones
+          </div>
+        </nav>
+      </aside>
+      <div class="main">
+        <div class="content">
+
+          <!-- DASHBOARD -->
+          <div class="view active" id="view-dashboard">
+            <div class="stats">
+              <div class="stat"><div class="stat-label">SKUs activos</div><div class="stat-value" id="st-skus">—</div></div>
+              <div class="stat"><div class="stat-label">Ubicaciones</div><div class="stat-value" id="st-ubs">—</div></div>
+              <div class="stat"><div class="stat-label">Registros</div><div class="stat-value" id="st-inv">—</div></div>
+              <div class="stat"><div class="stat-label">Valor total stock</div><div class="stat-value" id="st-valor" style="font-size:18px;color:var(--accent)">—</div><div class="stat-sub" id="st-valor-sub"></div></div>
             </div>
-            <div id="ub-results" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-                <div><div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Stock</div><div id="ub-stock"></div></div>
-                <div><div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Últimos movimientos</div><div id="ub-movs"></div></div>
+            <div style="display:flex;gap:14px">
+              <div class="card" style="flex:2"><div class="card-title">Alertas de stock mínimo</div><div id="alertas-table"><div class="empty">Cargando...</div></div></div>
+              <div class="card" style="flex:1"><div class="card-title">Últimos movimientos</div><div id="ultimos-movs"><div class="empty">Cargando...</div></div></div>
+            </div>
+          </div>
+
+          <!-- ENTRADA -->
+          <div class="view" id="view-entrada">
+            <div class="card" style="max-width:820px">
+              <div class="card-title">Registrar entrada de stock</div>
+              <div class="ml-header">
+                <div class="form-grid form-grid-3">
+                  <div class="form-group"><label>Referencia (OC, guía...)</label><input type="text" id="e-ref" placeholder="OC-2024-001"/></div>
+                  <div class="form-group"><label>Usuario</label><input type="text" id="e-usr" placeholder="tu.nombre"/></div>
+                  <div class="form-group"><label>Observación general</label><input type="text" id="e-obs" placeholder="Opcional"/></div>
+                </div>
               </div>
-            </div>
-          </div>
-          <!-- Consulta SKU -->
-          <div class="card">
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-              <span style="font-size:13px;font-weight:600">Consultar SKU</span>
-              <div id="dash-sku-ac" class="ac-wrap" style="flex:1;max-width:300px"></div>
-              <button class="btn btn-ghost btn-sm" onclick="limpiarSkuDash()">Limpiar</button>
-            </div>
-            <div id="sku-results" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-              <div id="sku-info-hdr" style="margin-bottom:12px"></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-                <div><div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Ubicaciones con stock</div><div id="sku-stock"></div></div>
-                <div><div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Últimos movimientos</div><div id="sku-movs"></div></div>
-              </div>
-            </div>
-          </div>
-          <div style="display:flex;gap:16px">
-            <div class="card" style="flex:2"><div class="card-title">Alertas de stock mínimo</div><div id="alertas-table"><div class="empty">Cargando...</div></div></div>
-            <div class="card" style="flex:1"><div class="card-title">Últimos movimientos</div><div id="ultimos-movs"><div class="empty">Cargando...</div></div></div>
-          </div>
-        </div>
-
-        <!-- ENTRADA -->
-        <div class="view" id="view-entrada">
-          <div class="card" style="max-width:820px">
-            <div class="card-title"><span>Registrar entrada de stock</span><span id="entrada-bodega-badge" class="badge badge-bodega"></span></div>
-            <div class="ml-header">
-              <div class="form-grid form-grid-3">
-                <div class="form-group"><label>Referencia (OC, guía...)</label><input type="text" id="e-ref" placeholder="OC-2024-001"/></div>
-                <div class="form-group"><label>Usuario</label><input type="text" id="e-usr" placeholder="tu.nombre"/></div>
-                <div class="form-group"><label>Observación general</label><input type="text" id="e-obs" placeholder="Opcional"/></div>
-              </div>
-            </div>
-            <div class="ml-divider"><div class="ml-divider-line"></div><span class="ml-divider-label">Líneas — SKU · Ubicación destino · Cantidad</span><div class="ml-divider-line"></div></div>
-            <div class="lines-wrap" id="e-lines"></div>
-            <button class="add-line-btn" onclick="agregarLinea('entrada')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar producto
-            </button>
-            <div class="ml-summary" id="e-summary" style="display:none">
-              <div class="ml-summary-item">Líneas: <strong id="e-sum-l">0</strong></div>
-              <div class="ml-summary-item">SKUs: <strong id="e-sum-s">0</strong></div>
-              <div class="ml-summary-item">Unidades: <strong id="e-sum-u">0</strong></div>
-            </div>
-            <div style="display:flex;gap:10px;margin-top:16px">
-              <button class="btn btn-primary" onclick="submitEntrada()" id="btn-entrada">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Registrar entrada
+              <div class="ml-divider"><div class="ml-divider-line"></div><span class="ml-divider-label">Líneas — SKU · Ubicación destino · Cantidad</span><div class="ml-divider-line"></div></div>
+              <div class="lines-wrap" id="e-lines"></div>
+              <button class="add-line-btn" onclick="agregarLinea('entrada')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar producto
               </button>
-              <button class="btn btn-ghost" onclick="resetMulti('entrada')">Limpiar</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- SALIDA -->
-        <div class="view" id="view-salida">
-          <div class="card" style="max-width:820px">
-            <div class="card-title"><span>Registrar salida de stock</span><span id="salida-bodega-badge" class="badge badge-bodega"></span></div>
-            <div class="ml-header">
-              <div class="form-grid form-grid-3">
-                <div class="form-group"><label>Referencia (guía, orden...)</label><input type="text" id="s-ref" placeholder="GD-2024-001"/></div>
-                <div class="form-group"><label>Usuario</label><input type="text" id="s-usr" placeholder="tu.nombre"/></div>
-                <div class="form-group"><label>Observación general</label><input type="text" id="s-obs" placeholder="Opcional"/></div>
+              <div class="ml-summary" id="e-summary" style="display:none">
+                <div class="ml-summary-item">Líneas: <strong id="e-sum-l">0</strong></div>
+                <div class="ml-summary-item">SKUs: <strong id="e-sum-s">0</strong></div>
+                <div class="ml-summary-item">Unidades: <strong id="e-sum-u">0</strong></div>
               </div>
-            </div>
-            <div class="ml-divider"><div class="ml-divider-line"></div><span class="ml-divider-label">Líneas — SKU · Ubicación origen · Cantidad</span><div class="ml-divider-line"></div></div>
-            <div class="lines-wrap" id="s-lines"></div>
-            <button class="add-line-btn" onclick="agregarLinea('salida')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar producto
-            </button>
-            <div class="ml-summary" id="s-summary" style="display:none">
-              <div class="ml-summary-item">Líneas: <strong id="s-sum-l">0</strong></div>
-              <div class="ml-summary-item">SKUs: <strong id="s-sum-s">0</strong></div>
-              <div class="ml-summary-item">Unidades: <strong id="s-sum-u">0</strong></div>
-            </div>
-            <div style="display:flex;gap:10px;margin-top:16px">
-              <button class="btn btn-primary" onclick="submitSalida()" id="btn-salida">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Registrar salida
-              </button>
-              <button class="btn btn-ghost" onclick="resetMulti('salida')">Limpiar</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- TRASPASO INTERNO -->
-        <div class="view" id="view-traspaso">
-          <div class="card" style="max-width:560px">
-            <div class="card-title"><span>Traspaso dentro de la bodega</span><span id="traspaso-bodega-badge" class="badge badge-bodega"></span></div>
-            <div class="info-box">Mueve stock entre ubicaciones dentro de la misma bodega.</div>
-            <form class="form-grid" id="form-traspaso" onsubmit="submitTraspaso(event)">
-              <div class="form-group"><label>SKU / Producto *</label><div id="ac-traspaso" class="ac-wrap"></div></div>
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Ubicación origen *</label>
-                  <select id="t-ub-origen" required onchange="mostrarStockTraspaso()"><option value="">Primero selecciona un SKU</option></select>
-                  <div id="t-stock-hint" style="font-size:11px;margin-top:3px;color:var(--muted)"></div>
-                </div>
-                <div class="form-group"><label>Ubicación destino *</label><select id="t-ub-destino" required><option value="">Seleccionar...</option></select></div>
-              </div>
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Cantidad *</label><input type="number" id="t-cant" min="1" step="1" required placeholder="0"/></div>
-                <div class="form-group"><label>Referencia</label><input type="text" id="t-ref" placeholder="Opcional"/></div>
-              </div>
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Usuario</label><input type="text" id="t-usr" placeholder="tu.nombre"/></div>
-                <div class="form-group"><label>Observación</label><input type="text" id="t-obs" placeholder="Opcional"/></div>
-              </div>
-              <div style="display:flex;gap:10px">
-                <button class="btn btn-primary" type="submit" id="btn-traspaso">Registrar traspaso</button>
-                <button class="btn btn-ghost" type="button" onclick="resetTraspaso()">Limpiar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- TRASPASO ENTRE BODEGAS -->
-        <div class="view" id="view-traspaso-externo">
-          <div class="card" style="max-width:600px">
-            <div class="card-title">Traspaso entre bodegas</div>
-            <div class="warn-box">Este movimiento genera una salida en la bodega origen y una entrada en la bodega destino. Ambas quedan registradas en sus respectivos kardex con la misma referencia.</div>
-            <form class="form-grid" id="form-te" onsubmit="submitTraspasoExterno(event)">
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Bodega origen *</label>
-                  <select id="te-bod-origen" required onchange="cargarDatosBodegaOrigen()"><option value="">Seleccionar...</option></select>
-                </div>
-                <div class="form-group"><label>Bodega destino *</label>
-                  <select id="te-bod-destino" required><option value="">Seleccionar...</option></select>
-                </div>
-              </div>
-              <div class="form-group"><label>SKU origen *</label><div id="ac-te-sku" class="ac-wrap"></div></div>
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Ubicación origen *</label>
-                  <select id="te-ub-origen" required disabled><option value="">Primero selecciona SKU</option></select>
-                  <div id="te-stock-hint" style="font-size:11px;margin-top:3px;color:var(--muted)"></div>
-                </div>
-                <div class="form-group"><label>Ubicación destino *</label>
-                  <select id="te-ub-destino" required disabled><option value="">Primero selecciona bodega destino</option></select>
-                </div>
-              </div>
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Cantidad *</label><input type="number" id="te-cant" min="1" step="1" required placeholder="0"/></div>
-                <div class="form-group"><label>Referencia</label><input type="text" id="te-ref" placeholder="Auto-generada si no ingresas"/></div>
-              </div>
-              <div class="form-grid form-grid-2">
-                <div class="form-group"><label>Usuario</label><input type="text" id="te-usr" placeholder="tu.nombre"/></div>
-                <div class="form-group"><label>Observación</label><input type="text" id="te-obs" placeholder="Opcional"/></div>
-              </div>
-              <div style="display:flex;gap:10px">
-                <button class="btn btn-warning" type="submit" id="btn-te">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4-4 4M3 12h18"/></svg>Registrar traspaso entre bodegas
+              <div style="display:flex;gap:10px;margin-top:16px">
+                <button class="btn btn-primary" onclick="submitEntrada()" id="btn-entrada">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Registrar entrada
                 </button>
-                <button class="btn btn-ghost" type="button" onclick="resetTraspasoExterno()">Limpiar</button>
+                <button class="btn btn-ghost" onclick="resetMulti('entrada')">Limpiar</button>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
 
-        <!-- INVENTARIO -->
-        <div class="view" id="view-inventario">
-          <div class="card">
-            <div class="filter-row">
-              <div class="search-bar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <input type="text" id="inv-search" placeholder="Buscar SKU o nombre..." oninput="filtrarInventario()"/>
+          <!-- SALIDA -->
+          <div class="view" id="view-salida">
+            <div class="card" style="max-width:820px">
+              <div class="card-title">Registrar salida de stock</div>
+              <div class="ml-header">
+                <div class="form-grid form-grid-3">
+                  <div class="form-group"><label>Referencia</label><input type="text" id="s-ref" placeholder="GD-2024-001"/></div>
+                  <div class="form-group"><label>Usuario</label><input type="text" id="s-usr" placeholder="tu.nombre"/></div>
+                  <div class="form-group"><label>Observación</label><input type="text" id="s-obs" placeholder="Opcional"/></div>
+                </div>
               </div>
-              <select id="inv-ub-filter" onchange="filtrarInventario()"><option value="">Todas las ubicaciones</option></select>
-              <select id="inv-alerta-filter" onchange="filtrarInventario()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
-              <span id="inv-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
-            </div>
-            <div class="table-wrap"><table>
-              <thead><tr><th>Ubicación</th><th>SKU</th><th>Nombre</th><th>Unidad</th><th style="text-align:right">Stock</th><th>Estado</th><th>Última act.</th></tr></thead>
-              <tbody id="inv-tbody"></tbody>
-            </table></div>
-            <div id="inv-empty" class="empty" style="display:none">Sin resultados</div>
-          </div>
-        </div>
-
-        <!-- KARDEX -->
-        <div class="view" id="view-kardex">
-          <div class="card">
-            <div class="filter-row">
-              <select id="k-sku-filter" onchange="filtrarKardex()" style="min-width:160px"><option value="">Todos los SKUs</option></select>
-              <select id="k-ub-filter" onchange="filtrarKardex()" style="min-width:140px"><option value="">Todas las ubicaciones</option></select>
-              <select id="k-tipo-filter" onchange="filtrarKardex()" style="min-width:120px">
-                <option value="">Todos los tipos</option>
-                <option value="ENTRADA">Entrada</option><option value="SALIDA">Salida</option><option value="TRASPASO">Traspaso</option>
-              </select>
-            </div>
-            <div class="filter-row" style="margin-bottom:12px">
-              <span style="font-size:12px;font-weight:500;color:var(--muted)">Desde</span>
-              <input type="date" id="k-fecha-desde" onchange="filtrarKardex()" style="width:148px"/>
-              <span style="font-size:12px;font-weight:500;color:var(--muted)">Hasta</span>
-              <input type="date" id="k-fecha-hasta" onchange="filtrarKardex()" style="width:148px"/>
-              <button class="btn btn-ghost btn-sm" onclick="limpiarFechas()">Limpiar fechas</button>
-              <span id="k-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
-              <button class="btn btn-success btn-sm" onclick="exportarExcel()">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+              <div class="ml-divider"><div class="ml-divider-line"></div><span class="ml-divider-label">Líneas — SKU · Ubicación origen · Cantidad</span><div class="ml-divider-line"></div></div>
+              <div class="lines-wrap" id="s-lines"></div>
+              <button class="add-line-btn" onclick="agregarLinea('salida')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar producto
               </button>
-            </div>
-            <div class="table-wrap"><table>
-              <thead><tr><th>ID</th><th>Lote</th><th>Fecha</th><th>Tipo</th><th>SKU</th><th>Origen</th><th>Destino</th><th style="text-align:right">Cant.</th><th style="text-align:right">Antes</th><th style="text-align:right">Después</th><th>Referencia</th><th>Usuario</th></tr></thead>
-              <tbody id="k-tbody"></tbody>
-            </table></div>
-            <div id="k-empty" class="empty" style="display:none">Sin movimientos</div>
-          </div>
-        </div>
-
-        <!-- CONSOLIDADO -->
-        <div class="view" id="view-consolidado">
-          <div class="card" style="margin-bottom:16px">
-            <div class="card-title">
-              <span>Stock consolidado — todas las bodegas</span>
-              <button class="btn btn-ghost btn-sm" onclick="cargarConsolidado()">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Recargar
-              </button>
-            </div>
-            <div class="filter-row">
-              <div class="search-bar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <input type="text" id="cons-search" placeholder="Buscar SKU o nombre..." oninput="filtrarConsolidado()"/>
+              <div class="ml-summary" id="s-summary" style="display:none">
+                <div class="ml-summary-item">Líneas: <strong id="s-sum-l">0</strong></div>
+                <div class="ml-summary-item">SKUs: <strong id="s-sum-s">0</strong></div>
+                <div class="ml-summary-item">Unidades: <strong id="s-sum-u">0</strong></div>
               </div>
-              <select id="cons-bod-filter" onchange="filtrarConsolidado()" style="min-width:160px"><option value="">Todas las bodegas</option></select>
-              <select id="cons-alerta-filter" onchange="filtrarConsolidado()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
-              <span id="cons-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
-              <button class="btn btn-success btn-sm" onclick="exportarConsolidado()">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
-              </button>
-            </div>
-            <div id="cons-loading" class="empty">Cargando bodegas...</div>
-            <div class="table-wrap" id="cons-table-wrap" style="display:none"><table>
-              <thead><tr><th>Bodega</th><th>Tipo</th><th>Ubicación</th><th>SKU</th><th>Nombre</th><th>Unidad</th><th style="text-align:right">Stock</th><th>Estado</th></tr></thead>
-              <tbody id="cons-tbody"></tbody>
-            </table></div>
-          </div>
-        </div>
-
-        <!-- UBICACIONES -->
-        <div class="view" id="view-ubicaciones">
-          <div class="card">
-            <div class="filter-row">
-              <div class="search-bar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <input type="text" id="ub-search" placeholder="Buscar código o zona..." oninput="filtrarUbicaciones()"/>
+              <div style="display:flex;gap:10px;margin-top:16px">
+                <button class="btn btn-primary" onclick="submitSalida()" id="btn-salida">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Registrar salida
+                </button>
+                <button class="btn btn-ghost" onclick="resetMulti('salida')">Limpiar</button>
               </div>
-              <select id="ub-estado-filter" onchange="filtrarUbicaciones()" style="min-width:120px">
-                <option value="">Todas</option><option value="activo">Activas</option><option value="inactivo">Inactivas</option>
-              </select>
-              <span id="ub-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
-              <button class="btn btn-primary btn-sm" onclick="abrirModalUb('nueva')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nueva
-              </button>
             </div>
-            <div class="table-wrap"><table>
-              <thead><tr><th>Código</th><th>Zona</th><th>Descripción</th><th style="text-align:right">SKUs</th><th style="text-align:right">Stock</th><th>Estado</th><th>Acciones</th></tr></thead>
-              <tbody id="ub-tbody"></tbody>
-            </table></div>
-            <div id="ub-empty" class="empty" style="display:none">Sin ubicaciones</div>
           </div>
-        </div>
 
-        <!-- ADMIN BODEGAS -->
-        <div class="view" id="view-admin-bodegas">
-          <div class="card">
-            <div class="card-title">
-              <span>Gestión de bodegas</span>
-              <button class="btn btn-primary btn-sm" onclick="abrirModalBodega('nueva')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nueva bodega
-              </button>
+          <!-- TRASPASO -->
+          <div class="view" id="view-traspaso">
+            <div class="card" style="max-width:560px">
+              <div class="card-title">Traspaso entre ubicaciones</div>
+              <div class="info-box">Mueve stock entre posiciones dentro de la misma bodega.</div>
+              <form class="form-grid" id="form-traspaso" onsubmit="submitTraspaso(event)">
+                <div class="form-group"><label>SKU / Producto *</label><div id="ac-traspaso" class="ac-wrap"></div></div>
+                <div class="form-grid form-grid-2">
+                  <div class="form-group">
+                    <label>Ubicación origen *</label>
+                    <select id="t-ub-origen" required onchange="mostrarStockTraspaso()"><option value="">Primero selecciona un SKU</option></select>
+                    <div id="t-stock-hint" style="font-size:11px;margin-top:3px;color:var(--muted)"></div>
+                  </div>
+                  <div class="form-group"><label>Ubicación destino *</label><select id="t-ub-destino" required><option value="">Seleccionar...</option></select></div>
+                </div>
+                <div class="form-grid form-grid-2">
+                  <div class="form-group"><label>Cantidad *</label><input type="number" id="t-cant" min="1" step="1" required placeholder="0"/></div>
+                  <div class="form-group"><label>Referencia</label><input type="text" id="t-ref" placeholder="Opcional"/></div>
+                </div>
+                <div class="form-grid form-grid-2">
+                  <div class="form-group"><label>Usuario</label><input type="text" id="t-usr" placeholder="tu.nombre"/></div>
+                  <div class="form-group"><label>Observación</label><input type="text" id="t-obs" placeholder="Opcional"/></div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <button class="btn btn-primary" type="submit" id="btn-traspaso">Registrar traspaso</button>
+                  <button class="btn btn-ghost" type="button" onclick="resetTraspaso()">Limpiar</button>
+                </div>
+              </form>
             </div>
-            <div class="info-box" style="margin-bottom:16px">Las bodegas se configuran en el Sheet central. Cada bodega necesita su propio Google Sheet con Apps Script publicado.</div>
-            <div class="table-wrap"><table>
-              <thead><tr><th>ID</th><th>Nombre</th><th>Tipo</th><th>URL API</th><th>Estado</th><th>Acciones</th></tr></thead>
-              <tbody id="bodegas-tbody"></tbody>
-            </table></div>
-            <div id="bodegas-empty" class="empty" style="display:none">Sin bodegas configuradas</div>
           </div>
-        </div>
 
+          <!-- INVENTARIO -->
+          <div class="view" id="view-inventario">
+            <div class="card">
+              <div class="filter-row">
+                <div class="search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input type="text" id="inv-search" placeholder="Buscar SKU o nombre..." oninput="filtrarInventario()"/>
+                </div>
+                <select id="inv-ub-filter" onchange="filtrarInventario()"><option value="">Todas las ubicaciones</option></select>
+                <select id="inv-alerta-filter" onchange="filtrarInventario()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
+                <span id="inv-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <button class="btn btn-success btn-sm" onclick="exportarInventario()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+                </button>
+              </div>
+              <div class="table-wrap"><table>
+                <thead><tr><th>Ubicación</th><th>SKU</th><th>Nombre</th><th>Unidad</th><th style="text-align:right">Stock</th><th style="text-align:right">Costo unit.</th><th style="text-align:right">Valor total</th><th>Estado</th><th>Última act.</th></tr></thead>
+                <tbody id="inv-tbody"></tbody>
+              </table></div>
+              <div id="inv-empty" class="empty" style="display:none">Sin resultados</div>
+              <div id="inv-total" style="display:none;margin-top:12px;padding:10px 14px;background:var(--accent-bg);border-radius:var(--radius);font-size:12px;color:var(--accent);text-align:right"></div>
+            </div>
+          </div>
+
+          <!-- VALORIZACIÓN -->
+          <div class="view" id="view-valorizacion">
+            <div class="card">
+              <div class="card-title">
+                <span>Reporte de valorización del inventario</span>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-ghost btn-sm" onclick="cargarValorizacion()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Recargar
+                  </button>
+                  <button class="btn btn-success btn-sm" onclick="exportarValorizacion()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+                  </button>
+                </div>
+              </div>
+              <!-- Stats de valorización -->
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px" id="val-stats">
+                <div class="val-stat"><div class="val-stat-label">Valor total inventario</div><div class="val-stat-value" id="val-total">—</div></div>
+                <div class="val-stat"><div class="val-stat-label">SKUs valorizados</div><div class="val-stat-value" id="val-skus">—</div></div>
+                <div class="val-stat"><div class="val-stat-label">SKUs sin costo</div><div class="val-stat-value" id="val-sin-costo" style="color:var(--warning)">—</div></div>
+              </div>
+              <div class="filter-row">
+                <div class="search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input type="text" id="val-search" placeholder="Buscar SKU o categoría..." oninput="filtrarValorizacion()"/>
+                </div>
+                <select id="val-cat-filter" onchange="filtrarValorizacion()"><option value="">Todas las categorías</option></select>
+                <select id="val-orden" onchange="filtrarValorizacion()">
+                  <option value="valor-desc">Mayor valor primero</option>
+                  <option value="valor-asc">Menor valor primero</option>
+                  <option value="sku">Por SKU</option>
+                </select>
+                <span id="val-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+              </div>
+              <div class="table-wrap"><table>
+                <thead><tr><th>SKU</th><th>Nombre</th><th>Categoría</th><th>Unidad</th><th style="text-align:right">Stock total</th><th style="text-align:right">Costo unit.</th><th style="text-align:right">Valor total</th><th style="text-align:right">% del total</th></tr></thead>
+                <tbody id="val-tbody"></tbody>
+              </table></div>
+              <div id="val-empty" class="empty" style="display:none">Sin datos</div>
+            </div>
+          </div>
+
+          <!-- KARDEX -->
+          <div class="view" id="view-kardex">
+            <div class="card">
+              <div class="filter-row">
+                <select id="k-sku-filter" onchange="filtrarKardex()" style="min-width:160px"><option value="">Todos los SKUs</option></select>
+                <select id="k-ub-filter" onchange="filtrarKardex()" style="min-width:140px"><option value="">Todas las ubicaciones</option></select>
+                <select id="k-tipo-filter" onchange="filtrarKardex()" style="min-width:120px">
+                  <option value="">Todos</option><option value="ENTRADA">Entrada</option>
+                  <option value="SALIDA">Salida</option><option value="TRASPASO">Traspaso</option><option value="AJUSTE">Ajuste</option>
+                </select>
+              </div>
+              <div class="filter-row" style="margin-bottom:12px">
+                <span style="font-size:12px;font-weight:500;color:var(--muted)">Desde</span>
+                <input type="date" id="k-desde" onchange="filtrarKardex()" style="width:148px"/>
+                <span style="font-size:12px;font-weight:500;color:var(--muted)">Hasta</span>
+                <input type="date" id="k-hasta" onchange="filtrarKardex()" style="width:148px"/>
+                <button class="btn btn-ghost btn-sm" onclick="limpiarFechas()">Limpiar fechas</button>
+                <span id="k-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <button class="btn btn-success btn-sm" onclick="exportarKardex()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+                </button>
+              </div>
+              <div class="table-wrap"><table>
+                <thead><tr><th>ID</th><th>Lote</th><th>Fecha</th><th>Tipo</th><th>SKU</th><th>Origen</th><th>Destino</th><th style="text-align:right">Cant.</th><th style="text-align:right">Antes</th><th style="text-align:right">Después</th><th>Referencia</th><th>Usuario</th></tr></thead>
+                <tbody id="k-tbody"></tbody>
+              </table></div>
+              <div id="k-empty" class="empty" style="display:none">Sin movimientos</div>
+            </div>
+          </div>
+
+          <!-- PRODUCTOS -->
+          <div class="view" id="view-productos">
+            <div class="card">
+              <div class="filter-row">
+                <div class="search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input type="text" id="prod-search" placeholder="Buscar SKU, nombre o categoría..." oninput="filtrarProductos()"/>
+                </div>
+                <select id="prod-cat-filter" onchange="filtrarProductos()"><option value="">Todas las categorías</option></select>
+                <select id="prod-estado-filter" onchange="filtrarProductos()"><option value="">Todos</option><option value="activo">Activos</option><option value="inactivo">Inactivos</option></select>
+                <span id="prod-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <button class="btn btn-ghost btn-sm" onclick="abrirModalImportarSku()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Importar Excel
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="abrirModalSku('nuevo')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nuevo producto
+                </button>
+              </div>
+              <div class="table-wrap"><table>
+                <thead><tr><th>SKU</th><th>Nombre</th><th>Categoría</th><th>Unidad</th><th style="text-align:right">Costo</th><th style="text-align:right">Stock mín.</th><th style="text-align:right">Stock actual</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody id="prod-tbody"></tbody>
+              </table></div>
+              <div id="prod-empty" class="empty" style="display:none">Sin productos</div>
+            </div>
+          </div>
+
+          <!-- UBICACIONES -->
+          <div class="view" id="view-ubicaciones">
+            <div class="card">
+              <div class="filter-row">
+                <div class="search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input type="text" id="ub-search" placeholder="Buscar código o zona..." oninput="filtrarUbicaciones()"/>
+                </div>
+                <select id="ub-estado-filter" onchange="filtrarUbicaciones()"><option value="">Todas</option><option value="activo">Activas</option><option value="inactivo">Inactivas</option></select>
+                <span id="ub-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <button class="btn btn-primary btn-sm" onclick="abrirModalUb('nueva')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nueva
+                </button>
+              </div>
+              <div class="table-wrap"><table>
+                <thead><tr><th>Código</th><th>Zona</th><th>Descripción</th><th style="text-align:right">SKUs</th><th style="text-align:right">Stock</th><th style="text-align:right">Valor</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody id="ub-tbody"></tbody>
+              </table></div>
+              <div id="ub-empty" class="empty" style="display:none">Sin ubicaciones</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL BODEGA SWITCHER -->
-<div class="modal-backdrop" id="modal-switcher">
-  <div class="modal" style="max-width:380px">
-    <div class="modal-title"><span>Cambiar bodega</span><button class="modal-close" onclick="cerrarModal('modal-switcher')">×</button></div>
-    <div id="switcher-list" class="form-grid"></div>
+<!-- MODAL PRODUCTO -->
+<div class="modal-backdrop" id="modal-sku">
+  <div class="modal">
+    <div class="modal-title"><span id="modal-sku-title">Nuevo producto</span><button class="modal-close" onclick="cerrarModal('modal-sku')">×</button></div>
+    <div class="form-grid">
+      <div class="form-grid form-grid-2">
+        <div class="form-group"><label>SKU *</label><input type="text" id="m-sku" placeholder="PROD-001" style="text-transform:uppercase"/></div>
+        <div class="form-group"><label>Nombre *</label><input type="text" id="m-nombre" placeholder="Nombre del producto"/></div>
+      </div>
+      <div class="form-grid form-grid-3">
+        <div class="form-group"><label>Categoría</label><input type="text" id="m-categoria" placeholder="Ferretería"/></div>
+        <div class="form-group"><label>Unidad *</label><select id="m-unidad"><option value="UN">UN</option><option value="KG">KG</option><option value="MT">MT</option><option value="LT">LT</option><option value="CJ">CJ</option><option value="PAR">PAR</option><option value="M2">M2</option><option value="M3">M3</option></select></div>
+        <div class="form-group"><label>Stock mínimo</label><input type="number" id="m-stock-min" min="0" step="1" placeholder="0"/></div>
+      </div>
+      <div class="form-group"><label>Costo unitario</label><input type="number" id="m-costo" min="0" step="0.01" placeholder="0.00"/></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="cerrarModal('modal-sku')">Cancelar</button>
+      <button class="btn btn-primary" id="btn-sku-guardar" onclick="guardarSku()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL IMPORTAR SKUs -->
+<div class="modal-backdrop" id="modal-importar-sku">
+  <div class="modal">
+    <div class="modal-title"><span>Importar productos desde Excel</span><button class="modal-close" onclick="cerrarModal('modal-importar-sku')">×</button></div>
+    <div class="info-box" style="margin-bottom:14px">
+      El archivo debe tener estas columnas (en ese orden): <strong>sku · nombre · categoria · unidad · stock_minimo · costo · activo</strong>
+    </div>
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input-sku').click()">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <p>Arrastra un archivo Excel o CSV aquí<br/><strong>o haz clic para seleccionar</strong></p>
+    </div>
+    <input type="file" id="file-input-sku" accept=".xlsx,.xls,.csv" style="display:none" onchange="procesarArchivoSku(this)"/>
+    <div id="importar-preview" style="margin-top:14px;display:none">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px" id="importar-preview-label"></div>
+      <div class="table-wrap" style="max-height:200px;overflow-y:auto"><table id="importar-preview-table"></table></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="cerrarModal('modal-importar-sku')">Cancelar</button>
+      <button class="btn btn-primary" id="btn-importar-sku" onclick="importarSkus()" disabled>Importar</button>
+    </div>
   </div>
 </div>
 
 <!-- MODAL UBICACIÓN -->
 <div class="modal-backdrop" id="modal-ub">
-  <div class="modal">
+  <div class="modal" style="max-width:420px">
     <div class="modal-title"><span id="modal-ub-title">Nueva ubicación</span><button class="modal-close" onclick="cerrarModal('modal-ub')">×</button></div>
     <div class="form-grid">
       <div class="form-grid form-grid-2">
@@ -663,35 +597,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
   </div>
 </div>
 
-<!-- MODAL BODEGA -->
-<div class="modal-backdrop" id="modal-bodega">
-  <div class="modal">
-    <div class="modal-title"><span id="modal-bodega-title">Nueva bodega</span><button class="modal-close" onclick="cerrarModal('modal-bodega')">×</button></div>
-    <div class="form-grid">
-      <div class="form-grid form-grid-2">
-        <div class="form-group"><label>ID único *</label><input type="text" id="m-bod-id" placeholder="bodega-norte"/></div>
-        <div class="form-group"><label>Nombre *</label><input type="text" id="m-bod-nombre" placeholder="Bodega Norte"/></div>
-      </div>
-      <div class="form-group"><label>URL del Apps Script *</label><input type="text" id="m-bod-url" placeholder="https://script.google.com/macros/s/.../exec"/></div>
-      <div class="form-group"><label>Tipo</label>
-        <select id="m-bod-tipo"><option value="bodega">Bodega propia</option><option value="consignacion">Consignación</option></select>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="cerrarModal('modal-bodega')">Cancelar</button>
-      <button class="btn btn-primary" id="btn-bodega-guardar" onclick="guardarBodega()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- PANEL DETALLE UB -->
-<div class="detail-panel" id="detail-panel">
+<!-- PANEL DETALLE PRODUCTO -->
+<div class="detail-panel" id="detail-prod">
   <div class="detail-header">
-    <div><div style="font-size:15px;font-weight:600" id="dp-codigo">—</div><div style="font-size:12px;color:var(--muted);margin-top:2px" id="dp-desc">—</div></div>
-    <button class="modal-close" onclick="cerrarDetailPanel()">×</button>
+    <div><div style="font-size:15px;font-weight:600" id="dp-sku">—</div><div style="font-size:12px;color:var(--muted);margin-top:2px" id="dp-nombre">—</div></div>
+    <button class="modal-close" onclick="cerrarDetail('detail-prod')">×</button>
   </div>
   <div class="detail-body">
-    <div class="detail-section"><div class="detail-section-title">Stock</div><div id="dp-stock"></div></div>
+    <div class="detail-section"><div class="detail-section-title">Stock por ubicación</div><div id="dp-stock"></div></div>
     <div class="detail-section"><div class="detail-section-title">Últimos movimientos</div><div id="dp-movs"></div></div>
   </div>
 </div>
@@ -700,54 +613,86 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 
 <script>
 // ══════════════════════════════════════════════════════════
-//  CONFIGURACIÓN
+//  CONFIGURACIÓN SUPABASE
 // ══════════════════════════════════════════════════════════
-// URL del Apps Script CENTRAL (Sheet BodegaSI-Central)
-const API_CENTRAL = 'https://script.google.com/macros/s/AKfycbygUp__F0i1Ao91DNp_0pDRy6qNZ7cGKr0xj5uEuGAZyLrhlcdOZms-gf6Om1yFei97qQ/exec';
+const SB_URL  = 'https://imkoxkktklhqpbyaoryh.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlta294a2t0a2xocXBieWFvcnloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTc0MTUsImV4cCI6MjA5MDEzMzQxNX0.dHhFKK5bLSJtzwZSS2f1DVE12zafzFiEWiLES1BBCFs';
+const SB_SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlta294a2t0a2xocXBieWFvcnloIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDU1NzQxNSwiZXhwIjoyMDkwMTMzNDE1fQ.ZYzEzx-SEcA4JlH8afziGBN_sUTUjXBTXFfQDC-L8e0';
 
 // ── ESTADO GLOBAL ──────────────────────────────────────────
-let SESSION    = null;  // { usuario, perfil, bodegaId, bodegaNombre, bodegaTipo, apiUrl, esCentral }
-let BODEGAS    = [];    // lista de bodegas del sheet central
-let SKUS       = [], UBS = [], UBS_TODAS = [], INV = [], KARDEX = [], kardexFiltrado = [];
-let CONS_DATA  = [];    // datos consolidados
+let SESSION = null;
+let BODEGAS = [], SKUS = [], UBS = [], UBS_TODAS = [], INV = [], KARDEX = [], kardexFiltrado = [];
+let SKUS_MAP = {}; // sku -> objeto completo
+let VAL_DATA = []; // datos de valorización
+let skuImportarData = [];
+let modalSkuModo = 'nuevo', modalSkuOrig = '';
 let modalUbModo = 'nueva', modalUbCodOrig = '';
-let modalBodModo = 'nueva', modalBodIdOrig = '';
 let lineCounters = { entrada: 0, salida: 0 };
-let lineAC       = { entrada: {}, salida: {} };
-const ACt        = { sku: null, focusIdx: -1 };
-const ACte       = { sku: null, focusIdx: -1, invOrigen: [] };
-const ACskuDash  = { sku: null, focusIdx: -1 };
+let lineAC = { entrada: {}, salida: {} };
+const ACt = { sku: null, focusIdx: -1 };
 
 const PERFILES = {
-  admin:    { label: 'Admin',    items: ['dashboard','entrada','salida','traspaso','traspaso-externo','inventario','kardex','consolidado','ubicaciones','admin-bodegas'] },
-  operador: { label: 'Operador', items: ['dashboard','entrada','salida','traspaso','traspaso-externo','inventario','kardex','consolidado'] },
-  lectura:  { label: 'Lectura',  items: ['dashboard','inventario','kardex','consolidado'] },
+  admin:    { label:'Admin',    items:['dashboard','entrada','salida','traspaso','inventario','valorizacion','kardex','productos','ubicaciones'] },
+  operador: { label:'Operador', items:['dashboard','entrada','salida','traspaso','inventario','kardex'] },
+  lectura:  { label:'Lectura',  items:['dashboard','inventario','valorizacion','kardex'] },
 };
 
 const TITLES = {
-  dashboard:'Dashboard', entrada:'Entrada de stock', salida:'Salida de stock',
-  traspaso:'Traspaso interno', 'traspaso-externo':'Traspaso entre bodegas',
-  inventario:'Inventario', kardex:'Kardex', consolidado:'Consolidado',
-  ubicaciones:'Ubicaciones', 'admin-bodegas':'Administrar bodegas',
+  dashboard:'Dashboard', entrada:'Entrada', salida:'Salida', traspaso:'Traspaso',
+  inventario:'Inventario', valorizacion:'Valorización', kardex:'Kardex',
+  productos:'Administrador de productos', ubicaciones:'Ubicaciones',
 };
 
-// ── API ────────────────────────────────────────────────────
-function apiUrl() { return SESSION?.apiUrl || ''; }
-
-async function apiGet(accion, params = {}, url = null) {
-  const base = url || apiUrl();
-  if (!base) throw new Error('No hay API configurada');
-  const d = await (await fetch(base + '?' + new URLSearchParams({ accion, ...params }))).json();
-  if (!d.ok) throw new Error(d.error);
-  return d.data;
+// ══════════════════════════════════════════════════════════
+//  SUPABASE API
+// ══════════════════════════════════════════════════════════
+async function sbGet(tabla, params = '', useService = false) {
+  const key = useService ? SB_SKEY : SB_ANON;
+  const r = await fetch(SB_URL + '/rest/v1/' + tabla + params, {
+    headers: { 'apikey': key, 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' }
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'Error ' + r.status); }
+  return r.json();
 }
 
-async function apiPost(body, url = null) {
-  const base = url || apiUrl();
-  if (!base) throw new Error('No hay API configurada');
-  const d = await (await fetch(base, { method: 'POST', body: JSON.stringify(body) })).json();
-  if (!d.ok) throw new Error(d.error);
-  return d;
+async function sbPost(tabla, data, upsert = false) {
+  const r = await fetch(SB_URL + '/rest/v1/' + tabla, {
+    method: 'POST',
+    headers: {
+      'apikey': SB_SKEY, 'Authorization': 'Bearer ' + SB_SKEY,
+      'Content-Type': 'application/json',
+      'Prefer': upsert ? 'resolution=merge-duplicates,return=representation' : 'return=representation',
+    },
+    body: JSON.stringify(data),
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'Error ' + r.status); }
+  return r.json();
+}
+
+async function sbPatch(tabla, filtro, data) {
+  const r = await fetch(SB_URL + '/rest/v1/' + tabla + filtro, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SB_SKEY, 'Authorization': 'Bearer ' + SB_SKEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=representation',
+    },
+    body: JSON.stringify(data),
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'Error ' + r.status); }
+  return r.json();
+}
+
+async function sbRpc(fn, params) {
+  const r = await fetch(SB_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: {
+      'apikey': SB_SKEY, 'Authorization': 'Bearer ' + SB_SKEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || e.details || 'Error RPC'); }
+  return r.json();
 }
 
 function toast(msg, tipo = 'ok') {
@@ -758,19 +703,20 @@ function toast(msg, tipo = 'ok') {
   setTimeout(() => el.remove(), 5000);
 }
 
-// ── LOGIN ──────────────────────────────────────────────────
+function fmt(n) { return Number(n || 0).toLocaleString('es-CL'); }
+function fmtCLP(n) { return '$' + Number(n || 0).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
+function focusDd(items, fi) { items.forEach((x, i) => x.classList.toggle('focused', i === fi)); items[fi]?.scrollIntoView({ block: 'nearest' }); }
+
+// ══════════════════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════════════════
 async function cargarBodegasLogin() {
   const sel = document.getElementById('login-bodega');
   try {
-    const data = await apiGet('getBodegas', {}, API_CENTRAL);
-    BODEGAS = data;
-    const activas = data.filter(b => b.activo);
+    BODEGAS = await sbGet('bodegas', '?activo=eq.true&order=nombre');
     sel.innerHTML = '<option value="">Seleccionar bodega...</option>'
-      + activas.map(b => '<option value="' + b.id + '">' + b.nombre + (b.tipo === 'consignacion' ? ' (Consig.)' : '') + '</option>').join('');
-  } catch (e) {
-    sel.innerHTML = '<option value="">Error cargando bodegas</option>';
-    toast('No se pudo conectar al servidor central: ' + e.message, 'err');
-  }
+      + BODEGAS.map(b => '<option value="' + b.id + '">' + b.nombre + (b.tipo === 'consignacion' ? ' (Consig.)' : '') + '</option>').join('');
+  } catch (e) { sel.innerHTML = '<option value="">Error: ' + e.message + '</option>'; }
 }
 
 async function submitLogin() {
@@ -784,11 +730,15 @@ async function submitLogin() {
   errEl.classList.remove('visible');
   btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Ingresando...';
   try {
-    const bodega = BODEGAS.find(b => b.id === bodegaId);
-    if (!bodega) throw new Error('Bodega no encontrada');
-    const res = await apiPost({ accion: 'login', usuario: usr, password: pwd }, bodega.urlApi);
-    SESSION = { usuario: res.usuario, perfil: res.perfil, bodegaId: bodega.id,
-      bodegaNombre: bodega.nombre, bodegaTipo: bodega.tipo, apiUrl: bodega.urlApi, esCentral: false };
+    const rows = await sbGet('usuarios',
+      '?usuario=eq.' + encodeURIComponent(usr) +
+      '&password=eq.' + encodeURIComponent(pwd) +
+      '&bodega_id=eq.' + bodegaId +
+      '&activo=eq.true', true);
+    if (!rows.length) throw new Error('Usuario o contraseña incorrectos');
+    const u = rows[0];
+    const bod = BODEGAS.find(b => b.id === bodegaId);
+    SESSION = { usuario: u.usuario, perfil: u.perfil, bodegaId, bodegaNombre: bod.nombre, bodegaTipo: bod.tipo };
     sessionStorage.setItem('bodegasi_session', JSON.stringify(SESSION));
     iniciarApp();
   } catch (e) {
@@ -797,223 +747,237 @@ async function submitLogin() {
   }
 }
 
-function loginConsolidado() {
-  SESSION = { usuario: 'Consolidado', perfil: 'lectura', bodegaId: 'central',
-    bodegaNombre: 'Vista consolidada', bodegaTipo: 'central', apiUrl: API_CENTRAL, esCentral: true };
-  sessionStorage.setItem('bodegasi_session', JSON.stringify(SESSION));
-  iniciarApp();
-}
-
 function iniciarApp() {
   document.getElementById('login-screen').classList.remove('visible');
   document.getElementById('app-shell').style.display = 'flex';
-  // Topbar
-  document.getElementById('topbar-usuario').textContent = SESSION.usuario;
-  const badge = document.getElementById('topbar-perfil');
+  document.getElementById('app-shell').classList.add('visible');
+  document.getElementById('top-usuario').textContent = SESSION.usuario;
+  const badge = document.getElementById('top-perfil');
   const p = PERFILES[SESSION.perfil] || PERFILES.lectura;
   badge.textContent = p.label; badge.className = 'perfil-badge perfil-' + SESSION.perfil;
-  actualizarBodegaTopbar();
+  document.getElementById('bodega-nombre-top').textContent = SESSION.bodegaNombre;
+  document.getElementById('bodega-dot').className = 'bodega-dot' + (SESSION.bodegaTipo === 'consignacion' ? ' consig' : '');
   aplicarPermisos();
   recargarTodo();
 }
 
-function actualizarBodegaTopbar() {
-  document.getElementById('bodega-nombre-topbar').textContent = SESSION.bodegaNombre;
-  const dot = document.getElementById('bodega-dot');
-  dot.className = 'bodega-dot' + (SESSION.bodegaTipo === 'consignacion' ? ' consignacion' : SESSION.bodegaTipo === 'central' ? ' consolidado' : '');
-  // Badges en vistas
-  ['entrada','salida','traspaso'].forEach(v => {
-    const el = document.getElementById(v + '-bodega-badge');
-    if (el) { el.textContent = SESSION.bodegaNombre; el.className = 'badge badge-' + (SESSION.bodegaTipo === 'consignacion' ? 'consignacion' : 'bodega'); }
-  });
-}
-
 function aplicarPermisos() {
   const p = PERFILES[SESSION.perfil] || PERFILES.lectura;
-  // Si es vista central, solo mostrar consolidado
-  const escentral = SESSION.esCentral;
   document.querySelectorAll('.nav-item').forEach(n => {
-    const m = (n.getAttribute('onclick') || '').match(/'([\w-]+)'/);
-    const view = m ? m[1] : null;
-    if (!view) return;
-    const permitido = p.items.includes(view);
-    // Ocultar operaciones si es consolidado
-    const esOp = ['entrada','salida','traspaso','ubicaciones'].includes(view);
-    n.classList.toggle('disabled', !permitido || (escentral && esOp));
+    const m = (n.getAttribute('onclick') || '').match(/'(\w+)'/);
+    const v = m ? m[1] : null;
+    n.classList.toggle('disabled', v && !p.items.includes(v));
   });
-  // Mostrar/ocultar admin bodegas solo para admin
-  document.getElementById('nav-admin-bodegas').classList.toggle('disabled', SESSION.perfil !== 'admin');
 }
 
 function cerrarSesion() {
   SESSION = null; sessionStorage.removeItem('bodegasi_session');
-  SKUS = []; UBS = []; UBS_TODAS = []; INV = []; KARDEX = []; CONS_DATA = [];
+  SKUS = []; UBS = []; INV = []; KARDEX = []; SKUS_MAP = {};
   lineCounters = { entrada: 0, salida: 0 }; lineAC = { entrada: {}, salida: {} };
   document.getElementById('app-shell').style.display = 'none';
+  document.getElementById('app-shell').classList.remove('visible');
   document.getElementById('login-screen').classList.add('visible');
   document.getElementById('login-usuario').value = '';
   document.getElementById('login-pwd').value = '';
-  document.getElementById('login-error').classList.remove('visible');
 }
 
-function puedeMover()  { return SESSION && (SESSION.perfil === 'admin' || SESSION.perfil === 'operador') && !SESSION.esCentral; }
-function esAdmin()     { return SESSION && SESSION.perfil === 'admin'; }
+function puedeMover() { return SESSION && (SESSION.perfil === 'admin' || SESSION.perfil === 'operador'); }
+function esAdmin()    { return SESSION && SESSION.perfil === 'admin'; }
 
 // ── NAV ────────────────────────────────────────────────────
-function goTo(view) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('view-' + view)?.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if ((n.getAttribute('onclick') || '').includes("'" + view + "'")) n.classList.add('active');
+function goTo(v) {
+  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
+  document.getElementById('view-' + v)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(x => {
+    if ((x.getAttribute('onclick') || '').includes("'" + v + "'")) x.classList.add('active');
   });
-  document.getElementById('topbar-title') && (document.querySelector('.topbar-brand') || {}).textContent;
-  if (view === 'ubicaciones') renderUbicaciones();
-  if (view === 'consolidado' && !CONS_DATA.length) cargarConsolidado();
-  if (view === 'admin-bodegas') renderAdminBodegas();
-  if (view === 'entrada' && !Object.keys(lineAC.entrada).length) setTimeout(() => agregarLinea('entrada'), 80);
-  if (view === 'salida'  && !Object.keys(lineAC.salida).length)  setTimeout(() => agregarLinea('salida'), 80);
-  if (view === 'traspaso-externo') cargarSelectoresTraspasoExterno();
+  if (v === 'productos')    renderProductos();
+  if (v === 'ubicaciones')  renderUbicaciones();
+  if (v === 'valorizacion') cargarValorizacion();
+  if (v === 'entrada' && !Object.keys(lineAC.entrada).length) setTimeout(() => agregarLinea('entrada'), 80);
+  if (v === 'salida'  && !Object.keys(lineAC.salida).length)  setTimeout(() => agregarLinea('salida'), 80);
+  if (v === 'traspaso') inicAcTraspaso();
 }
 
-// ── CARGA ──────────────────────────────────────────────────
+// ── CARGA DATOS ────────────────────────────────────────────
 async function recargarTodo() {
   const btn = document.getElementById('btn-reload');
   btn.innerHTML = '<span class="loader loader-dark"></span>'; btn.disabled = true;
-  try {
-    if (SESSION.esCentral) {
-      await cargarConsolidado();
-    } else {
-      await Promise.all([cargarSkus(), cargarUbicaciones(), cargarInventario(), cargarKardex()]);
-      renderDashboard();
-    }
-    await cargarBodegasLista();
-  } catch (e) { toast(e.message, 'err'); }
+  try { await Promise.all([cargarSkus(), cargarUbicaciones(), cargarInventario(), cargarKardex()]); renderDashboard(); }
+  catch (e) { toast(e.message, 'err'); }
   btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> Actualizar';
   btn.disabled = false;
 }
 
-async function cargarBodegasLista() {
-  try { BODEGAS = await apiGet('getBodegas', {}, API_CENTRAL); } catch (e) {}
-}
-
 async function cargarSkus() {
-  SKUS = await apiGet('getSkus');
+  SKUS = await sbGet('maestro_sku', '?activo=eq.true&order=sku');
+  SKUS_MAP = {};
+  SKUS.forEach(s => { SKUS_MAP[s.sku] = s; });
+  // Filtros kardex y productos
   const kf = document.getElementById('k-sku-filter');
   if (kf) kf.innerHTML = '<option value="">Todos los SKUs</option>' + SKUS.map(s => '<option value="' + s.sku + '">' + s.sku + '</option>').join('');
-  inicAcTraspaso(); inicAcTraspasoExterno(); inicDashSkuAc();
+  // Categorías únicas
+  const cats = [...new Set(SKUS.map(s => s.categoria).filter(Boolean))].sort();
+  ['prod-cat-filter', 'val-cat-filter'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<option value="">Todas las categorías</option>' + cats.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+  });
+  inicAcTraspaso();
 }
 
 async function cargarUbicaciones() {
-  UBS       = await apiGet('getUbicaciones');
-  UBS_TODAS = await apiGet('getUbicaciones', { todas: 'true' });
+  UBS = await sbGet('ubicaciones', '?bodega_id=eq.' + SESSION.bodegaId + '&activo=eq.true&order=codigo');
+  UBS_TODAS = await sbGet('ubicaciones', '?bodega_id=eq.' + SESSION.bodegaId + '&order=codigo');
   const opts = UBS.map(u => '<option value="' + u.codigo + '">' + u.codigo + (u.descripcion ? ' — ' + u.descripcion : '') + '</option>').join('');
   ['t-ub-destino'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = '<option value="">Seleccionar...</option>' + opts; });
   const ubOpts = '<option value="">Todas las ubicaciones</option>' + UBS.map(u => '<option value="' + u.codigo + '">' + u.codigo + '</option>').join('');
   ['inv-ub-filter', 'k-ub-filter'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ubOpts; });
-  const ds = document.getElementById('dash-ub-select');
-  if (ds) ds.innerHTML = '<option value="">Seleccionar...</option>' + opts;
 }
 
-async function cargarInventario() { INV = await apiGet('getInventario'); filtrarInventario(); }
-async function cargarKardex()     { KARDEX = await apiGet('getKardex');  kardexFiltrado = [...KARDEX]; filtrarKardex(); }
+async function cargarInventario() {
+  INV = await sbGet('inventario', '?bodega_id=eq.' + SESSION.bodegaId + '&order=ubicacion_codigo');
+  filtrarInventario();
+}
+
+async function cargarKardex() {
+  KARDEX = await sbGet('kardex', '?bodega_id=eq.' + SESSION.bodegaId + '&order=fecha.desc&limit=500');
+  kardexFiltrado = [...KARDEX];
+  filtrarKardex();
+}
 
 // ── DASHBOARD ──────────────────────────────────────────────
 function renderDashboard() {
   document.getElementById('st-skus').textContent = SKUS.length;
   document.getElementById('st-ubs').textContent  = UBS.length;
   document.getElementById('st-inv').textContent  = INV.length;
-  const al = INV.filter(i => i.alerta);
-  document.getElementById('st-alertas').textContent = al.length;
-  const at = document.getElementById('alertas-table');
-  at.innerHTML = !al.length ? '<div class="empty">Sin alertas</div>'
-    : '<table><thead><tr><th>Ubicación</th><th>SKU</th><th>Nombre</th><th style="text-align:right">Stock</th></tr></thead><tbody>'
-      + al.map(i => '<tr><td class="td-mono">' + i.ubicacion + '</td><td class="td-mono">' + i.sku + '</td><td>' + i.nombre + '</td><td style="text-align:right;color:var(--warning);font-weight:600">' + i.stockActual + '</td></tr>').join('')
-      + '</tbody></table>';
-  const um = document.getElementById('ultimos-movs');
-  um.innerHTML = !KARDEX.length ? '<div class="empty">Sin movimientos</div>'
-    : KARDEX.slice(0, 8).map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + m.sku + '</div><div style="font-size:11px;color:var(--muted)">' + m.fecha + '</div></div><div style="display:flex;align-items:center;gap:7px"><span style="font-size:12px;font-family:var(--mono)">' + m.cantidad + '</span><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div></div>').join('');
-}
-
-function buscarUbicacion() {
-  const ub = document.getElementById('dash-ub-select').value;
-  const panel = document.getElementById('ub-results');
-  if (!ub) { panel.style.display = 'none'; return; }
-  const st = INV.filter(i => i.ubicacion === ub);
-  const mv = KARDEX.filter(m => m.origen === ub || m.destino === ub).slice(0, 10);
-  document.getElementById('ub-stock').innerHTML = !st.length ? '<div style="font-size:12px;color:var(--muted)">Sin stock.</div>'
-    : '<table style="width:100%"><thead><tr><th>SKU</th><th>Nombre</th><th style="text-align:right">Stock</th></tr></thead><tbody>'
-      + st.map(i => '<tr><td class="td-mono">' + i.sku + '</td><td style="font-size:12px">' + i.nombre + '</td><td style="text-align:right;font-family:var(--mono)" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + i.stockActual + '</td></tr>').join('') + '</tbody></table>';
-  document.getElementById('ub-movs').innerHTML = !mv.length ? '<div style="font-size:12px;color:var(--muted)">Sin movimientos.</div>'
-    : mv.map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + m.sku + ' · <span style="font-family:var(--mono)">' + m.cantidad + '</span></div><div style="font-size:11px;color:var(--muted)">' + m.fecha + (m.referencia ? ' · ' + m.referencia : '') + '</div></div><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div>').join('');
-  panel.style.display = 'block';
-}
-function limpiarUb() { document.getElementById('dash-ub-select').value = ''; document.getElementById('ub-results').style.display = 'none'; }
-
-// ── DASH SKU AC ────────────────────────────────────────────
-function inicDashSkuAc() {
-  const cid = 'dash-sku-ac';
-  const c = document.getElementById(cid); if (!c) return;
-  c.innerHTML = '<div class="ac-input-row"><input type="text" class="ac-input" placeholder="SKU o nombre..." autocomplete="off" id="' + cid + '-input"/><button type="button" class="ac-clear" id="' + cid + '-clear">×</button></div><div class="ac-pill" id="' + cid + '-pill"></div><div class="ac-dropdown" id="' + cid + '-dd"></div>';
-  const inp = document.getElementById(cid + '-input');
-  const clr = document.getElementById(cid + '-clear');
-  const dd  = document.getElementById(cid + '-dd');
-  let dbt = null;
-  inp.addEventListener('input', () => { clearTimeout(dbt); dbt = setTimeout(() => renderAcDd(cid, 'dashSku', inp.value), 120); });
-  inp.addEventListener('keydown', e => {
-    const items = dd.querySelectorAll('.ac-item'); if (!items.length) return;
-    if (e.key === 'ArrowDown') { e.preventDefault(); ACskuDash.focusIdx = Math.min(ACskuDash.focusIdx + 1, items.length - 1); focusDd(items, ACskuDash.focusIdx); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); ACskuDash.focusIdx = Math.max(ACskuDash.focusIdx - 1, 0); focusDd(items, ACskuDash.focusIdx); }
-    else if (e.key === 'Enter') { e.preventDefault(); items[ACskuDash.focusIdx >= 0 ? ACskuDash.focusIdx : 0]?.click(); }
-    else if (e.key === 'Escape') dd.classList.remove('open');
+  // Valor total
+  const valorTotal = INV.reduce((a, i) => {
+    const sku = SKUS_MAP[i.sku];
+    return a + (i.stock_actual * (sku?.costo || 0));
+  }, 0);
+  document.getElementById('st-valor').textContent = fmtCLP(valorTotal);
+  document.getElementById('st-valor-sub').textContent = 'en ' + INV.length + ' registros';
+  // Alertas
+  const alertas = INV.filter(i => {
+    const s = SKUS_MAP[i.sku];
+    return s && s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
   });
-  inp.addEventListener('focus', () => { if (inp.value.length >= 1) renderAcDd(cid, 'dashSku', inp.value); });
-  clr.addEventListener('click', limpiarSkuDash);
-  document.addEventListener('click', e => { if (!c.contains(e.target)) dd.classList.remove('open'); });
-}
-
-function onSelectSkuDash(sku, nombre, unidad, categoria) {
-  ACskuDash.sku = sku;
-  const st = INV.filter(i => i.sku === sku);
-  const mv = KARDEX.filter(m => m.sku === sku).slice(0, 10);
-  document.getElementById('sku-info-hdr').innerHTML = '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="td-mono" style="font-size:13px;font-weight:500;color:var(--accent)">' + sku + '</span><span style="font-size:13px">' + nombre + '</span>' + (unidad ? '<span style="font-size:12px;color:var(--muted)">' + unidad + '</span>' : '') + (categoria ? '<span class="badge" style="background:var(--surface2);color:var(--muted)">' + categoria + '</span>' : '') + '</div>';
-  const total = st.reduce((a, i) => a + i.stockActual, 0);
-  document.getElementById('sku-stock').innerHTML = !st.length ? '<div style="font-size:12px;color:var(--muted)">Sin stock en ninguna ubicación.</div>'
-    : '<div style="font-size:11px;color:var(--muted);margin-bottom:6px">Total: <strong style="color:var(--text);font-family:var(--mono)">' + total.toLocaleString('es-CL') + '</strong> ' + unidad + '</div><table style="width:100%"><thead><tr><th>Ubicación</th><th style="text-align:right">Stock</th><th>Estado</th></tr></thead><tbody>' + st.sort((a, b) => b.stockActual - a.stockActual).map(i => '<tr><td class="td-mono" style="font-size:12px">' + i.ubicacion + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + i.stockActual + '</td><td>' + (i.alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td></tr>').join('') + '</tbody></table>';
-  document.getElementById('sku-movs').innerHTML = !mv.length ? '<div style="font-size:12px;color:var(--muted)">Sin movimientos.</div>'
-    : mv.map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + (m.origen || m.destino) + ' · <span style="font-family:var(--mono)">' + m.cantidad + '</span></div><div style="font-size:11px;color:var(--muted)">' + m.fecha + (m.referencia ? ' · ' + m.referencia : '') + '</div></div><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div>').join('');
-  document.getElementById('sku-results').style.display = 'block';
-}
-function limpiarSkuDash() {
-  ACskuDash.sku = null; ACskuDash.focusIdx = -1;
-  const inp = document.getElementById('dash-sku-ac-input');
-  const clr = document.getElementById('dash-sku-ac-clear');
-  const pill = document.getElementById('dash-sku-ac-pill');
-  const dd  = document.getElementById('dash-sku-ac-dd');
-  if (inp) { inp.value = ''; inp.classList.remove('has-value'); }
-  if (clr) clr.classList.remove('visible');
-  if (pill) { pill.innerHTML = ''; pill.classList.remove('visible'); }
-  if (dd) dd.classList.remove('open');
-  document.getElementById('sku-results').style.display = 'none';
+  document.getElementById('st-alertas') && (document.getElementById('st-alertas').textContent = alertas.length);
+  const at = document.getElementById('alertas-table');
+  at.innerHTML = !alertas.length ? '<div class="empty">Sin alertas</div>'
+    : '<table><thead><tr><th>Ubicación</th><th>SKU</th><th>Nombre</th><th style="text-align:right">Stock</th></tr></thead><tbody>'
+      + alertas.map(i => '<tr><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + (SKUS_MAP[i.sku]?.nombre || '') + '</td><td style="text-align:right;color:var(--warning);font-weight:600">' + fmt(i.stock_actual) + '</td></tr>').join('')
+      + '</tbody></table>';
+  document.getElementById('ultimos-movs').innerHTML = !KARDEX.length ? '<div class="empty">Sin movimientos</div>'
+    : KARDEX.slice(0, 8).map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + m.sku + '</div><div style="font-size:11px;color:var(--muted)">' + (m.fecha ? m.fecha.replace('T', ' ').slice(0, 16) : '') + '</div></div><div style="display:flex;align-items:center;gap:7px"><span style="font-size:12px;font-family:var(--mono)">' + fmt(m.cantidad) + '</span><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div></div>').join('');
 }
 
 // ── INVENTARIO ─────────────────────────────────────────────
+function getInvConSku() {
+  return INV.map(i => {
+    const s = SKUS_MAP[i.sku] || {};
+    const alerta = s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
+    return { ...i, nombre: s.nombre || '', unidad: s.unidad || '', costo: s.costo || 0, stock_minimo: s.stock_minimo || 0, alerta, valor: i.stock_actual * (s.costo || 0) };
+  });
+}
+
 function filtrarInventario() {
   const q  = document.getElementById('inv-search')?.value.toLowerCase() || '';
   const ub = document.getElementById('inv-ub-filter')?.value || '';
   const al = document.getElementById('inv-alerta-filter')?.value || '';
-  const data = INV.filter(i => {
-    if (ub && i.ubicacion !== ub) return false;
+  const data = getInvConSku().filter(i => {
+    if (ub && i.ubicacion_codigo !== ub) return false;
     if (al === 'alerta' && !i.alerta) return false;
     if (q && !i.sku.toLowerCase().includes(q) && !i.nombre.toLowerCase().includes(q)) return false;
     return true;
   });
-  const tb = document.getElementById('inv-tbody');
-  const em = document.getElementById('inv-empty');
+  const tb = document.getElementById('inv-tbody'), em = document.getElementById('inv-empty');
   document.getElementById('inv-count').textContent = data.length + ' registros';
+  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; document.getElementById('inv-total').style.display = 'none'; return; }
+  em.style.display = 'none';
+  const totalValor = data.reduce((a, i) => a + i.valor, 0);
+  tb.innerHTML = data.map(i => '<tr><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + i.nombre + '</td><td style="color:var(--muted)">' + i.unidad + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + fmt(i.stock_actual) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + (i.costo ? fmtCLP(i.costo) : '—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + (i.costo ? fmtCLP(i.valor) : '—') + '</td><td>' + (i.alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td><td style="color:var(--muted);font-size:12px">' + (i.ultima_act ? i.ultima_act.replace('T', ' ').slice(0, 16) : '') + '</td></tr>').join('');
+  const tot = document.getElementById('inv-total');
+  tot.style.display = 'block';
+  tot.innerHTML = 'Valor total filtrado: <strong style="font-family:var(--mono)">' + fmtCLP(totalValor) + '</strong>';
+}
+
+function exportarInventario() {
+  const data = getInvConSku();
+  const h = ['Ubicación','SKU','Nombre','Unidad','Stock','Costo unit.','Valor total','Estado'];
+  const f = data.map(i => [i.ubicacion_codigo, i.sku, i.nombre, i.unidad, i.stock_actual, i.costo, i.valor, i.alerta ? 'Bajo mínimo' : 'OK']);
+  const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
+  ws['!cols'] = [{wch:12},{wch:16},{wch:30},{wch:8},{wch:10},{wch:12},{wch:14},{wch:12}];
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Inventario');
+  XLSX.writeFile(wb, 'inventario_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  toast('Inventario exportado');
+}
+
+// ── VALORIZACIÓN ────────────────────────────────────────────
+async function cargarValorizacion() {
+  // Agrupa INV por SKU sumando stock de todas las ubicaciones
+  const porSku = {};
+  INV.forEach(i => {
+    if (!porSku[i.sku]) porSku[i.sku] = 0;
+    porSku[i.sku] += i.stock_actual;
+  });
+  VAL_DATA = Object.entries(porSku).map(([sku, stock]) => {
+    const s = SKUS_MAP[sku] || { nombre: sku, categoria: '', unidad: '', costo: 0 };
+    return { sku, nombre: s.nombre, categoria: s.categoria || '', unidad: s.unidad || '', stock, costo: s.costo || 0, valor: stock * (s.costo || 0) };
+  });
+  const totalValor   = VAL_DATA.reduce((a, v) => a + v.valor, 0);
+  const sinCosto     = VAL_DATA.filter(v => !v.costo).length;
+  const conCosto     = VAL_DATA.filter(v => v.costo > 0).length;
+  document.getElementById('val-total').textContent    = fmtCLP(totalValor);
+  document.getElementById('val-skus').textContent     = conCosto;
+  document.getElementById('val-sin-costo').textContent = sinCosto;
+  filtrarValorizacion();
+}
+
+function filtrarValorizacion() {
+  const q   = document.getElementById('val-search')?.value.toLowerCase() || '';
+  const cat = document.getElementById('val-cat-filter')?.value || '';
+  const ord = document.getElementById('val-orden')?.value || 'valor-desc';
+  let data  = VAL_DATA.filter(v => {
+    if (cat && v.categoria !== cat) return false;
+    if (q && !v.sku.toLowerCase().includes(q) && !v.nombre.toLowerCase().includes(q) && !v.categoria.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  data.sort((a, b) => ord === 'valor-desc' ? b.valor - a.valor : ord === 'valor-asc' ? a.valor - b.valor : a.sku.localeCompare(b.sku));
+  const totalValor = data.reduce((a, v) => a + v.valor, 0);
+  document.getElementById('val-count').textContent = data.length + ' SKUs';
+  const tb = document.getElementById('val-tbody'), em = document.getElementById('val-empty');
   if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
   em.style.display = 'none';
-  tb.innerHTML = data.map(i => '<tr><td class="td-mono">' + i.ubicacion + '</td><td class="td-mono">' + i.sku + '</td><td>' + i.nombre + '</td><td style="color:var(--muted)">' + i.unidad + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + i.stockActual + '</td><td>' + (i.alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td><td style="color:var(--muted);font-size:12px">' + i.ultimaAct + '</td></tr>').join('');
+  tb.innerHTML = data.map(v => {
+    const pct = totalValor > 0 ? ((v.valor / totalValor) * 100).toFixed(1) : '0.0';
+    return '<tr><td class="td-mono">' + v.sku + '</td><td>' + v.nombre + '</td><td style="color:var(--muted)">' + (v.categoria || '—') + '</td><td style="color:var(--muted)">' + v.unidad + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(v.stock) + '</td><td style="text-align:right;font-family:var(--mono)">' + (v.costo ? fmtCLP(v.costo) : '<span style="color:var(--warning)">Sin costo</span>') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + (v.costo ? fmtCLP(v.valor) : '—') + '</td><td style="text-align:right;font-size:12px;color:var(--muted)">' + pct + '%</td></tr>';
+  }).join('');
+}
+
+function exportarValorizacion() {
+  if (!VAL_DATA.length) { toast('Sin datos para exportar', 'err'); return; }
+  const totalValor = VAL_DATA.reduce((a, v) => a + v.valor, 0);
+  const h = ['SKU','Nombre','Categoría','Unidad','Stock total','Costo unit.','Valor total','% del total'];
+  const f = VAL_DATA.sort((a, b) => b.valor - a.valor).map(v => [v.sku, v.nombre, v.categoria, v.unidad, v.stock, v.costo, v.valor, totalValor > 0 ? Number(((v.valor / totalValor) * 100).toFixed(2)) : 0]);
+  const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
+  ws['!cols'] = [{wch:16},{wch:30},{wch:16},{wch:8},{wch:12},{wch:14},{wch:14},{wch:10}];
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Valorización');
+  // Hoja resumen
+  const resumen = [
+    ['Reporte de valorización — ' + SESSION.bodegaNombre],
+    ['Fecha', new Date().toLocaleDateString('es-CL')],
+    [],
+    ['Valor total inventario', totalValor],
+    ['SKUs con costo', VAL_DATA.filter(v => v.costo > 0).length],
+    ['SKUs sin costo', VAL_DATA.filter(v => !v.costo).length],
+    ['Total SKUs', VAL_DATA.length],
+  ];
+  const wsR = XLSX.utils.aoa_to_sheet(resumen);
+  XLSX.utils.book_append_sheet(wb, wsR, 'Resumen');
+  XLSX.writeFile(wb, 'valorizacion_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  toast('Reporte de valorización exportado');
 }
 
 // ── KARDEX ─────────────────────────────────────────────────
@@ -1021,271 +985,288 @@ function filtrarKardex() {
   const sku   = document.getElementById('k-sku-filter')?.value || '';
   const ub    = document.getElementById('k-ub-filter')?.value || '';
   const tipo  = document.getElementById('k-tipo-filter')?.value || '';
-  const desde = document.getElementById('k-fecha-desde')?.value || '';
-  const hasta = document.getElementById('k-fecha-hasta')?.value || '';
-  const parseFecha = str => {
-    if (!str) return null;
-    const [d, m, y] = str.split('/');
-    return new Date((y || '').split(' ')[0], Number(m) - 1, Number(d));
-  };
-  const desdeDate = desde ? new Date(desde + 'T00:00:00') : null;
-  const hastaDate = hasta ? new Date(hasta + 'T23:59:59') : null;
+  const desde = document.getElementById('k-desde')?.value || '';
+  const hasta = document.getElementById('k-hasta')?.value || '';
   kardexFiltrado = KARDEX.filter(m => {
-    if (sku && m.sku !== sku) return false;
-    if (ub  && m.origen !== ub && m.destino !== ub) return false;
+    if (sku  && m.sku !== sku) return false;
+    if (ub   && m.ubicacion_origen !== ub && m.ubicacion_destino !== ub) return false;
     if (tipo && m.tipo !== tipo) return false;
-    if (desdeDate || hastaDate) {
-      const fm = parseFecha(m.fecha); if (!fm) return false;
-      if (desdeDate && fm < desdeDate) return false;
-      if (hastaDate && fm > hastaDate) return false;
+    if (desde || hasta) {
+      const fm = new Date(m.fecha);
+      if (desde && fm < new Date(desde + 'T00:00:00')) return false;
+      if (hasta && fm > new Date(hasta + 'T23:59:59')) return false;
     }
     return true;
   });
-  const tb = document.getElementById('k-tbody');
-  const em = document.getElementById('k-empty');
+  const tb = document.getElementById('k-tbody'), em = document.getElementById('k-empty');
   document.getElementById('k-count').textContent = kardexFiltrado.length + ' movimientos';
   if (!kardexFiltrado.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
   em.style.display = 'none';
-  tb.innerHTML = kardexFiltrado.map(m => '<tr><td class="td-mono" style="font-size:11px;color:var(--muted)">' + m.id + '</td><td class="td-mono" style="font-size:11px;color:var(--accent)">' + (m.lote || '—') + '</td><td style="font-size:12px;white-space:nowrap">' + m.fecha + '</td><td><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></td><td class="td-mono">' + m.sku + '</td><td class="td-mono" style="font-size:12px">' + (m.origen || '—') + '</td><td class="td-mono" style="font-size:12px">' + (m.destino || '—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + m.cantidad + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + m.stockAntes + '</td><td style="text-align:right;font-family:var(--mono)">' + m.stockDespues + '</td><td style="font-size:12px;color:var(--muted)">' + (m.referencia || '—') + '</td><td style="font-size:12px;color:var(--muted)">' + (m.usuario || '—') + '</td></tr>').join('');
+  tb.innerHTML = kardexFiltrado.map(m => '<tr><td class="td-mono" style="font-size:11px;color:var(--muted)">' + (m.id||'') + '</td><td class="td-mono" style="font-size:11px;color:var(--accent)">' + (m.lote||'—') + '</td><td style="font-size:12px;white-space:nowrap">' + (m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '') + '</td><td><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></td><td class="td-mono">' + m.sku + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_origen||'—') + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_destino||'—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(m.cantidad) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + fmt(m.stock_antes) + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(m.stock_despues) + '</td><td style="font-size:12px;color:var(--muted)">' + (m.referencia||'—') + '</td><td style="font-size:12px;color:var(--muted)">' + (m.usuario||'—') + '</td></tr>').join('');
 }
-function limpiarFechas() { document.getElementById('k-fecha-desde').value = ''; document.getElementById('k-fecha-hasta').value = ''; filtrarKardex(); }
+function limpiarFechas() { document.getElementById('k-desde').value = ''; document.getElementById('k-hasta').value = ''; filtrarKardex(); }
 
-function exportarExcel() {
-  if (!kardexFiltrado.length) { toast('Sin movimientos para exportar', 'err'); return; }
+function exportarKardex() {
+  if (!kardexFiltrado.length) { toast('Sin movimientos', 'err'); return; }
   const h = ['ID','Lote','Fecha','Tipo','SKU','Origen','Destino','Cantidad','Antes','Después','Referencia','Usuario'];
-  const f = kardexFiltrado.map(m => [m.id, m.lote||'', m.fecha, m.tipo, m.sku, m.origen||'', m.destino||'', m.cantidad, m.stockAntes, m.stockDespues, m.referencia||'', m.usuario||'']);
+  const f = kardexFiltrado.map(m => [m.id, m.lote||'', m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '', m.tipo, m.sku, m.ubicacion_origen||'', m.ubicacion_destino||'', m.cantidad, m.stock_antes, m.stock_despues, m.referencia||'', m.usuario||'']);
   const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
-  ws['!cols'] = [{wch:10},{wch:18},{wch:16},{wch:10},{wch:12},{wch:12},{wch:12},{wch:9},{wch:10},{wch:10},{wch:14},{wch:12}];
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Kardex');
   XLSX.writeFile(wb, 'kardex_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0,10) + '.xlsx');
-  toast('Exportado: ' + kardexFiltrado.length + ' movimientos');
+  toast('Kardex exportado: ' + kardexFiltrado.length + ' movimientos');
 }
 
-// ── CONSOLIDADO ────────────────────────────────────────────
-async function cargarConsolidado() {
-  document.getElementById('cons-loading').style.display = 'block';
-  document.getElementById('cons-table-wrap').style.display = 'none';
-  try {
-    const res = await apiGet('getConsolidado', {}, API_CENTRAL);
-    CONS_DATA = res;
-    // Poblar filtro de bodegas
-    const bods = [...new Set(res.map(i => i.bodegaNombre))];
-    const cf = document.getElementById('cons-bod-filter');
-    cf.innerHTML = '<option value="">Todas las bodegas</option>' + bods.map(b => '<option value="' + b + '">' + b + '</option>').join('');
-    filtrarConsolidado();
-    document.getElementById('cons-loading').style.display = 'none';
-    document.getElementById('cons-table-wrap').style.display = 'block';
-  } catch (e) {
-    document.getElementById('cons-loading').textContent = 'Error: ' + e.message;
-    toast(e.message, 'err');
-  }
+// ══════════════════════════════════════════════════════════
+//  ADMIN PRODUCTOS
+// ══════════════════════════════════════════════════════════
+async function cargarTodosSkus() {
+  return sbGet('maestro_sku', '?order=sku');
 }
 
-function filtrarConsolidado() {
-  const q  = document.getElementById('cons-search')?.value.toLowerCase() || '';
-  const bd = document.getElementById('cons-bod-filter')?.value || '';
-  const al = document.getElementById('cons-alerta-filter')?.value || '';
-  const data = CONS_DATA.filter(i => {
-    if (bd && i.bodegaNombre !== bd) return false;
-    if (al === 'alerta' && !i.alerta) return false;
-    if (q && !i.sku.toLowerCase().includes(q) && !(i.nombre||'').toLowerCase().includes(q)) return false;
+async function renderProductos() {
+  filtrarProductos();
+}
+
+async function filtrarProductos() {
+  const q   = document.getElementById('prod-search')?.value.toLowerCase() || '';
+  const cat = document.getElementById('prod-cat-filter')?.value || '';
+  const est = document.getElementById('prod-estado-filter')?.value || '';
+  // Cargar todos (activos e inactivos) para el admin
+  let todos;
+  try { todos = await cargarTodosSkus(); } catch (e) { toast(e.message, 'err'); return; }
+  const data = todos.filter(s => {
+    if (est === 'activo'   && !s.activo) return false;
+    if (est === 'inactivo' &&  s.activo) return false;
+    if (cat && s.categoria !== cat) return false;
+    if (q && !s.sku.toLowerCase().includes(q) && !s.nombre.toLowerCase().includes(q) && !(s.categoria||'').toLowerCase().includes(q)) return false;
     return true;
   });
-  document.getElementById('cons-count').textContent = data.length + ' registros';
-  const tb = document.getElementById('cons-tbody');
-  tb.innerHTML = data.map(i => '<tr><td style="font-size:12px;font-weight:500">' + i.bodegaNombre + '</td><td><span class="badge badge-' + (i.tipoBodega === 'consignacion' ? 'consignacion' : 'bodega') + '">' + (i.tipoBodega === 'consignacion' ? 'Consig.' : 'Bodega') + '</span></td><td class="td-mono">' + i.ubicacion + '</td><td class="td-mono">' + i.sku + '</td><td>' + (i.nombre||'') + '</td><td style="color:var(--muted)">' + (i.unidad||'') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + i.stockActual + '</td><td>' + (i.alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td></tr>').join('');
-}
-
-function exportarConsolidado() {
-  const h = ['Bodega','Tipo','Ubicación','SKU','Nombre','Unidad','Stock','Alerta'];
-  const f = CONS_DATA.map(i => [i.bodegaNombre, i.tipoBodega, i.ubicacion, i.sku, i.nombre||'', i.unidad||'', i.stockActual, i.alerta ? 'Sí' : 'No']);
-  const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
-  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Consolidado');
-  XLSX.writeFile(wb, 'consolidado_' + new Date().toISOString().slice(0,10) + '.xlsx');
-  toast('Consolidado exportado');
-}
-
-// ── TRASPASO EXTERNO ───────────────────────────────────────
-function cargarSelectoresTraspasoExterno() {
-  const activas = BODEGAS.filter(b => b.activo);
-  const opts = activas.map(b => '<option value="' + b.id + '">' + b.nombre + '</option>').join('');
-  document.getElementById('te-bod-origen').innerHTML  = '<option value="">Seleccionar...</option>' + opts;
-  document.getElementById('te-bod-destino').innerHTML = '<option value="">Seleccionar...</option>' + opts;
-  limpiarAcSimple('ac-te-sku', ACte);
-  document.getElementById('te-ub-origen').innerHTML  = '<option value="">Primero selecciona SKU</option>';
-  document.getElementById('te-ub-destino').innerHTML = '<option value="">Primero selecciona bodega destino</option>';
-  document.getElementById('te-ub-origen').disabled  = true;
-  document.getElementById('te-ub-destino').disabled = true;
-}
-
-async function cargarDatosBodegaOrigen() {
-  const bodId = document.getElementById('te-bod-origen').value;
-  const bod   = BODEGAS.find(b => b.id === bodId);
-  if (!bod) return;
-  // Cargar SKUs de la bodega origen para el autocomplete
-  try {
-    ACte.invOrigen = await apiGet('getInventario', {}, bod.urlApi);
-  } catch (e) { toast('Error cargando inventario de bodega origen: ' + e.message, 'err'); }
-}
-
-async function cargarUbsBodegaDestino() {
-  const bodId = document.getElementById('te-bod-destino').value;
-  const bod   = BODEGAS.find(b => b.id === bodId);
-  const sel   = document.getElementById('te-ub-destino');
-  if (!bod) { sel.innerHTML = '<option value="">Seleccionar bodega primero</option>'; sel.disabled = true; return; }
-  sel.innerHTML = '<option value="">Cargando...</option>'; sel.disabled = true;
-  try {
-    const ubs = await apiGet('getUbicaciones', {}, bod.urlApi);
-    sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.codigo + '">' + u.codigo + (u.descripcion ? ' — ' + u.descripcion : '') + '</option>').join('');
-    sel.disabled = false;
-  } catch (e) { sel.innerHTML = '<option value="">Error cargando</option>'; toast(e.message, 'err'); }
-}
-
-async function onSelectSkuTraspasoExterno(sku) {
-  ACte.sku = sku;
-  const sel  = document.getElementById('te-ub-origen');
-  const hint = document.getElementById('te-stock-hint');
-  sel.innerHTML = '<option value="">Cargando...</option>'; sel.disabled = true;
-  const conStock = ACte.invOrigen.filter(i => i.sku === sku && i.stockActual > 0);
-  if (!conStock.length) {
-    sel.innerHTML = '<option value="">Sin stock en ninguna ubicación</option>';
-    hint.textContent = 'Sin stock disponible'; hint.style.color = 'var(--danger)';
-    return;
-  }
-  sel.innerHTML = '<option value="">Seleccionar...</option>' + conStock.map(u => '<option value="' + u.ubicacion + '">' + u.ubicacion + ' — ' + u.stockActual + ' ' + u.unidad + '</option>').join('');
-  sel.disabled = false;
-  hint.textContent = conStock.length + ' ubicación' + (conStock.length > 1 ? 'es' : '') + ' con stock';
-  hint.style.color = 'var(--success)';
-}
-
-async function submitTraspasoExterno(e) {
-  e.preventDefault();
-  if (!puedeMover()) { toast('Sin permisos para esta operación', 'err'); return; }
-  const btn = document.getElementById('btn-te');
-  btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Registrando...';
-  try {
-    const res = await apiPost({
-      accion: 'traspasoEntreBodegas',
-      skuOrigen:        ACte.sku,
-      skuDestino:       ACte.sku,
-      bodegaOrigenId:   document.getElementById('te-bod-origen').value,
-      bodegaDestinoId:  document.getElementById('te-bod-destino').value,
-      ubicacionOrigen:  document.getElementById('te-ub-origen').value,
-      ubicacionDestino: document.getElementById('te-ub-destino').value,
-      cantidad:         document.getElementById('te-cant').value,
-      referencia:       document.getElementById('te-ref').value,
-      usuario:          document.getElementById('te-usr').value,
-      observacion:      document.getElementById('te-obs').value,
-    }, API_CENTRAL);
-    toast(res.mensaje);
-    resetTraspasoExterno();
-    await Promise.all([cargarInventario(), cargarKardex()]);
-  } catch (err) { toast(err.message, 'err'); }
-  btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4-4 4M3 12h18"/></svg> Registrar traspaso entre bodegas';
-}
-
-function resetTraspasoExterno() {
-  document.getElementById('form-te').reset();
-  limpiarAcSimple('ac-te-sku', ACte);
-  ACte.invOrigen = [];
-  document.getElementById('te-ub-origen').innerHTML  = '<option value="">Primero selecciona SKU</option>';
-  document.getElementById('te-ub-destino').innerHTML = '<option value="">Primero selecciona bodega destino</option>';
-  document.getElementById('te-ub-origen').disabled  = true;
-  document.getElementById('te-ub-destino').disabled = true;
-  document.getElementById('te-stock-hint').textContent = '';
-}
-
-// ── BODEGA SWITCHER ────────────────────────────────────────
-function abrirSwitcherBodega() {
-  const list = document.getElementById('switcher-list');
-  const activas = BODEGAS.filter(b => b.activo);
-  list.innerHTML = activas.map(b => '<button class="btn ' + (b.id === SESSION.bodegaId ? 'btn-primary' : 'btn-ghost') + '" style="width:100%;justify-content:flex-start;gap:10px" onclick="cambiarBodega(\'' + b.id + '\')">'
-    + '<div class="bodega-dot' + (b.tipo === 'consignacion' ? ' consignacion' : '') + '"></div>'
-    + b.nombre + (b.tipo === 'consignacion' ? ' <span style=\'font-size:11px;opacity:0.7\'>(Consig.)</span>' : '')
-    + '</button>').join('')
-    + '<hr style="border:none;border-top:1px solid var(--border);margin:10px 0"/>'
-    + '<button class="btn btn-ghost" style="width:100%;justify-content:flex-start" onclick="loginConsolidadoSwitch()">'
-    + '<div class="bodega-dot consolidado"></div>Vista consolidada</button>';
-  document.getElementById('modal-switcher').classList.add('open');
-}
-
-async function cambiarBodega(bodegaId) {
-  const bod = BODEGAS.find(b => b.id === bodegaId);
-  if (!bod) return;
-  cerrarModal('modal-switcher');
-  // Verificar login en la nueva bodega
-  const usr = SESSION.usuario;
-  const pwd = prompt('Contraseña para ' + bod.nombre + ':');
-  if (!pwd) return;
-  try {
-    const res = await apiPost({ accion: 'login', usuario: usr, password: pwd }, bod.urlApi);
-    SESSION.bodegaId = bod.id; SESSION.bodegaNombre = bod.nombre;
-    SESSION.bodegaTipo = bod.tipo; SESSION.apiUrl = bod.urlApi;
-    SESSION.perfil = res.perfil; SESSION.esCentral = false;
-    sessionStorage.setItem('bodegasi_session', JSON.stringify(SESSION));
-    SKUS = []; UBS = []; INV = []; KARDEX = [];
-    lineCounters = { entrada: 0, salida: 0 }; lineAC = { entrada: {}, salida: {} };
-    document.getElementById('e-lines').innerHTML = '';
-    document.getElementById('s-lines').innerHTML = '';
-    actualizarBodegaTopbar(); aplicarPermisos();
-    goTo('dashboard'); recargarTodo();
-    toast('Cambiado a ' + bod.nombre);
-  } catch (e) { toast(e.message, 'err'); }
-}
-
-function loginConsolidadoSwitch() {
-  cerrarModal('modal-switcher');
-  SESSION.bodegaId = 'central'; SESSION.bodegaNombre = 'Vista consolidada';
-  SESSION.bodegaTipo = 'central'; SESSION.esCentral = true;
-  sessionStorage.setItem('bodegasi_session', JSON.stringify(SESSION));
-  actualizarBodegaTopbar(); aplicarPermisos();
-  goTo('consolidado');
-}
-
-// ── ADMIN BODEGAS ──────────────────────────────────────────
-function renderAdminBodegas() {
-  const tb = document.getElementById('bodegas-tbody');
-  const em = document.getElementById('bodegas-empty');
-  if (!BODEGAS.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
+  const tb = document.getElementById('prod-tbody'), em = document.getElementById('prod-empty');
+  document.getElementById('prod-count').textContent = data.length + ' productos';
+  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
   em.style.display = 'none';
-  tb.innerHTML = BODEGAS.map(b => '<tr style="' + (!b.activo ? 'opacity:0.55' : '') + '"><td class="td-mono" style="font-weight:500">' + b.id + '</td><td>' + b.nombre + '</td><td><span class="badge badge-' + (b.tipo === 'consignacion' ? 'consignacion' : 'bodega') + '">' + b.tipo + '</span></td><td style="font-size:11px;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + b.urlApi + '</td><td><span class="badge badge-' + (b.activo ? 'activo' : 'inactivo') + '">' + (b.activo ? 'Activa' : 'Inactiva') + '</span></td><td><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" onclick="abrirModalBodega(\'editar\',\'' + b.id + '\',\'' + b.nombre + '\',\'' + b.urlApi + '\',\'' + b.tipo + '\')">Editar</button><label class="toggle"><input type="checkbox" ' + (b.activo ? 'checked' : '') + ' onchange="toggleBodega(\'' + b.id + '\',this)"/><div class="toggle-track"></div></label></div></td></tr>').join('');
+  tb.innerHTML = data.map(s => {
+    const stockTotal = INV.filter(i => i.sku === s.sku).reduce((a, i) => a + i.stock_actual, 0);
+    return '<tr style="' + (!s.activo ? 'opacity:0.55' : '') + '"><td class="td-mono" style="font-weight:500">' + s.sku + '</td><td>' + s.nombre + '</td><td style="color:var(--muted)">' + (s.categoria||'—') + '</td><td style="color:var(--muted)">' + s.unidad + '</td><td style="text-align:right;font-family:var(--mono)">' + (s.costo ? fmtCLP(s.costo) : '<span style="color:var(--warning)">Sin costo</span>') + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(s.stock_minimo) + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (stockTotal <= s.stock_minimo && s.stock_minimo > 0 ? 'stock-low' : 'stock-ok') + '">' + fmt(stockTotal) + '</td><td><span class="badge badge-' + (s.activo ? 'activo' : 'inactivo') + '">' + (s.activo ? 'Activo' : 'Inactivo') + '</span></td><td><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" onclick="verDetalleSku(\'' + s.sku + '\')">Ver</button><button class="btn btn-ghost btn-sm" onclick="abrirModalSku(\'editar\',\'' + s.sku + '\',\'' + s.nombre.replace(/'/g,"\\'") + '\',\'' + (s.categoria||'').replace(/'/g,"\\'") + '\',\'' + s.unidad + '\',' + (s.stock_minimo||0) + ',' + (s.costo||0) + ')">Editar</button><label class="toggle"><input type="checkbox" ' + (s.activo ? 'checked' : '') + ' onchange="toggleSku(\'' + s.sku + '\',this)"/><div class="toggle-track"></div></label></div></td></tr>';
+  }).join('');
 }
 
-function abrirModalBodega(modo, id, nombre, url, tipo) {
-  modalBodModo = modo; modalBodIdOrig = id || '';
-  document.getElementById('modal-bodega-title').textContent = modo === 'nueva' ? 'Nueva bodega' : 'Editar bodega';
-  document.getElementById('m-bod-id').value     = id     || '';
-  document.getElementById('m-bod-nombre').value = nombre || '';
-  document.getElementById('m-bod-url').value    = url    || '';
-  document.getElementById('m-bod-tipo').value   = tipo   || 'bodega';
-  document.getElementById('modal-bodega').classList.add('open');
-  setTimeout(() => document.getElementById('m-bod-id').focus(), 80);
+function abrirModalSku(modo, sku, nombre, categoria, unidad, stockMin, costo) {
+  modalSkuModo = modo; modalSkuOrig = sku || '';
+  document.getElementById('modal-sku-title').textContent = modo === 'nuevo' ? 'Nuevo producto' : 'Editar producto';
+  document.getElementById('m-sku').value        = sku       || '';
+  document.getElementById('m-sku').disabled     = modo === 'editar';
+  document.getElementById('m-nombre').value     = nombre    || '';
+  document.getElementById('m-categoria').value  = categoria || '';
+  document.getElementById('m-unidad').value     = unidad    || 'UN';
+  document.getElementById('m-stock-min').value  = stockMin  || 0;
+  document.getElementById('m-costo').value      = costo     || '';
+  document.getElementById('modal-sku').classList.add('open');
+  setTimeout(() => document.getElementById(modo === 'nuevo' ? 'm-sku' : 'm-nombre').focus(), 80);
 }
 
-async function guardarBodega() {
-  const id     = document.getElementById('m-bod-id').value.trim();
-  const nombre = document.getElementById('m-bod-nombre').value.trim();
-  const url    = document.getElementById('m-bod-url').value.trim();
-  if (!id || !nombre || !url) { toast('ID, nombre y URL son obligatorios', 'err'); return; }
-  const btn = document.getElementById('btn-bodega-guardar');
+async function guardarSku() {
+  if (!esAdmin()) { toast('Solo administradores', 'err'); return; }
+  const sku      = document.getElementById('m-sku').value.trim().toUpperCase();
+  const nombre   = document.getElementById('m-nombre').value.trim();
+  const categoria= document.getElementById('m-categoria').value.trim();
+  const unidad   = document.getElementById('m-unidad').value;
+  const stockMin = Number(document.getElementById('m-stock-min').value) || 0;
+  const costo    = Number(document.getElementById('m-costo').value) || 0;
+  if (!sku || !nombre) { toast('SKU y nombre son obligatorios', 'err'); return; }
+  const btn = document.getElementById('btn-sku-guardar');
   btn.disabled = true; btn.innerHTML = '<span class="loader"></span>';
   try {
-    const body = modalBodModo === 'nueva'
-      ? { accion: 'crearBodega', id, nombre, urlApi: url, tipo: document.getElementById('m-bod-tipo').value }
-      : { accion: 'editarBodega', idOriginal: modalBodIdOrig, id, nombre, urlApi: url, tipo: document.getElementById('m-bod-tipo').value };
-    const res = await apiPost(body, API_CENTRAL);
-    toast(res.mensaje); cerrarModal('modal-bodega');
-    await cargarBodegasLista(); renderAdminBodegas();
+    const data = { sku, nombre, categoria, unidad, stock_minimo: stockMin, costo, activo: true };
+    if (modalSkuModo === 'nuevo') {
+      await sbPost('maestro_sku', data, true);
+      toast('Producto ' + sku + ' creado');
+    } else {
+      await sbPatch('maestro_sku', '?sku=eq.' + encodeURIComponent(modalSkuOrig), { nombre, categoria, unidad, stock_minimo: stockMin, costo });
+      toast('Producto actualizado');
+    }
+    cerrarModal('modal-sku');
+    await cargarSkus();
+    filtrarProductos();
   } catch (e) { toast(e.message, 'err'); }
   btn.disabled = false; btn.innerHTML = 'Guardar';
 }
 
-async function toggleBodega(id, cb) {
+async function toggleSku(sku, cb) {
   const ant = cb.checked;
   try {
-    const res = await apiPost({ accion: 'toggleBodega', id }, API_CENTRAL);
-    toast(res.mensaje); await cargarBodegasLista(); renderAdminBodegas();
+    await sbPatch('maestro_sku', '?sku=eq.' + encodeURIComponent(sku), { activo: !ant });
+    toast('Producto ' + (ant ? 'desactivado' : 'activado'));
+    await cargarSkus(); filtrarProductos();
   } catch (e) { toast(e.message, 'err'); cb.checked = ant; }
+}
+
+async function verDetalleSku(sku) {
+  const s = SKUS_MAP[sku] || {};
+  document.getElementById('dp-sku').textContent    = sku;
+  document.getElementById('dp-nombre').textContent = s.nombre || '—';
+  document.getElementById('dp-stock').innerHTML    = '<div class="empty">Cargando...</div>';
+  document.getElementById('dp-movs').innerHTML     = '<div class="empty">Cargando...</div>';
+  document.getElementById('detail-prod').classList.add('open');
+  try {
+    const inv = INV.filter(i => i.sku === sku);
+    const movs = KARDEX.filter(m => m.sku === sku).slice(0, 15);
+    document.getElementById('dp-stock').innerHTML = !inv.length ? '<div style="font-size:12px;color:var(--muted)">Sin stock.</div>'
+      : '<table style="width:100%"><thead><tr><th>Ubicación</th><th style="text-align:right">Stock</th></tr></thead><tbody>'
+        + inv.sort((a, b) => b.stock_actual - a.stock_actual).map(i => '<tr><td class="td-mono" style="font-size:12px">' + i.ubicacion_codigo + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(i.stock_actual) + '</td></tr>').join('')
+        + '</tbody></table>';
+    document.getElementById('dp-movs').innerHTML = !movs.length ? '<div style="font-size:12px;color:var(--muted)">Sin movimientos.</div>'
+      : movs.map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + (m.ubicacion_origen || m.ubicacion_destino || '—') + ' · <span style="font-family:var(--mono)">' + fmt(m.cantidad) + '</span></div><div style="font-size:11px;color:var(--muted)">' + (m.fecha ? m.fecha.replace('T', ' ').slice(0, 16) : '') + (m.referencia ? ' · ' + m.referencia : '') + '</div></div><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div>').join('');
+  } catch (e) { document.getElementById('dp-stock').innerHTML = '<div style="color:var(--danger);font-size:12px">' + e.message + '</div>'; }
+}
+
+// ── IMPORTAR SKUs desde Excel ───────────────────────────────
+function abrirModalImportarSku() {
+  skuImportarData = [];
+  document.getElementById('importar-preview').style.display = 'none';
+  document.getElementById('btn-importar-sku').disabled = true;
+  document.getElementById('file-input-sku').value = '';
+  document.getElementById('modal-importar-sku').classList.add('open');
+  // Drag & drop
+  const zone = document.getElementById('upload-zone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files[0]) procesarArchivoSkuFile(e.dataTransfer.files[0]); });
+}
+
+function procesarArchivoSku(input) {
+  if (input.files[0]) procesarArchivoSkuFile(input.files[0]);
+}
+
+function procesarArchivoSkuFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const wb = XLSX.read(e.target.result, { type: 'binary' });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const data = XLSX.utils.sheet_to_json(ws, { defval: '' });
+    if (!data.length) { toast('Archivo vacío', 'err'); return; }
+    // Normalizar columnas (case insensitive)
+    skuImportarData = data.map(row => {
+      const k = key => Object.keys(row).find(c => c.toLowerCase().replace(/[^a-z]/g,'') === key.toLowerCase().replace(/[^a-z]/g,''));
+      return {
+        sku:          String(row[k('sku')] || '').trim().toUpperCase(),
+        nombre:       String(row[k('nombre')] || '').trim(),
+        categoria:    String(row[k('categoria')] || '').trim(),
+        unidad:       String(row[k('unidad')] || 'UN').trim() || 'UN',
+        stock_minimo: Number(row[k('stockminimo')] || row[k('stockmin')] || 0),
+        costo:        Number(row[k('costo')] || 0),
+        activo:       String(row[k('activo')] || 'TRUE').toUpperCase() !== 'FALSE',
+      };
+    }).filter(r => r.sku && r.nombre);
+    // Preview
+    document.getElementById('importar-preview-label').textContent = skuImportarData.length + ' productos listos para importar';
+    const tbl = document.getElementById('importar-preview-table');
+    tbl.innerHTML = '<thead><tr><th>SKU</th><th>Nombre</th><th>Categoría</th><th>Unidad</th><th style="text-align:right">Costo</th></tr></thead><tbody>'
+      + skuImportarData.slice(0, 10).map(r => '<tr><td class="td-mono">' + r.sku + '</td><td>' + r.nombre + '</td><td>' + (r.categoria||'—') + '</td><td>' + r.unidad + '</td><td style="text-align:right;font-family:var(--mono)">' + (r.costo ? fmtCLP(r.costo) : '—') + '</td></tr>').join('')
+      + (skuImportarData.length > 10 ? '<tr><td colspan="5" style="text-align:center;color:var(--muted);font-size:12px">... y ' + (skuImportarData.length - 10) + ' más</td></tr>' : '')
+      + '</tbody>';
+    document.getElementById('importar-preview').style.display = 'block';
+    document.getElementById('btn-importar-sku').disabled = false;
+  };
+  reader.readAsBinaryString(file);
+}
+
+async function importarSkus() {
+  if (!skuImportarData.length) return;
+  const btn = document.getElementById('btn-importar-sku');
+  btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Importando...';
+  try {
+    // Upsert en lotes de 100
+    let total = 0;
+    const loteSize = 100;
+    for (let i = 0; i < skuImportarData.length; i += loteSize) {
+      const lote = skuImportarData.slice(i, i + loteSize);
+      await sbPost('maestro_sku', lote, true);
+      total += lote.length;
+    }
+    toast(total + ' productos importados/actualizados');
+    cerrarModal('modal-importar-sku');
+    await cargarSkus(); filtrarProductos();
+  } catch (e) { toast(e.message, 'err'); }
+  btn.disabled = false; btn.innerHTML = 'Importar';
+}
+
+// ── UBICACIONES ────────────────────────────────────────────
+function renderUbicaciones() { filtrarUbicaciones(); }
+function filtrarUbicaciones() {
+  const q   = document.getElementById('ub-search').value.toLowerCase();
+  const est = document.getElementById('ub-estado-filter').value;
+  const data = UBS_TODAS.filter(u => {
+    if (est === 'activo'   && !u.activo) return false;
+    if (est === 'inactivo' &&  u.activo) return false;
+    if (q && !u.codigo.toLowerCase().includes(q) && !(u.zona||'').toLowerCase().includes(q) && !(u.descripcion||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const tb = document.getElementById('ub-tbody'), em = document.getElementById('ub-empty');
+  document.getElementById('ub-count').textContent = data.length + ' ubicaciones';
+  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
+  em.style.display = 'none';
+  tb.innerHTML = data.map(u => {
+    const su = INV.filter(i => i.ubicacion_codigo === u.codigo);
+    const st = su.reduce((a, i) => a + i.stock_actual, 0);
+    const val = su.reduce((a, i) => a + (i.stock_actual * (SKUS_MAP[i.sku]?.costo || 0)), 0);
+    return '<tr style="' + (!u.activo ? 'opacity:0.55' : '') + '"><td class="td-mono" style="font-weight:500">' + u.codigo + '</td><td style="color:var(--muted)">' + (u.zona||'—') + '</td><td style="font-size:12px;color:var(--muted)">' + (u.descripcion||'—') + '</td><td style="text-align:right;font-family:var(--mono)">' + su.length + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(st) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--accent)">' + fmtCLP(val) + '</td><td><span class="badge badge-' + (u.activo ? 'activo' : 'inactivo') + '">' + (u.activo ? 'Activa' : 'Inactiva') + '</span></td><td><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" onclick="abrirModalUb(\'editar\',\'' + u.codigo + '\',\'' + (u.zona||'').replace(/'/g,"\\'") + '\',\'' + (u.descripcion||'').replace(/'/g,"\\'") + '\',\'' + u.id + '\')">Editar</button><label class="toggle"><input type="checkbox" ' + (u.activo ? 'checked' : '') + ' onchange="toggleUb(\'' + u.id + '\',this)"/><div class="toggle-track"></div></label></div></td></tr>';
+  }).join('');
+}
+
+function abrirModalUb(modo, codigo, zona, desc, id) {
+  modalUbModo = modo; modalUbCodOrig = id || '';
+  document.getElementById('modal-ub-title').textContent = modo === 'nueva' ? 'Nueva ubicación' : 'Editar ubicación';
+  document.getElementById('m-ub-codigo').value = codigo || '';
+  document.getElementById('m-ub-zona').value   = zona   || '';
+  document.getElementById('m-ub-desc').value   = desc   || '';
+  document.getElementById('m-ub-codigo').disabled = modo === 'editar';
+  document.getElementById('modal-ub').classList.add('open');
+  setTimeout(() => document.getElementById(modo === 'nueva' ? 'm-ub-codigo' : 'm-ub-zona').focus(), 80);
+}
+
+async function guardarUbicacion() {
+  if (!esAdmin()) { toast('Solo administradores', 'err'); return; }
+  const codigo = document.getElementById('m-ub-codigo').value.trim().toUpperCase();
+  if (!codigo) { toast('El código es obligatorio', 'err'); return; }
+  const btn = document.getElementById('btn-ub-guardar');
+  btn.disabled = true; btn.innerHTML = '<span class="loader"></span>';
+  try {
+    if (modalUbModo === 'nueva') {
+      await sbPost('ubicaciones', { bodega_id: SESSION.bodegaId, codigo, zona: document.getElementById('m-ub-zona').value.trim(), descripcion: document.getElementById('m-ub-desc').value.trim(), activo: true });
+      toast('Ubicación ' + codigo + ' creada');
+    } else {
+      await sbPatch('ubicaciones', '?id=eq.' + modalUbCodOrig, { zona: document.getElementById('m-ub-zona').value.trim(), descripcion: document.getElementById('m-ub-desc').value.trim() });
+      toast('Ubicación actualizada');
+    }
+    cerrarModal('modal-ub');
+    await cargarUbicaciones(); filtrarUbicaciones();
+  } catch (e) { toast(e.message, 'err'); }
+  btn.disabled = false; btn.innerHTML = 'Guardar';
+}
+
+async function toggleUb(id, cb) {
+  const ant = cb.checked;
+  try { await sbPatch('ubicaciones', '?id=eq.' + id, { activo: !ant }); toast('Ubicación ' + (ant ? 'desactivada' : 'activada')); await cargarUbicaciones(); filtrarUbicaciones(); }
+  catch (e) { toast(e.message, 'err'); cb.checked = ant; }
+}
+
+// ══════════════════════════════════════════════════════════
+//  MOVIMIENTOS CON RPC SUPABASE
+// ══════════════════════════════════════════════════════════
+async function registrarMovimiento(params) {
+  return sbRpc('registrar_movimiento', {
+    p_bodega_id:          SESSION.bodegaId,
+    p_tipo:               params.tipo,
+    p_sku:                params.sku,
+    p_ubicacion_origen:   params.origen || null,
+    p_ubicacion_destino:  params.destino || null,
+    p_cantidad:           params.cantidad,
+    p_lote:               params.lote,
+    p_referencia:         params.referencia || '',
+    p_usuario:            params.usuario || '',
+    p_observacion:        params.observacion || '',
+  });
 }
 
 // ── MULTI-LÍNEA ────────────────────────────────────────────
@@ -1295,10 +1276,8 @@ function agregarLinea(form) {
   const wrap = document.getElementById(form[0] + '-lines');
   const esSalida = (form === 'salida');
   const lbl = esSalida ? 'Ubicación origen *' : 'Ubicación destino *';
-  const div = document.createElement('div');
-  div.className = 'line-row'; div.id = form + '-line-' + idx;
-  const numDiv = document.createElement('div');
-  numDiv.className = 'line-num'; numDiv.textContent = 'Línea ' + Object.keys(lineAC[form]).length;
+  const div = document.createElement('div'); div.className = 'line-row'; div.id = form + '-line-' + idx;
+  const numDiv = document.createElement('div'); numDiv.className = 'line-num'; numDiv.textContent = 'Línea ' + Object.keys(lineAC[form]).length;
   const grid = document.createElement('div'); grid.className = 'line-grid';
   const g1 = document.createElement('div'); g1.className = 'form-group';
   g1.innerHTML = '<label>SKU / Producto *</label><div id="lac-' + form + '-' + idx + '" class="ac-wrap"></div><div class="line-hint" id="lhint-' + form + '-' + idx + '"></div>';
@@ -1324,13 +1303,8 @@ function agregarLinea(form) {
 function eliminarLinea(form, idx) {
   document.getElementById(form + '-line-' + idx)?.remove();
   delete lineAC[form][idx];
-  renumerarLineas(form); actualizarResumen(form);
-}
-
-function renumerarLineas(form) {
-  document.querySelectorAll('#' + form[0] + '-lines .line-row').forEach((r, i) => {
-    const n = r.querySelector('.line-num'); if (n) n.textContent = 'Línea ' + (i + 1);
-  });
+  document.querySelectorAll('#' + form[0] + '-lines .line-row').forEach((r, i) => { const n = r.querySelector('.line-num'); if (n) n.textContent = 'Línea ' + (i + 1); });
+  actualizarResumen(form);
 }
 
 function actualizarResumen(form) {
@@ -1338,12 +1312,8 @@ function actualizarResumen(form) {
   const skus  = idxs.map(i => lineAC[form][i]?.sku).filter(Boolean);
   const total = idxs.reduce((a, i) => a + Number(document.getElementById('lqty-' + form + '-' + i)?.value || 0), 0);
   const sum = document.getElementById(form[0] + '-summary');
-  if (idxs.length) {
-    sum.style.display = 'flex';
-    document.getElementById(form[0] + '-sum-l').textContent = idxs.length;
-    document.getElementById(form[0] + '-sum-s').textContent = new Set(skus).size;
-    document.getElementById(form[0] + '-sum-u').textContent = total.toLocaleString('es-CL');
-  } else { sum.style.display = 'none'; }
+  if (idxs.length) { sum.style.display = 'flex'; document.getElementById(form[0] + '-sum-l').textContent = idxs.length; document.getElementById(form[0] + '-sum-s').textContent = new Set(skus).size; document.getElementById(form[0] + '-sum-u').textContent = fmt(total); }
+  else sum.style.display = 'none';
 }
 
 function refreshHint(form, idx) {
@@ -1351,30 +1321,27 @@ function refreshHint(form, idx) {
   const sku  = lineAC[form][idx]?.sku;
   const ub   = document.getElementById('lub-' + form + '-' + idx)?.value;
   if (!sku || !ub) { hint.textContent = ''; hint.className = 'line-hint'; return; }
-  const reg  = INV.find(i => i.sku === sku && i.ubicacion === ub);
+  const reg  = INV.find(i => i.sku === sku && i.ubicacion_codigo === ub);
   if (form === 'salida') {
-    if (!reg || reg.stockActual === 0) { hint.textContent = 'Sin stock en esta ubicación'; hint.className = 'line-hint err'; return; }
+    if (!reg || reg.stock_actual === 0) { hint.textContent = 'Sin stock'; hint.className = 'line-hint err'; return; }
     const qty = Number(document.getElementById('lqty-' + form + '-' + idx)?.value || 0);
-    hint.className = 'line-hint ' + (qty > reg.stockActual ? 'warn' : 'ok');
-    hint.textContent = 'Disponible: ' + reg.stockActual + ' ' + reg.unidad;
+    hint.className = 'line-hint ' + (qty > reg.stock_actual ? 'warn' : 'ok');
+    hint.textContent = 'Disponible: ' + fmt(reg.stock_actual) + ' ' + (SKUS_MAP[sku]?.unidad || '');
   } else {
     hint.className = 'line-hint';
-    hint.textContent = reg ? 'Stock actual: ' + reg.stockActual + ' ' + reg.unidad : 'Producto nuevo en esta ubicación';
+    hint.textContent = reg ? 'Stock actual: ' + fmt(reg.stock_actual) : 'Nuevo en esta ubicación';
   }
   actualizarResumen(form);
 }
 
-async function cargarUbicacionesLineaSalida(form, idx, sku) {
+async function cargarUbsLineaSalida(form, idx, sku) {
   const sel  = document.getElementById('lub-' + form + '-' + idx);
   const hint = document.getElementById('lhint-' + form + '-' + idx);
   if (!sel) return;
   sel.innerHTML = '<option value="">Cargando...</option>'; sel.disabled = true;
-  const ubs = INV.filter(i => i.sku === sku && i.stockActual > 0);
-  if (!ubs.length) {
-    sel.innerHTML = '<option value="">Sin stock en ninguna ubicación</option>';
-    hint.textContent = 'Sin stock disponible'; hint.className = 'line-hint err'; return;
-  }
-  sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.ubicacion + '">' + u.ubicacion + ' — ' + u.stockActual + ' ' + u.unidad + '</option>').join('');
+  const ubs = INV.filter(i => i.sku === sku && i.stock_actual > 0);
+  if (!ubs.length) { sel.innerHTML = '<option value="">Sin stock disponible</option>'; hint.textContent = 'Sin stock en ninguna ubicación'; hint.className = 'line-hint err'; return; }
+  sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.ubicacion_codigo + '">' + u.ubicacion_codigo + ' — ' + fmt(u.stock_actual) + ' ' + (SKUS_MAP[sku]?.unidad || '') + '</option>').join('');
   sel.disabled = false;
   hint.textContent = (ubs.length > 1 ? ubs.length + ' ubicaciones con stock' : '1 ubicación con stock');
   hint.className = 'line-hint ok';
@@ -1398,72 +1365,73 @@ function recogerLineas(form) {
     const ub   = document.getElementById('lub-' + form + '-' + idx)?.value;
     const qty  = document.getElementById('lqty-' + form + '-' + idx)?.value;
     const obs  = document.getElementById('lobs-' + form + '-' + idx)?.value || '';
-    if (!sku) { toast('Línea ' + (Number(idx) + 1) + ': selecciona un SKU', 'err'); return null; }
-    if (!ub)  { toast('Línea ' + (Number(idx) + 1) + ': selecciona una ubicación', 'err'); return null; }
-    if (!qty || Number(qty) <= 0) { toast('Línea ' + (Number(idx) + 1) + ': cantidad inválida', 'err'); return null; }
+    if (!sku) { toast('Línea ' + (Number(idx)+1) + ': selecciona un SKU', 'err'); return null; }
+    if (!ub)  { toast('Línea ' + (Number(idx)+1) + ': selecciona una ubicación', 'err'); return null; }
+    if (!qty || Number(qty) <= 0) { toast('Línea ' + (Number(idx)+1) + ': cantidad inválida', 'err'); return null; }
     lineas.push({ sku, ubicacion: ub, cantidad: Number(qty), observacion: obs });
   }
   return lineas;
 }
 
 async function submitEntrada() {
-  if (!puedeMover()) { toast('Sin permisos para esta operación', 'err'); return; }
+  if (!puedeMover()) { toast('Sin permisos', 'err'); return; }
   const lineas = recogerLineas('entrada'); if (!lineas) return;
   const btn = document.getElementById('btn-entrada');
   btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Registrando...';
   try {
-    const res = await apiPost({ accion: 'entradaMulti', lineas,
-      referencia: document.getElementById('e-ref').value,
-      usuario: document.getElementById('e-usr').value,
-      observacion: document.getElementById('e-obs').value });
-    toast(res.mensaje); resetMulti('entrada');
+    const lote = 'ENT-' + SESSION.bodegaId + '-' + Date.now();
+    const ref  = document.getElementById('e-ref').value;
+    const usr  = document.getElementById('e-usr').value;
+    const obs  = document.getElementById('e-obs').value;
+    for (const l of lineas) {
+      await registrarMovimiento({ tipo: 'ENTRADA', sku: l.sku, destino: l.ubicacion, cantidad: l.cantidad, lote, referencia: ref, usuario: usr, observacion: l.observacion || obs });
+    }
+    toast('Entrada registrada · ' + lineas.length + ' línea' + (lineas.length > 1 ? 's' : '') + ' · Lote ' + lote);
+    resetMulti('entrada');
     await Promise.all([cargarInventario(), cargarKardex()]); renderDashboard();
-  } catch (err) { toast(err.message, 'err'); }
+  } catch (e) { toast(e.message, 'err'); }
   btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg> Registrar entrada';
 }
 
 async function submitSalida() {
-  if (!puedeMover()) { toast('Sin permisos para esta operación', 'err'); return; }
+  if (!puedeMover()) { toast('Sin permisos', 'err'); return; }
   const lineas = recogerLineas('salida'); if (!lineas) return;
   const btn = document.getElementById('btn-salida');
   btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Registrando...';
   try {
-    const res = await apiPost({ accion: 'salidaMulti', lineas,
-      referencia: document.getElementById('s-ref').value,
-      usuario: document.getElementById('s-usr').value,
-      observacion: document.getElementById('s-obs').value });
-    toast(res.mensaje); resetMulti('salida');
+    const lote = 'SAL-' + SESSION.bodegaId + '-' + Date.now();
+    const ref  = document.getElementById('s-ref').value;
+    const usr  = document.getElementById('s-usr').value;
+    const obs  = document.getElementById('s-obs').value;
+    for (const l of lineas) {
+      await registrarMovimiento({ tipo: 'SALIDA', sku: l.sku, origen: l.ubicacion, cantidad: l.cantidad, lote, referencia: ref, usuario: usr, observacion: l.observacion || obs });
+    }
+    toast('Salida registrada · ' + lineas.length + ' línea' + (lineas.length > 1 ? 's' : '') + ' · Lote ' + lote);
+    resetMulti('salida');
     await Promise.all([cargarInventario(), cargarKardex()]); renderDashboard();
-  } catch (err) { toast(err.message, 'err'); }
+  } catch (e) { toast(e.message, 'err'); }
   btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Registrar salida';
 }
 
-// ── TRASPASO INTERNO ───────────────────────────────────────
-function inicAcTraspaso() {
-  crearAcSimple('ac-traspaso', ACt, sku => { cargarOrigenesTraspaso(sku); });
-}
+// ── TRASPASO ───────────────────────────────────────────────
+function inicAcTraspaso() { crearAcSimple('ac-traspaso', ACt, sku => cargarOrigenesTraspaso(sku)); }
 
 async function cargarOrigenesTraspaso(sku) {
   const sel  = document.getElementById('t-ub-origen');
   const hint = document.getElementById('t-stock-hint');
   sel.innerHTML = '<option value="">Cargando...</option>'; sel.disabled = true;
-  const ubs = INV.filter(i => i.sku === sku && i.stockActual > 0);
-  if (!ubs.length) {
-    sel.innerHTML = '<option value="">Sin stock disponible</option>';
-    hint.textContent = 'Sin stock en ninguna ubicación'; hint.style.color = 'var(--danger)'; return;
-  }
-  sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.ubicacion + '">' + u.ubicacion + ' — ' + u.stockActual + ' ' + u.unidad + '</option>').join('');
-  sel.disabled = false;
-  hint.textContent = (ubs.length > 1 ? ubs.length + ' ubicaciones con stock' : '1 ubicación con stock');
-  hint.style.color = 'var(--success)';
+  const ubs = INV.filter(i => i.sku === sku && i.stock_actual > 0);
+  if (!ubs.length) { sel.innerHTML = '<option value="">Sin stock</option>'; hint.textContent = 'Sin stock disponible'; hint.style.color = 'var(--danger)'; return; }
+  sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.ubicacion_codigo + '">' + u.ubicacion_codigo + ' — ' + fmt(u.stock_actual) + ' ' + (SKUS_MAP[sku]?.unidad || '') + '</option>').join('');
+  sel.disabled = false; hint.textContent = ubs.length + ' ubicación' + (ubs.length > 1 ? 'es' : '') + ' con stock'; hint.style.color = 'var(--success)';
 }
 
 function mostrarStockTraspaso() {
   const ub   = document.getElementById('t-ub-origen').value;
   const hint = document.getElementById('t-stock-hint');
   if (!ub || !ACt.sku) { hint.textContent = ''; return; }
-  const reg = INV.find(i => i.sku === ACt.sku && i.ubicacion === ub);
-  hint.textContent = reg ? 'Stock disponible: ' + reg.stockActual + ' ' + reg.unidad : '';
+  const reg = INV.find(i => i.sku === ACt.sku && i.ubicacion_codigo === ub);
+  hint.textContent = reg ? 'Disponible: ' + fmt(reg.stock_actual) + ' ' + (SKUS_MAP[ACt.sku]?.unidad || '') : '';
   hint.style.color = 'var(--success)';
 }
 
@@ -1474,16 +1442,18 @@ async function submitTraspaso(e) {
   const btn = document.getElementById('btn-traspaso');
   btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Registrando...';
   try {
-    const res = await apiPost({ accion: 'traspaso', sku: ACt.sku,
-      ubicacionOrigen:  document.getElementById('t-ub-origen').value,
-      ubicacionDestino: document.getElementById('t-ub-destino').value,
-      cantidad:  document.getElementById('t-cant').value,
-      referencia:document.getElementById('t-ref').value,
-      usuario:   document.getElementById('t-usr').value,
-      observacion:document.getElementById('t-obs').value });
-    toast(res.mensaje); resetTraspaso();
+    const origen  = document.getElementById('t-ub-origen').value;
+    const destino = document.getElementById('t-ub-destino').value;
+    const cant    = Number(document.getElementById('t-cant').value);
+    const lote    = 'TRA-' + SESSION.bodegaId + '-' + Date.now();
+    // Salida del origen
+    await registrarMovimiento({ tipo: 'SALIDA', sku: ACt.sku, origen, cantidad: cant, lote, referencia: document.getElementById('t-ref').value, usuario: document.getElementById('t-usr').value, observacion: 'Traspaso → ' + destino });
+    // Entrada en destino
+    await registrarMovimiento({ tipo: 'ENTRADA', sku: ACt.sku, destino, cantidad: cant, lote, referencia: document.getElementById('t-ref').value, usuario: document.getElementById('t-usr').value, observacion: 'Traspaso ← ' + origen });
+    toast('Traspaso registrado · ' + origen + ' → ' + destino);
+    resetTraspaso();
     await Promise.all([cargarInventario(), cargarKardex()]); renderDashboard();
-  } catch (err) { toast(err.message, 'err'); }
+  } catch (e) { toast(e.message, 'err'); }
   btn.disabled = false; btn.innerHTML = 'Registrar traspaso';
 }
 
@@ -1494,92 +1464,14 @@ function resetTraspaso() {
   document.getElementById('t-stock-hint').textContent = '';
 }
 
-// ── UBICACIONES ────────────────────────────────────────────
-function renderUbicaciones() { filtrarUbicaciones(); }
-function filtrarUbicaciones() {
-  const q   = document.getElementById('ub-search').value.toLowerCase();
-  const est = document.getElementById('ub-estado-filter').value;
-  const data = UBS_TODAS.filter(u => {
-    if (est === 'activo'   && !u.activo) return false;
-    if (est === 'inactivo' &&  u.activo) return false;
-    if (q && !u.codigo.toLowerCase().includes(q) && !(u.zona||'').toLowerCase().includes(q) && !(u.descripcion||'').toLowerCase().includes(q)) return false;
-    return true;
-  });
-  const tb = document.getElementById('ub-tbody'), em = document.getElementById('ub-empty');
-  document.getElementById('ub-count').textContent = data.length + ' ubicaciones';
-  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
-  em.style.display = 'none';
-  tb.innerHTML = data.map(u => {
-    const su = INV.filter(i => i.ubicacion === u.codigo);
-    const st = su.reduce((a, i) => a + i.stockActual, 0);
-    return '<tr style="' + (!u.activo ? 'opacity:0.55' : '') + '"><td class="td-mono" style="font-weight:500">' + u.codigo + '</td><td style="color:var(--muted)">' + (u.zona || '—') + '</td><td style="font-size:12px;color:var(--muted)">' + (u.descripcion || '—') + '</td><td style="text-align:right;font-family:var(--mono)">' + su.length + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + st.toLocaleString('es-CL') + '</td><td><span class="badge badge-' + (u.activo ? 'activo' : 'inactivo') + '">' + (u.activo ? 'Activa' : 'Inactiva') + '</span></td><td><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" onclick="verDetalleUb(\'' + u.codigo + '\',\'' + (u.descripcion||'').replace(/'/g,"\\'") + '\')">Ver</button><button class="btn btn-ghost btn-sm" onclick="abrirModalUb(\'editar\',\'' + u.codigo + '\',\'' + (u.zona||'').replace(/'/g,"\\'") + '\',\'' + (u.descripcion||'').replace(/'/g,"\\'") + '\')">Editar</button><label class="toggle"><input type="checkbox" ' + (u.activo ? 'checked' : '') + ' onchange="toggleUb(\'' + u.codigo + '\',this)"/><div class="toggle-track"></div></label></div></td></tr>';
-  }).join('');
-}
-
-function abrirModalUb(modo, codigo, zona, desc) {
-  modalUbModo = modo; modalUbCodOrig = codigo || '';
-  document.getElementById('modal-ub-title').textContent = modo === 'nueva' ? 'Nueva ubicación' : 'Editar ubicación';
-  document.getElementById('m-ub-codigo').value = codigo || '';
-  document.getElementById('m-ub-zona').value   = zona   || '';
-  document.getElementById('m-ub-desc').value   = desc   || '';
-  document.getElementById('modal-ub').classList.add('open');
-  setTimeout(() => document.getElementById('m-ub-' + (modo === 'nueva' ? 'codigo' : 'zona')).focus(), 80);
-}
-
-async function guardarUbicacion() {
-  if (!esAdmin()) { toast('Solo administradores', 'err'); return; }
-  const codigo = document.getElementById('m-ub-codigo').value.trim().toUpperCase();
-  if (!codigo) { toast('El código es obligatorio', 'err'); return; }
-  const btn = document.getElementById('btn-ub-guardar');
-  btn.disabled = true; btn.innerHTML = '<span class="loader"></span>';
-  try {
-    const body = modalUbModo === 'nueva'
-      ? { accion: 'crearUbicacion', codigo, zona: document.getElementById('m-ub-zona').value, descripcion: document.getElementById('m-ub-desc').value }
-      : { accion: 'editarUbicacion', codigoOriginal: modalUbCodOrig, codigo, zona: document.getElementById('m-ub-zona').value, descripcion: document.getElementById('m-ub-desc').value };
-    const res = await apiPost(body);
-    toast(res.mensaje); cerrarModal('modal-ub');
-    await cargarUbicaciones(); filtrarUbicaciones();
-  } catch (e) { toast(e.message, 'err'); }
-  btn.disabled = false; btn.innerHTML = 'Guardar';
-}
-
-async function toggleUb(codigo, cb) {
-  const ant = cb.checked;
-  try { const res = await apiPost({ accion: 'toggleUbicacion', codigo }); toast(res.mensaje); await cargarUbicaciones(); filtrarUbicaciones(); }
-  catch (e) { toast(e.message, 'err'); cb.checked = ant; }
-}
-
-async function verDetalleUb(codigo, desc) {
-  document.getElementById('dp-codigo').textContent = codigo;
-  document.getElementById('dp-desc').textContent = desc || 'Sin descripción';
-  document.getElementById('dp-stock').innerHTML = '<div class="empty">Cargando...</div>';
-  document.getElementById('dp-movs').innerHTML  = '<div class="empty">Cargando...</div>';
-  document.getElementById('detail-panel').classList.add('open');
-  try {
-    const d = await apiGet('getUbicacionDetalle', { codigo });
-    document.getElementById('dp-stock').innerHTML = !d.stock.length ? '<div style="font-size:12px;color:var(--muted)">Sin stock.</div>'
-      : '<table style="width:100%"><thead><tr><th>SKU</th><th>Nombre</th><th style="text-align:right">Stock</th></tr></thead><tbody>' + d.stock.map(i => '<tr><td class="td-mono" style="font-size:12px">' + i.sku + '</td><td style="font-size:12px">' + i.nombre + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + i.stockActual + '</td></tr>').join('') + '</tbody></table>';
-    document.getElementById('dp-movs').innerHTML = !d.movimientos.length ? '<div style="font-size:12px;color:var(--muted)">Sin movimientos.</div>'
-      : d.movimientos.map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + m.sku + ' · <span style="font-family:var(--mono)">' + m.cantidad + '</span></div><div style="font-size:11px;color:var(--muted)">' + m.fecha + (m.lote ? ' · ' + m.lote : '') + '</div></div><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div>').join('');
-  } catch (e) { document.getElementById('dp-stock').innerHTML = '<div style="font-size:12px;color:var(--danger)">' + e.message + '</div>'; }
-}
-function cerrarDetailPanel() { document.getElementById('detail-panel').classList.remove('open'); }
-
-// ── MODAL ──────────────────────────────────────────────────
-function cerrarModal(id) { document.getElementById(id).classList.remove('open'); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { cerrarModal('modal-ub'); cerrarModal('modal-bodega'); cerrarModal('modal-switcher'); cerrarDetailPanel(); } });
-document.getElementById('modal-ub').addEventListener('click', e => { if (e.target === e.currentTarget) cerrarModal('modal-ub'); });
-document.getElementById('modal-bodega').addEventListener('click', e => { if (e.target === e.currentTarget) cerrarModal('modal-bodega'); });
-document.getElementById('modal-switcher').addEventListener('click', e => { if (e.target === e.currentTarget) cerrarModal('modal-switcher'); });
-
 // ══════════════════════════════════════════════════════════
 //  AUTOCOMPLETE ENGINE
 // ══════════════════════════════════════════════════════════
-function buscarSkus(q, lista) {
+function buscarSkus(q) {
   if (!q) return [];
-  const t = q.toLowerCase(), res = [], src = lista || SKUS;
-  for (let i = 0; i < src.length && res.length < 50; i++) {
-    const s = src[i];
+  const t = q.toLowerCase(), res = [];
+  for (let i = 0; i < SKUS.length && res.length < 50; i++) {
+    const s = SKUS[i];
     if ((s.sku||'').toLowerCase().includes(t) || (s.nombre||'').toLowerCase().includes(t) || (s.categoria||'').toLowerCase().includes(t)) res.push(s);
   }
   return res;
@@ -1590,23 +1482,19 @@ function hl(text, q) {
   if (idx < 0) return text;
   return text.slice(0, idx) + '<strong>' + text.slice(idx, idx + q.length) + '</strong>' + text.slice(idx + q.length);
 }
-function focusDd(items, fi) { items.forEach((x, i) => x.classList.toggle('focused', i === fi)); items[fi]?.scrollIntoView({ block: 'nearest' }); }
 
-// AC por línea
 function crearAcLinea(form, idx) {
   const cid = 'lac-' + form + '-' + idx;
   const c = document.getElementById(cid); if (!c) return;
   c.innerHTML = '<div class="ac-input-row"><input type="text" class="ac-input" placeholder="SKU o nombre..." autocomplete="off" id="' + cid + '-input"/><button type="button" class="ac-clear" id="' + cid + '-clear">×</button></div><div class="ac-pill" id="' + cid + '-pill"></div><div class="ac-dropdown" id="' + cid + '-dd"></div>';
-  const inp = document.getElementById(cid + '-input');
-  const clr = document.getElementById(cid + '-clear');
-  const dd  = document.getElementById(cid + '-dd');
+  const inp = document.getElementById(cid + '-input'), clr = document.getElementById(cid + '-clear'), dd = document.getElementById(cid + '-dd');
   let dbt = null;
   inp.addEventListener('input', () => { clearTimeout(dbt); dbt = setTimeout(() => renderLineDd(cid, form, idx, inp.value), 120); });
   inp.addEventListener('keydown', e => {
     const items = dd.querySelectorAll('.ac-item'); if (!items.length) return;
     const st = lineAC[form][idx];
-    if (e.key === 'ArrowDown') { e.preventDefault(); st.focusIdx = Math.min((st.focusIdx || 0) + 1, items.length - 1); focusDd(items, st.focusIdx); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); st.focusIdx = Math.max((st.focusIdx || 0) - 1, 0); focusDd(items, st.focusIdx); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); st.focusIdx = Math.min((st.focusIdx||0)+1, items.length-1); focusDd(items, st.focusIdx); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); st.focusIdx = Math.max((st.focusIdx||0)-1, 0); focusDd(items, st.focusIdx); }
     else if (e.key === 'Enter') { e.preventDefault(); items[st.focusIdx >= 0 ? st.focusIdx : 0]?.click(); }
     else if (e.key === 'Escape') dd.classList.remove('open');
   });
@@ -1620,110 +1508,89 @@ function renderLineDd(cid, form, idx, q) {
   if (lineAC[form][idx]) lineAC[form][idx].focusIdx = -1;
   if (!q) { dd.classList.remove('open'); return; }
   const res = buscarSkus(q);
-  dd.innerHTML = !res.length ? '<div class="ac-empty">Sin resultados para "' + q + '"</div>'
-    : res.map(s => '<div class="ac-item" data-sku="' + s.sku + '" data-nombre="' + s.nombre + '" data-unidad="' + (s.unidad || '') + '"><span class="ac-item-sku">' + hl(s.sku, q) + '</span><span class="ac-item-nombre">' + hl(s.nombre, q) + '</span>' + (s.categoria ? '<span class="ac-item-cat">' + s.categoria + '</span>' : '') + '</div>').join('');
+  dd.innerHTML = !res.length ? '<div class="ac-empty">Sin resultados</div>'
+    : res.map(s => '<div class="ac-item" data-sku="' + s.sku + '" data-nombre="' + s.nombre + '" data-unidad="' + (s.unidad||'') + '"><span class="ac-item-sku">' + hl(s.sku,q) + '</span><span class="ac-item-nombre">' + hl(s.nombre,q) + '</span>' + (s.categoria ? '<span class="ac-item-cat">' + s.categoria + '</span>' : '') + '</div>').join('');
   dd.querySelectorAll('.ac-item').forEach(item => item.addEventListener('click', () => {
-    const st = lineAC[form][idx];
-    st.sku = item.dataset.sku; st.nombre = item.dataset.nombre; st.unidad = item.dataset.unidad;
-    const inp = document.getElementById(cid + '-input');
-    const clr = document.getElementById(cid + '-clear');
-    const pill = document.getElementById(cid + '-pill');
-    inp.value = item.dataset.sku; inp.classList.add('has-value');
-    clr.classList.add('visible');
+    lineAC[form][idx].sku = item.dataset.sku;
+    const inp = document.getElementById(cid+'-input'), clr = document.getElementById(cid+'-clear'), pill = document.getElementById(cid+'-pill');
+    inp.value = item.dataset.sku; inp.classList.add('has-value'); clr.classList.add('visible');
     pill.innerHTML = '<strong>' + item.dataset.sku + '</strong> — ' + item.dataset.nombre + (item.dataset.unidad ? ' · ' + item.dataset.unidad : '');
     pill.classList.add('visible'); dd.classList.remove('open');
-    if (form === 'salida') cargarUbicacionesLineaSalida(form, idx, item.dataset.sku);
-    else { refreshHint(form, idx); setTimeout(() => document.getElementById('lub-' + form + '-' + idx)?.focus(), 60); }
+    if (form === 'salida') cargarUbsLineaSalida(form, idx, item.dataset.sku);
+    else { refreshHint(form, idx); setTimeout(() => document.getElementById('lub-'+form+'-'+idx)?.focus(), 60); }
     actualizarResumen(form);
   }));
   dd.classList.add('open');
 }
 
 function limpiarAcLinea(cid, form, idx) {
-  if (lineAC[form][idx]) lineAC[form][idx] = { sku: null, nombre: '', unidad: '', focusIdx: -1 };
-  document.getElementById(cid + '-input').value = '';
-  document.getElementById(cid + '-input').classList.remove('has-value');
-  document.getElementById(cid + '-clear').classList.remove('visible');
-  const pill = document.getElementById(cid + '-pill'); pill.innerHTML = ''; pill.classList.remove('visible');
-  document.getElementById(cid + '-dd').classList.remove('open');
-  const hint = document.getElementById('lhint-' + form + '-' + idx); if (hint) { hint.textContent = ''; hint.className = 'line-hint'; }
-  const sel = document.getElementById('lub-' + form + '-' + idx);
+  if (lineAC[form][idx]) lineAC[form][idx] = { sku:null, nombre:'', unidad:'', focusIdx:-1 };
+  const inp = document.getElementById(cid+'-input'), clr = document.getElementById(cid+'-clear'), pill = document.getElementById(cid+'-pill'), dd = document.getElementById(cid+'-dd');
+  inp.value = ''; inp.classList.remove('has-value'); clr.classList.remove('visible');
+  pill.innerHTML = ''; pill.classList.remove('visible'); dd.classList.remove('open');
+  const hint = document.getElementById('lhint-'+form+'-'+idx); if (hint) { hint.textContent = ''; hint.className = 'line-hint'; }
+  const sel = document.getElementById('lub-'+form+'-'+idx);
   if (sel && form === 'salida') { sel.innerHTML = '<option value="">Primero selecciona un SKU</option>'; sel.disabled = true; }
   actualizarResumen(form);
 }
 
-// AC simple genérico
 function crearAcSimple(containerId, state, onSelect) {
   const c = document.getElementById(containerId); if (!c) return;
   c.innerHTML = '<div class="ac-input-row"><input type="text" class="ac-input" placeholder="SKU o nombre..." autocomplete="off" id="' + containerId + '-input"/><button type="button" class="ac-clear" id="' + containerId + '-clear">×</button></div><div class="ac-pill" id="' + containerId + '-pill"></div><div class="ac-dropdown" id="' + containerId + '-dd"></div>';
-  const inp = document.getElementById(containerId + '-input');
-  const clr = document.getElementById(containerId + '-clear');
-  const dd  = document.getElementById(containerId + '-dd');
+  const inp = document.getElementById(containerId+'-input'), clr = document.getElementById(containerId+'-clear'), dd = document.getElementById(containerId+'-dd');
   let dbt = null;
-  inp.addEventListener('input', () => { clearTimeout(dbt); dbt = setTimeout(() => renderAcDd(containerId, null, inp.value, state), 120); });
+  inp.addEventListener('input', () => { clearTimeout(dbt); dbt = setTimeout(() => renderSimpleDd(containerId, inp.value, state), 120); });
   inp.addEventListener('keydown', e => {
     const items = dd.querySelectorAll('.ac-item'); if (!items.length) return;
-    if (e.key === 'ArrowDown') { e.preventDefault(); state.focusIdx = Math.min(state.focusIdx + 1, items.length - 1); focusDd(items, state.focusIdx); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); state.focusIdx = Math.max(state.focusIdx - 1, 0); focusDd(items, state.focusIdx); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); state.focusIdx = Math.min(state.focusIdx+1, items.length-1); focusDd(items, state.focusIdx); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); state.focusIdx = Math.max(state.focusIdx-1, 0); focusDd(items, state.focusIdx); }
     else if (e.key === 'Enter') { e.preventDefault(); items[state.focusIdx >= 0 ? state.focusIdx : 0]?.click(); }
     else if (e.key === 'Escape') dd.classList.remove('open');
   });
-  inp.addEventListener('focus', () => { if (inp.value.length >= 1) renderAcDd(containerId, null, inp.value, state); });
+  inp.addEventListener('focus', () => { if (inp.value.length >= 1) renderSimpleDd(containerId, inp.value, state); });
   clr.addEventListener('click', () => limpiarAcSimple(containerId, state));
   document.addEventListener('click', e => { if (!c.contains(e.target)) dd.classList.remove('open'); });
-  // Guardar referencia al onSelect
   c._onSelect = onSelect;
 }
 
-function renderAcDd(cid, formId, q, stateObj) {
-  const dd = document.getElementById(cid + '-dd');
-  const state = stateObj || (formId === 'dashSku' ? ACskuDash : formId === 'traspaso' ? ACt : ACte);
-  state.focusIdx = -1;
+function renderSimpleDd(cid, q, state) {
+  const dd = document.getElementById(cid+'-dd'); state.focusIdx = -1;
   if (!q) { dd.classList.remove('open'); return; }
-  // Para traspaso externo, buscar en SKUs locales si bodega origen = bodega actual, sino en todos
-  const lista = (cid === 'ac-te-sku' && ACte.invOrigen.length) ? ACte.invOrigen.map(i => ({ sku: i.sku, nombre: i.nombre, unidad: i.unidad })) : SKUS;
-  const res = buscarSkus(q, lista);
+  const res = buscarSkus(q);
   dd.innerHTML = !res.length ? '<div class="ac-empty">Sin resultados</div>'
-    : res.map(s => '<div class="ac-item" data-sku="' + s.sku + '" data-nombre="' + (s.nombre||'') + '" data-unidad="' + (s.unidad||'') + '" data-cat="' + (s.categoria||'') + '"><span class="ac-item-sku">' + hl(s.sku, q) + '</span><span class="ac-item-nombre">' + hl(s.nombre||'', q) + '</span>' + (s.categoria ? '<span class="ac-item-cat">' + s.categoria + '</span>' : '') + '</div>').join('');
+    : res.map(s => '<div class="ac-item" data-sku="' + s.sku + '" data-nombre="' + (s.nombre||'') + '" data-unidad="' + (s.unidad||'') + '"><span class="ac-item-sku">' + hl(s.sku,q) + '</span><span class="ac-item-nombre">' + hl(s.nombre||'',q) + '</span></div>').join('');
   dd.querySelectorAll('.ac-item').forEach(item => item.addEventListener('click', () => {
     state.sku = item.dataset.sku; state.focusIdx = -1;
-    const inp  = document.getElementById(cid + '-input');
-    const clr  = document.getElementById(cid + '-clear');
-    const pill = document.getElementById(cid + '-pill');
-    inp.value = item.dataset.sku; inp.classList.add('has-value');
-    clr.classList.add('visible');
+    const inp = document.getElementById(cid+'-input'), clr = document.getElementById(cid+'-clear'), pill = document.getElementById(cid+'-pill');
+    inp.value = item.dataset.sku; inp.classList.add('has-value'); clr.classList.add('visible');
     pill.innerHTML = '<strong>' + item.dataset.sku + '</strong> — ' + (item.dataset.nombre||'') + (item.dataset.unidad ? ' · ' + item.dataset.unidad : '');
     pill.classList.add('visible'); dd.classList.remove('open');
-    // Callbacks específicos
-    if (cid === 'ac-traspaso')  cargarOrigenesTraspaso(item.dataset.sku);
-    if (cid === 'ac-te-sku')    onSelectSkuTraspasoExterno(item.dataset.sku);
-    if (cid === 'dash-sku-ac')  onSelectSkuDash(item.dataset.sku, item.dataset.nombre, item.dataset.unidad, item.dataset.cat);
-    // Callback genérico
-    const c = document.getElementById(cid);
-    if (c?._onSelect) c._onSelect(item.dataset.sku);
+    const c = document.getElementById(cid); if (c?._onSelect) c._onSelect(item.dataset.sku);
   }));
   dd.classList.add('open');
 }
 
 function limpiarAcSimple(cid, state) {
   if (state) { state.sku = null; state.focusIdx = -1; }
-  const inp  = document.getElementById(cid + '-input');
-  const clr  = document.getElementById(cid + '-clear');
-  const pill = document.getElementById(cid + '-pill');
-  const dd   = document.getElementById(cid + '-dd');
-  if (inp)  { inp.value = ''; inp.classList.remove('has-value'); }
-  if (clr)  clr.classList.remove('visible');
+  const inp = document.getElementById(cid+'-input'), clr = document.getElementById(cid+'-clear'), pill = document.getElementById(cid+'-pill'), dd = document.getElementById(cid+'-dd');
+  if (inp) { inp.value = ''; inp.classList.remove('has-value'); }
+  if (clr) clr.classList.remove('visible');
   if (pill) { pill.innerHTML = ''; pill.classList.remove('visible'); }
-  if (dd)   dd.classList.remove('open');
+  if (dd) dd.classList.remove('open');
 }
 
-// AC traspaso externo
-function inicAcTraspasoExterno() {
-  crearAcSimple('ac-te-sku', ACte, null);
-  // Listener adicional en bodega destino
-  const selDest = document.getElementById('te-bod-destino');
-  if (selDest) selDest.addEventListener('change', cargarUbsBodegaDestino);
-}
+// ── MODALES ────────────────────────────────────────────────
+function cerrarModal(id) { document.getElementById(id).classList.remove('open'); }
+function cerrarDetail(id) { document.getElementById(id).classList.remove('open'); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    ['modal-sku','modal-ub','modal-importar-sku'].forEach(id => cerrarModal(id));
+    ['detail-prod'].forEach(id => cerrarDetail(id));
+  }
+});
+['modal-sku','modal-ub','modal-importar-sku'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => { if (e.target === e.currentTarget) cerrarModal(id); });
+});
 
 // ── INIT ───────────────────────────────────────────────────
 window.addEventListener('load', () => {
