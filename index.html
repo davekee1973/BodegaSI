@@ -535,11 +535,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
               <div class="filter-row">
                 <div class="search-bar">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                  <input type="text" id="prod-search" placeholder="Buscar SKU, nombre o categoría..." oninput="filtrarProductos()"/>
+                  <input type="text" id="prod-search" placeholder="Buscar SKU, nombre o categoría..." oninput="prodPagina=1;filtrarProductos()"/>
                 </div>
                 <select id="prod-cat-filter" onchange="filtrarProductos()"><option value="">Todas las categorías</option></select>
                 <select id="prod-estado-filter" onchange="filtrarProductos()"><option value="">Todos</option><option value="activo">Activos</option><option value="inactivo">Inactivos</option></select>
                 <span id="prod-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <select id="prod-page-size" onchange="prodPagina=1;filtrarProductos()" style="width:auto;min-width:80px">
+                  <option value="10">10 / pág</option>
+                  <option value="25">25 / pág</option>
+                  <option value="50">50 / pág</option>
+                  <option value="100">100 / pág</option>
+                </select>
                 <button class="btn btn-ghost btn-sm" onclick="abrirModalImportarSku()">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Importar Excel
                 </button>
@@ -552,17 +558,40 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <tbody id="prod-tbody"></tbody>
               </table></div>
               <div id="prod-empty" class="empty" style="display:none">Sin productos</div>
+              <div id="prod-paginador" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;margin-top:4px;flex-wrap:wrap;gap:8px">
+                <span id="prod-pag-info" style="font-size:12px;color:var(--muted)"></span>
+                <div id="prod-pag-btns" style="display:flex;gap:6px"></div>
+              </div>
             </div>
           </div>
 
           <!-- CONSOLIDADO -->
           <div class="view" id="view-consolidado">
-            <div class="card" style="margin-bottom:14px">
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px" id="cons-stats">
-                <div class="val-stat"><div class="val-stat-label">Valor total todas las bodegas</div><div class="val-stat-value" id="cons-valor-total">—</div></div>
-                <div class="val-stat"><div class="val-stat-label">Total registros</div><div class="val-stat-value" id="cons-total-reg">—</div></div>
-                <div class="val-stat"><div class="val-stat-label">Bodegas activas</div><div class="val-stat-value" id="cons-total-bodegas">—</div></div>
+            <!-- 1. Resumen / stats -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px" id="cons-stats">
+              <div class="val-stat"><div class="val-stat-label">Valor total todas las bodegas</div><div class="val-stat-value" id="cons-valor-total">—</div></div>
+              <div class="val-stat"><div class="val-stat-label">Total registros</div><div class="val-stat-value" id="cons-total-reg">—</div></div>
+              <div class="val-stat"><div class="val-stat-label">Bodegas activas</div><div class="val-stat-value" id="cons-total-bodegas">—</div></div>
+            </div>
+            <!-- 2. Valorización por bodega -->
+            <div class="card" id="cons-val-card" style="margin-bottom:14px">
+              <div class="card-title">
+                <span>Valorización por bodega</span>
+                <div style="display:flex;gap:8px">
+                  <button class="btn btn-ghost btn-sm" onclick="cargarConsolidado()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Recargar
+                  </button>
+                  <button class="btn btn-success btn-sm" onclick="exportarConsolidado()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+                  </button>
+                </div>
               </div>
+              <div id="cons-loading" class="empty">Haz clic en Recargar para cargar datos de todas las bodegas</div>
+              <div id="cons-val-tabla" style="display:none"></div>
+            </div>
+            <!-- 3. Listado de stock -->
+            <div class="card" id="cons-stock-card" style="margin-bottom:14px;display:none">
+              <div class="card-title">Stock consolidado por ubicación</div>
               <div class="filter-row">
                 <div class="search-bar">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -571,26 +600,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <select id="cons-bod-filter" onchange="filtrarConsolidado()"><option value="">Todas las bodegas</option></select>
                 <select id="cons-alerta-filter" onchange="filtrarConsolidado()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
                 <span id="cons-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
-                <button class="btn btn-ghost btn-sm" onclick="cargarConsolidado()">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Recargar
-                </button>
-                <button class="btn btn-success btn-sm" onclick="exportarConsolidado()">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
-                </button>
               </div>
-              <div id="cons-loading" class="empty">Haz clic en Recargar para cargar datos de todas las bodegas</div>
-              <div class="table-wrap" id="cons-table-wrap" style="display:none"><table>
+              <div class="table-wrap"><table>
                 <thead><tr><th>Bodega</th><th>Tipo</th><th>Ubicación</th><th>SKU</th><th>Nombre</th><th>Unidad</th><th style="text-align:right">Stock</th><th style="text-align:right">Costo</th><th style="text-align:right">Valor</th><th>Estado</th></tr></thead>
                 <tbody id="cons-tbody"></tbody>
               </table></div>
             </div>
-            <!-- Valorización por bodega -->
-            <div class="card" id="cons-val-card" style="display:none">
-              <div class="card-title">Valorización por bodega</div>
-              <div id="cons-val-tabla"></div>
-            </div>
-            <!-- Kardex consolidado -->
-            <div class="card" style="margin-top:14px" id="cons-kardex-card" style="display:none">
+            <!-- 4. Kardex consolidado -->
+            <div class="card" id="cons-kardex-card" style="margin-bottom:14px;display:none">
               <div class="card-title">
                 <span>Kardex consolidado</span>
                 <button class="btn btn-success btn-sm" onclick="exportarKardexConsolidado()">
@@ -602,8 +619,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <tbody id="cons-kardex-tbody"></tbody>
               </table></div>
             </div>
-            <!-- Traspaso entre bodegas -->
-            <div class="card" style="margin-top:14px">
+            <!-- 5. Traspaso entre bodegas -->
+            <div class="card" style="margin-bottom:14px">
               <div class="card-title">Traspaso entre bodegas</div>
               <div style="background:var(--warning-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:9px 12px;font-size:12px;color:var(--warning);margin-bottom:14px">
                 Genera una salida en la bodega origen y una entrada en la bodega destino. Ambas quedan registradas con la misma referencia.
@@ -1340,11 +1357,13 @@ async function renderProductos() {
   filtrarProductos();
 }
 
+let prodPagina = 1;
+
 async function filtrarProductos() {
   const q   = document.getElementById('prod-search')?.value.toLowerCase() || '';
   const cat = document.getElementById('prod-cat-filter')?.value || '';
   const est = document.getElementById('prod-estado-filter')?.value || '';
-  // Cargar todos (activos e inactivos) para el admin
+  const pageSize = Number(document.getElementById('prod-page-size')?.value || 10);
   let todos;
   try { todos = await cargarTodosSkus(); } catch (e) { toast(e.message, 'err'); return; }
   const data = todos.filter(s => {
@@ -1354,15 +1373,35 @@ async function filtrarProductos() {
     if (q && !s.sku.toLowerCase().includes(q) && !s.nombre.toLowerCase().includes(q) && !(s.categoria||'').toLowerCase().includes(q)) return false;
     return true;
   });
+  const totalPags = Math.max(1, Math.ceil(data.length / pageSize));
+  if (prodPagina > totalPags) prodPagina = totalPags;
+  const inicio = (prodPagina - 1) * pageSize;
+  const pagData = data.slice(inicio, inicio + pageSize);
   const tb = document.getElementById('prod-tbody'), em = document.getElementById('prod-empty');
   document.getElementById('prod-count').textContent = data.length + ' productos';
-  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
+  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; document.getElementById('prod-paginador').style.display = 'none'; return; }
   em.style.display = 'none';
-  tb.innerHTML = data.map(s => {
+  tb.innerHTML = pagData.map(s => {
     const stockTotal = INV.filter(i => i.sku === s.sku).reduce((a, i) => a + i.stock_actual, 0);
     return '<tr style="' + (!s.activo ? 'opacity:0.55' : '') + '"><td class="td-mono" style="font-weight:500">' + s.sku + '</td><td>' + s.nombre + '</td><td style="color:var(--muted)">' + (s.categoria||'—') + '</td><td style="color:var(--muted)">' + s.unidad + '</td><td style="text-align:right;font-family:var(--mono)">' + (s.costo ? fmtCLP(s.costo) : '<span style="color:var(--warning)">Sin costo</span>') + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(s.stock_minimo) + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (stockTotal <= s.stock_minimo && s.stock_minimo > 0 ? 'stock-low' : 'stock-ok') + '">' + fmt(stockTotal) + '</td><td><span class="badge badge-' + (s.activo ? 'activo' : 'inactivo') + '">' + (s.activo ? 'Activo' : 'Inactivo') + '</span></td><td><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" onclick="verDetalleSku(\'' + s.sku + '\')">Ver</button><button class="btn btn-ghost btn-sm" onclick="abrirModalSku(\'editar\',\'' + s.sku + '\',\'' + s.nombre.replace(/'/g,"\\'") + '\',\'' + (s.categoria||'').replace(/'/g,"\\'") + '\',\'' + s.unidad + '\',' + (s.stock_minimo||0) + ',' + (s.costo||0) + ')">Editar</button><label class="toggle"><input type="checkbox" ' + (s.activo ? 'checked' : '') + ' onchange="toggleSku(\'' + s.sku + '\',this)"/><div class="toggle-track"></div></label></div></td></tr>';
   }).join('');
+  // Paginador
+  document.getElementById('prod-pag-info').textContent = 'Mostrando ' + (inicio + 1) + '–' + Math.min(inicio + pageSize, data.length) + ' de ' + data.length;
+  const btns = document.getElementById('prod-pag-btns');
+  let html = '<button class="btn btn-ghost btn-sm" onclick="irPagProd(1)" ' + (prodPagina===1?'disabled':'') + '>«</button>';
+  html += '<button class="btn btn-ghost btn-sm" onclick="irPagProd(' + (prodPagina-1) + ')" ' + (prodPagina===1?'disabled':'') + '>‹</button>';
+  // Páginas cercanas
+  const rango = 2;
+  for (let p = Math.max(1, prodPagina - rango); p <= Math.min(totalPags, prodPagina + rango); p++) {
+    html += '<button class="btn btn-sm ' + (p === prodPagina ? 'btn-primary' : 'btn-ghost') + '" onclick="irPagProd(' + p + ')">' + p + '</button>';
+  }
+  html += '<button class="btn btn-ghost btn-sm" onclick="irPagProd(' + (prodPagina+1) + ')" ' + (prodPagina===totalPags?'disabled':'') + '>›</button>';
+  html += '<button class="btn btn-ghost btn-sm" onclick="irPagProd(' + totalPags + ')" ' + (prodPagina===totalPags?'disabled':'') + '>»</button>';
+  btns.innerHTML = html;
+  document.getElementById('prod-paginador').style.display = 'flex';
 }
+
+function irPagProd(p) { prodPagina = p; filtrarProductos(); }
 
 function abrirModalSku(modo, sku, nombre, categoria, unidad, stockMin, costo) {
   modalSkuModo = modo; modalSkuOrig = sku || '';
@@ -1947,7 +1986,8 @@ async function cargarConsolidado() {
     renderValorizacionPorBodega(bodegas);
     renderKardexConsolidado();
     document.getElementById('cons-loading').style.display = 'none';
-    document.getElementById('cons-table-wrap').style.display = 'block';
+    document.getElementById('cons-val-tabla').style.display = 'block';
+    document.getElementById('cons-stock-card').style.display = 'block';
     document.getElementById('cons-val-card').style.display = 'block';
     document.getElementById('cons-kardex-card').style.display = 'block';
     inicAcTraspasoExterno();
