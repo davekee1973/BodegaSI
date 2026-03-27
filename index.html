@@ -828,7 +828,7 @@ async function cargarSkus() {
 
 async function cargarUbicaciones() {
   UBS = await sbGet('ubicaciones', '?bodega_id=eq.' + SESSION.bodegaId + '&activo=eq.true&order=codigo&limit=50000');
-  UBS_TODAS = await sbGet('ubicaciones', '?bodega_id=eq.' + SESSION.bodegaId + '&order=codigo');
+  UBS_TODAS = await sbGet('ubicaciones', '?bodega_id=eq.' + SESSION.bodegaId + '&order=codigo&limit=50000');
   const opts = UBS.map(u => '<option value="' + u.codigo + '">' + u.codigo + (u.descripcion ? ' — ' + u.descripcion : '') + '</option>').join('');
   ['t-ub-destino'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = '<option value="">Seleccionar...</option>' + opts; });
   const ubOpts = '<option value="">Todas las ubicaciones</option>' + UBS.map(u => '<option value="' + u.codigo + '">' + u.codigo + '</option>').join('');
