@@ -445,6 +445,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <select id="inv-ub-filter" onchange="filtrarInventario()"><option value="">Todas las ubicaciones</option></select>
                 <select id="inv-alerta-filter" onchange="filtrarInventario()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
                 <span id="inv-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <select id="inv-page-size" onchange="invPagina=1;renderPaginaInventario()" style="width:auto;min-width:80px">
+                  <option value="25">25 / pág</option><option value="50">50 / pág</option><option value="100">100 / pág</option>
+                </select>
                 <button class="btn btn-success btn-sm" onclick="exportarInventario()">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
                 </button>
@@ -455,6 +458,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
               </table></div>
               <div id="inv-empty" class="empty" style="display:none">Sin resultados</div>
               <div id="inv-total" style="display:none;margin-top:12px;padding:10px 14px;background:var(--accent-bg);border-radius:var(--radius);font-size:12px;color:var(--accent);text-align:right"></div>
+              <div id="inv-paginador" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px">
+                <span id="inv-pag-info" style="font-size:12px;color:var(--muted)"></span>
+                <div id="inv-pag-btns" style="display:flex;gap:6px"></div>
+              </div>
             </div>
           </div>
 
@@ -490,12 +497,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                   <option value="sku">Por SKU</option>
                 </select>
                 <span id="val-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <select id="val-page-size" onchange="valPagina=1;renderPaginaValorizacion()" style="width:auto;min-width:80px">
+                  <option value="25">25 / pág</option><option value="50">50 / pág</option><option value="100">100 / pág</option>
+                </select>
               </div>
               <div class="table-wrap"><table>
                 <thead><tr><th>SKU</th><th>Nombre</th><th>Categoría</th><th>Unidad</th><th style="text-align:right">Stock total</th><th style="text-align:right">Costo unit.</th><th style="text-align:right">Valor total</th><th style="text-align:right">% del total</th></tr></thead>
                 <tbody id="val-tbody"></tbody>
               </table></div>
               <div id="val-empty" class="empty" style="display:none">Sin datos</div>
+              <div id="val-paginador" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px">
+                <span id="val-pag-info" style="font-size:12px;color:var(--muted)"></span>
+                <div id="val-pag-btns" style="display:flex;gap:6px"></div>
+              </div>
             </div>
           </div>
 
@@ -517,6 +531,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <input type="date" id="k-hasta" onchange="filtrarKardex()" style="width:148px"/>
                 <button class="btn btn-ghost btn-sm" onclick="limpiarFechas()">Limpiar fechas</button>
                 <span id="k-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <select id="k-page-size" onchange="kardexPagina=1;renderPaginaKardex()" style="width:auto;min-width:80px">
+                  <option value="25">25 / pág</option><option value="50">50 / pág</option><option value="100">100 / pág</option>
+                </select>
                 <button class="btn btn-success btn-sm" onclick="exportarKardex()">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
                 </button>
@@ -526,6 +543,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <tbody id="k-tbody"></tbody>
               </table></div>
               <div id="k-empty" class="empty" style="display:none">Sin movimientos</div>
+              <div id="kardex-paginador" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px">
+                <span id="kardex-pag-info" style="font-size:12px;color:var(--muted)"></span>
+                <div id="kardex-pag-btns" style="display:flex;gap:6px"></div>
+              </div>
             </div>
           </div>
 
@@ -600,11 +621,18 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <select id="cons-bod-filter" onchange="filtrarConsolidado()"><option value="">Todas las bodegas</option></select>
                 <select id="cons-alerta-filter" onchange="filtrarConsolidado()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
                 <span id="cons-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <select id="cons-page-size" onchange="consPagina=1;renderPaginaConsolidado()" style="width:auto;min-width:80px">
+                  <option value="25">25 / pág</option><option value="50">50 / pág</option><option value="100">100 / pág</option>
+                </select>
               </div>
               <div class="table-wrap"><table>
                 <thead><tr><th>Bodega</th><th>Tipo</th><th>Ubicación</th><th>SKU</th><th>Nombre</th><th>Unidad</th><th style="text-align:right">Stock</th><th style="text-align:right">Costo</th><th style="text-align:right">Valor</th><th>Estado</th></tr></thead>
                 <tbody id="cons-tbody"></tbody>
               </table></div>
+              <div id="cons-paginador" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px">
+                <span id="cons-pag-info" style="font-size:12px;color:var(--muted)"></span>
+                <div id="cons-pag-btns" style="display:flex;gap:6px"></div>
+              </div>
             </div>
             <!-- 4. Kardex consolidado -->
             <div class="card" id="cons-kardex-card" style="margin-bottom:14px;display:none">
@@ -671,6 +699,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 </div>
                 <select id="ub-estado-filter" onchange="filtrarUbicaciones()"><option value="">Todas</option><option value="activo">Activas</option><option value="inactivo">Inactivas</option></select>
                 <span id="ub-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <select id="ub-page-size" onchange="ubPagina=1;renderPaginaUbicaciones()" style="width:auto;min-width:80px">
+                  <option value="25">25 / pág</option><option value="50">50 / pág</option><option value="100">100 / pág</option>
+                </select>
                 <button class="btn btn-primary btn-sm" onclick="abrirModalUb('nueva')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nueva
                 </button>
@@ -680,6 +711,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
                 <tbody id="ub-tbody"></tbody>
               </table></div>
               <div id="ub-empty" class="empty" style="display:none">Sin ubicaciones</div>
+              <div id="ub-paginador" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px">
+                <span id="ub-pag-info" style="font-size:12px;color:var(--muted)"></span>
+                <div id="ub-pag-btns" style="display:flex;gap:6px"></div>
+              </div>
             </div>
           </div>
 
@@ -1212,106 +1247,145 @@ function getInvConSku() {
   });
 }
 
+// ══════════════════════════════════════════════════════════
+//  HELPER PAGINACIÓN GENÉRICA
+// ══════════════════════════════════════════════════════════
+function renderPaginador(prefijo, paginaActual, totalItems, pageSize, cbCambiar) {
+  const totalPags = Math.max(1, Math.ceil(totalItems / pageSize));
+  const inicio    = (paginaActual - 1) * pageSize;
+  const infoEl    = document.getElementById(prefijo + '-pag-info');
+  const btnsEl    = document.getElementById(prefijo + '-pag-btns');
+  const wrapEl    = document.getElementById(prefijo + '-paginador');
+  if (!infoEl || !btnsEl) return;
+  infoEl.textContent = 'Mostrando ' + (inicio + 1) + '–' + Math.min(inicio + pageSize, totalItems) + ' de ' + totalItems;
+  const rango = 2;
+  let html = '<button class="btn btn-ghost btn-sm" onclick="' + cbCambiar + '(1)" ' + (paginaActual===1?'disabled':'') + '>«</button>';
+  html += '<button class="btn btn-ghost btn-sm" onclick="' + cbCambiar + '(' + (paginaActual-1) + ')" ' + (paginaActual===1?'disabled':'') + '>‹</button>';
+  for (let p = Math.max(1, paginaActual - rango); p <= Math.min(totalPags, paginaActual + rango); p++) {
+    html += '<button class="btn btn-sm ' + (p===paginaActual?'btn-primary':'btn-ghost') + '" onclick="' + cbCambiar + '(' + p + ')">' + p + '</button>';
+  }
+  html += '<button class="btn btn-ghost btn-sm" onclick="' + cbCambiar + '(' + (paginaActual+1) + ')" ' + (paginaActual===totalPags?'disabled':'') + '>›</button>';
+  html += '<button class="btn btn-ghost btn-sm" onclick="' + cbCambiar + '(' + totalPags + ')" ' + (paginaActual===totalPags?'disabled':'') + '>»</button>';
+  btnsEl.innerHTML = html;
+  if (wrapEl) wrapEl.style.display = totalItems > pageSize ? 'flex' : 'none';
+}
+
+// ── INVENTARIO ─────────────────────────────────────────────
+let invPagina = 1;
+let invDataFiltrada = [];
+
 function filtrarInventario() {
+  invPagina = 1;
   const q  = document.getElementById('inv-search')?.value.toLowerCase() || '';
   const ub = document.getElementById('inv-ub-filter')?.value || '';
   const al = document.getElementById('inv-alerta-filter')?.value || '';
-  const data = getInvConSku().filter(i => {
+  invDataFiltrada = getInvConSku().filter(i => {
     if (ub && i.ubicacion_codigo !== ub) return false;
     if (al === 'alerta' && !i.alerta) return false;
     if (q && !i.sku.toLowerCase().includes(q) && !i.nombre.toLowerCase().includes(q)) return false;
     return true;
   });
+  document.getElementById('inv-count').textContent = invDataFiltrada.length + ' registros';
+  renderPaginaInventario();
+}
+
+function irPagInv(p) { invPagina = p; renderPaginaInventario(); }
+
+function renderPaginaInventario() {
+  const pageSize = Number(document.getElementById('inv-page-size')?.value || 25);
   const tb = document.getElementById('inv-tbody'), em = document.getElementById('inv-empty');
-  document.getElementById('inv-count').textContent = data.length + ' registros';
-  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; document.getElementById('inv-total').style.display = 'none'; return; }
+  if (!invDataFiltrada.length) { tb.innerHTML = ''; em.style.display = 'block'; document.getElementById('inv-total').style.display = 'none'; return; }
   em.style.display = 'none';
-  const totalValor = data.reduce((a, i) => a + i.valor, 0);
-  tb.innerHTML = data.map(i => '<tr><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + i.nombre + '</td><td style="color:var(--muted)">' + i.unidad + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta ? 'stock-low' : 'stock-ok') + '">' + fmt(i.stock_actual) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + (i.costo ? fmtCLP(i.costo) : '—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + (i.costo ? fmtCLP(i.valor) : '—') + '</td><td>' + (i.alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td><td style="color:var(--muted);font-size:12px">' + (i.ultima_act ? i.ultima_act.replace('T', ' ').slice(0, 16) : '') + '</td></tr>').join('');
+  const inicio  = (invPagina - 1) * pageSize;
+  const pagData = invDataFiltrada.slice(inicio, inicio + pageSize);
+  const totalValor = invDataFiltrada.reduce((a, i) => a + i.valor, 0);
+  tb.innerHTML = pagData.map(i => '<tr><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + i.nombre + '</td><td style="color:var(--muted)">' + i.unidad + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (i.alerta?'stock-low':'stock-ok') + '">' + fmt(i.stock_actual) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + (i.costo?fmtCLP(i.costo):'—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + (i.costo?fmtCLP(i.valor):'—') + '</td><td>' + (i.alerta?'<span class="badge badge-alerta">Bajo mínimo</span>':'<span class="badge badge-ok">OK</span>') + '</td><td style="color:var(--muted);font-size:12px">' + (i.ultima_act?i.ultima_act.replace('T',' ').slice(0,16):'') + '</td></tr>').join('');
   const tot = document.getElementById('inv-total');
   tot.style.display = 'block';
   tot.innerHTML = 'Valor total filtrado: <strong style="font-family:var(--mono)">' + fmtCLP(totalValor) + '</strong>';
+  renderPaginador('inv', invPagina, invDataFiltrada.length, pageSize, 'irPagInv');
 }
 
 function exportarInventario() {
   const data = getInvConSku();
   const h = ['Ubicación','SKU','Nombre','Unidad','Stock','Costo unit.','Valor total','Estado'];
-  const f = data.map(i => [i.ubicacion_codigo, i.sku, i.nombre, i.unidad, i.stock_actual, i.costo, i.valor, i.alerta ? 'Bajo mínimo' : 'OK']);
+  const f = data.map(i => [i.ubicacion_codigo, i.sku, i.nombre, i.unidad, i.stock_actual, i.costo, i.valor, i.alerta?'Bajo mínimo':'OK']);
   const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
   ws['!cols'] = [{wch:12},{wch:16},{wch:30},{wch:8},{wch:10},{wch:12},{wch:14},{wch:12}];
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Inventario');
-  XLSX.writeFile(wb, 'inventario_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  XLSX.writeFile(wb, 'inventario_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0,10) + '.xlsx');
   toast('Inventario exportado');
 }
 
 // ── VALORIZACIÓN ────────────────────────────────────────────
+let valPagina = 1;
+let valDataFiltrada = [];
+
 async function cargarValorizacion() {
-  // Agrupa INV por SKU sumando stock de todas las ubicaciones
   const porSku = {};
-  INV.forEach(i => {
-    if (!porSku[i.sku]) porSku[i.sku] = 0;
-    porSku[i.sku] += i.stock_actual;
-  });
+  INV.forEach(i => { if (!porSku[i.sku]) porSku[i.sku] = 0; porSku[i.sku] += i.stock_actual; });
   VAL_DATA = Object.entries(porSku).map(([sku, stock]) => {
     const s = SKUS_MAP[sku] || { nombre: sku, categoria: '', unidad: '', costo: 0 };
-    return { sku, nombre: s.nombre, categoria: s.categoria || '', unidad: s.unidad || '', stock, costo: s.costo || 0, valor: stock * (s.costo || 0) };
+    return { sku, nombre: s.nombre, categoria: s.categoria||'', unidad: s.unidad||'', stock, costo: s.costo||0, valor: stock*(s.costo||0) };
   });
-  const totalValor   = VAL_DATA.reduce((a, v) => a + v.valor, 0);
-  const sinCosto     = VAL_DATA.filter(v => !v.costo).length;
-  const conCosto     = VAL_DATA.filter(v => v.costo > 0).length;
-  document.getElementById('val-total').textContent    = fmtCLP(totalValor);
-  document.getElementById('val-skus').textContent     = conCosto;
-  document.getElementById('val-sin-costo').textContent = sinCosto;
+  const totalValor = VAL_DATA.reduce((a, v) => a + v.valor, 0);
+  document.getElementById('val-total').textContent     = fmtCLP(totalValor);
+  document.getElementById('val-skus').textContent      = VAL_DATA.filter(v => v.costo > 0).length;
+  document.getElementById('val-sin-costo').textContent = VAL_DATA.filter(v => !v.costo).length;
   filtrarValorizacion();
 }
 
 function filtrarValorizacion() {
+  valPagina = 1;
   const q   = document.getElementById('val-search')?.value.toLowerCase() || '';
   const cat = document.getElementById('val-cat-filter')?.value || '';
   const ord = document.getElementById('val-orden')?.value || 'valor-desc';
-  let data  = VAL_DATA.filter(v => {
+  valDataFiltrada = VAL_DATA.filter(v => {
     if (cat && v.categoria !== cat) return false;
     if (q && !v.sku.toLowerCase().includes(q) && !v.nombre.toLowerCase().includes(q) && !v.categoria.toLowerCase().includes(q)) return false;
     return true;
   });
-  data.sort((a, b) => ord === 'valor-desc' ? b.valor - a.valor : ord === 'valor-asc' ? a.valor - b.valor : a.sku.localeCompare(b.sku));
-  const totalValor = data.reduce((a, v) => a + v.valor, 0);
-  document.getElementById('val-count').textContent = data.length + ' SKUs';
+  valDataFiltrada.sort((a, b) => ord==='valor-desc'?b.valor-a.valor:ord==='valor-asc'?a.valor-b.valor:a.sku.localeCompare(b.sku));
+  document.getElementById('val-count').textContent = valDataFiltrada.length + ' SKUs';
+  renderPaginaValorizacion();
+}
+
+function irPagVal(p) { valPagina = p; renderPaginaValorizacion(); }
+
+function renderPaginaValorizacion() {
+  const pageSize = Number(document.getElementById('val-page-size')?.value || 25);
   const tb = document.getElementById('val-tbody'), em = document.getElementById('val-empty');
-  if (!data.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
+  if (!valDataFiltrada.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
   em.style.display = 'none';
-  tb.innerHTML = data.map(v => {
-    const pct = totalValor > 0 ? ((v.valor / totalValor) * 100).toFixed(1) : '0.0';
-    return '<tr><td class="td-mono">' + v.sku + '</td><td>' + v.nombre + '</td><td style="color:var(--muted)">' + (v.categoria || '—') + '</td><td style="color:var(--muted)">' + v.unidad + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(v.stock) + '</td><td style="text-align:right;font-family:var(--mono)">' + (v.costo ? fmtCLP(v.costo) : '<span style="color:var(--warning)">Sin costo</span>') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + (v.costo ? fmtCLP(v.valor) : '—') + '</td><td style="text-align:right;font-size:12px;color:var(--muted)">' + pct + '%</td></tr>';
+  const inicio     = (valPagina - 1) * pageSize;
+  const pagData    = valDataFiltrada.slice(inicio, inicio + pageSize);
+  const totalValor = valDataFiltrada.reduce((a, v) => a + v.valor, 0);
+  tb.innerHTML = pagData.map(v => {
+    const pct = totalValor > 0 ? ((v.valor/totalValor)*100).toFixed(1) : '0.0';
+    return '<tr><td class="td-mono">' + v.sku + '</td><td>' + v.nombre + '</td><td style="color:var(--muted)">' + (v.categoria||'—') + '</td><td style="color:var(--muted)">' + v.unidad + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(v.stock) + '</td><td style="text-align:right;font-family:var(--mono)">' + (v.costo?fmtCLP(v.costo):'<span style="color:var(--warning)">Sin costo</span>') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + (v.costo?fmtCLP(v.valor):'—') + '</td><td style="text-align:right;font-size:12px;color:var(--muted)">' + pct + '%</td></tr>';
   }).join('');
+  renderPaginador('val', valPagina, valDataFiltrada.length, pageSize, 'irPagVal');
 }
 
 function exportarValorizacion() {
   if (!VAL_DATA.length) { toast('Sin datos para exportar', 'err'); return; }
   const totalValor = VAL_DATA.reduce((a, v) => a + v.valor, 0);
   const h = ['SKU','Nombre','Categoría','Unidad','Stock total','Costo unit.','Valor total','% del total'];
-  const f = VAL_DATA.sort((a, b) => b.valor - a.valor).map(v => [v.sku, v.nombre, v.categoria, v.unidad, v.stock, v.costo, v.valor, totalValor > 0 ? Number(((v.valor / totalValor) * 100).toFixed(2)) : 0]);
+  const f = VAL_DATA.sort((a,b) => b.valor-a.valor).map(v => [v.sku,v.nombre,v.categoria,v.unidad,v.stock,v.costo,v.valor,totalValor>0?Number(((v.valor/totalValor)*100).toFixed(2)):0]);
   const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
   ws['!cols'] = [{wch:16},{wch:30},{wch:16},{wch:8},{wch:12},{wch:14},{wch:14},{wch:10}];
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Valorización');
-  // Hoja resumen
-  const resumen = [
-    ['Reporte de valorización — ' + SESSION.bodegaNombre],
-    ['Fecha', new Date().toLocaleDateString('es-CL')],
-    [],
-    ['Valor total inventario', totalValor],
-    ['SKUs con costo', VAL_DATA.filter(v => v.costo > 0).length],
-    ['SKUs sin costo', VAL_DATA.filter(v => !v.costo).length],
-    ['Total SKUs', VAL_DATA.length],
-  ];
-  const wsR = XLSX.utils.aoa_to_sheet(resumen);
-  XLSX.utils.book_append_sheet(wb, wsR, 'Resumen');
-  XLSX.writeFile(wb, 'valorizacion_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0, 10) + '.xlsx');
+  const resumen = [['Reporte de valorización — ' + SESSION.bodegaNombre],['Fecha',new Date().toLocaleDateString('es-CL')],[],['Valor total inventario',totalValor],['SKUs con costo',VAL_DATA.filter(v=>v.costo>0).length],['SKUs sin costo',VAL_DATA.filter(v=>!v.costo).length],['Total SKUs',VAL_DATA.length]];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(resumen), 'Resumen');
+  XLSX.writeFile(wb, 'valorizacion_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0,10) + '.xlsx');
   toast('Reporte de valorización exportado');
 }
 
 // ── KARDEX ─────────────────────────────────────────────────
+let kardexPagina = 1;
+
 function filtrarKardex() {
+  kardexPagina = 1;
   const sku   = document.getElementById('k-sku-filter')?.value || '';
   const ub    = document.getElementById('k-ub-filter')?.value || '';
   const tipo  = document.getElementById('k-tipo-filter')?.value || '';
@@ -1321,30 +1395,79 @@ function filtrarKardex() {
     if (sku  && m.sku !== sku) return false;
     if (ub   && m.ubicacion_origen !== ub && m.ubicacion_destino !== ub) return false;
     if (tipo && m.tipo !== tipo) return false;
-    if (desde || hasta) {
-      const fm = new Date(m.fecha);
-      if (desde && fm < new Date(desde + 'T00:00:00')) return false;
-      if (hasta && fm > new Date(hasta + 'T23:59:59')) return false;
-    }
+    if (desde||hasta) { const fm=new Date(m.fecha); if(desde&&fm<new Date(desde+'T00:00:00'))return false; if(hasta&&fm>new Date(hasta+'T23:59:59'))return false; }
     return true;
   });
-  const tb = document.getElementById('k-tbody'), em = document.getElementById('k-empty');
   document.getElementById('k-count').textContent = kardexFiltrado.length + ' movimientos';
+  renderPaginaKardex();
+}
+
+function irPagKardex(p) { kardexPagina = p; renderPaginaKardex(); }
+
+function renderPaginaKardex() {
+  const pageSize = Number(document.getElementById('k-page-size')?.value || 25);
+  const tb = document.getElementById('k-tbody'), em = document.getElementById('k-empty');
   if (!kardexFiltrado.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
   em.style.display = 'none';
-  tb.innerHTML = kardexFiltrado.map(m => '<tr><td class="td-mono" style="font-size:11px;color:var(--muted)">' + (m.id||'') + '</td><td class="td-mono" style="font-size:11px;color:var(--accent)">' + (m.lote||'—') + '</td><td style="font-size:12px;white-space:nowrap">' + (m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '') + '</td><td><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></td><td class="td-mono">' + m.sku + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_origen||'—') + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_destino||'—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(m.cantidad) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + fmt(m.stock_antes) + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(m.stock_despues) + '</td><td style="font-size:12px;color:var(--muted)">' + (m.referencia||'—') + '</td><td style="font-size:12px;color:var(--muted)">' + (m.usuario||'—') + '</td></tr>').join('');
+  const inicio  = (kardexPagina - 1) * pageSize;
+  const pagData = kardexFiltrado.slice(inicio, inicio + pageSize);
+  tb.innerHTML = pagData.map(m => '<tr><td class="td-mono" style="font-size:11px;color:var(--muted)">' + (m.id||'') + '</td><td class="td-mono" style="font-size:11px;color:var(--accent)">' + (m.lote||'—') + '</td><td style="font-size:12px;white-space:nowrap">' + (m.fecha?m.fecha.replace('T',' ').slice(0,16):'') + '</td><td><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></td><td class="td-mono">' + m.sku + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_origen||'—') + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_destino||'—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(m.cantidad) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + fmt(m.stock_antes) + '</td><td style="text-align:right;font-family:var(--mono)">' + fmt(m.stock_despues) + '</td><td style="font-size:12px;color:var(--muted)">' + (m.referencia||'—') + '</td><td style="font-size:12px;color:var(--muted)">' + (m.usuario||'—') + '</td></tr>').join('');
+  renderPaginador('kardex', kardexPagina, kardexFiltrado.length, pageSize, 'irPagKardex');
 }
-function limpiarFechas() { document.getElementById('k-desde').value = ''; document.getElementById('k-hasta').value = ''; filtrarKardex(); }
+
+function limpiarFechas() { document.getElementById('k-desde').value=''; document.getElementById('k-hasta').value=''; filtrarKardex(); }
 
 function exportarKardex() {
-  if (!kardexFiltrado.length) { toast('Sin movimientos', 'err'); return; }
+  if (!kardexFiltrado.length) { toast('Sin movimientos','err'); return; }
   const h = ['ID','Lote','Fecha','Tipo','SKU','Origen','Destino','Cantidad','Antes','Después','Referencia','Usuario'];
-  const f = kardexFiltrado.map(m => [m.id, m.lote||'', m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '', m.tipo, m.sku, m.ubicacion_origen||'', m.ubicacion_destino||'', m.cantidad, m.stock_antes, m.stock_despues, m.referencia||'', m.usuario||'']);
-  const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
-  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Kardex');
-  XLSX.writeFile(wb, 'kardex_' + SESSION.bodegaId + '_' + new Date().toISOString().slice(0,10) + '.xlsx');
-  toast('Kardex exportado: ' + kardexFiltrado.length + ' movimientos');
+  const f = kardexFiltrado.map(m=>[m.id,m.lote||'',m.fecha?m.fecha.replace('T',' ').slice(0,16):'',m.tipo,m.sku,m.ubicacion_origen||'',m.ubicacion_destino||'',m.cantidad,m.stock_antes,m.stock_despues,m.referencia||'',m.usuario||'']);
+  const ws = XLSX.utils.aoa_to_sheet([h,...f]);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Kardex');
+  XLSX.writeFile(wb,'kardex_'+SESSION.bodegaId+'_'+new Date().toISOString().slice(0,10)+'.xlsx');
+  toast('Kardex exportado: '+kardexFiltrado.length+' movimientos');
 }
+
+// ── UBICACIONES ─────────────────────────────────────────────
+let ubPagina = 1;
+let ubDataFiltrada = [];
+
+function renderUbicaciones() { filtrarUbicaciones(); }
+
+function filtrarUbicaciones() {
+  ubPagina = 1;
+  const q   = document.getElementById('ub-search').value.toLowerCase();
+  const est = document.getElementById('ub-estado-filter').value;
+  ubDataFiltrada = UBS_TODAS.filter(u => {
+    if (est==='activo'   && !u.activo) return false;
+    if (est==='inactivo' &&  u.activo) return false;
+    if (q && !u.codigo.toLowerCase().includes(q) && !(u.zona||'').toLowerCase().includes(q) && !(u.descripcion||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.getElementById('ub-count').textContent = ubDataFiltrada.length + ' ubicaciones';
+  renderPaginaUbicaciones();
+}
+
+function irPagUb(p) { ubPagina = p; renderPaginaUbicaciones(); }
+
+function renderPaginaUbicaciones() {
+  const pageSize = Number(document.getElementById('ub-page-size')?.value || 25);
+  const tb = document.getElementById('ub-tbody'), em = document.getElementById('ub-empty');
+  if (!ubDataFiltrada.length) { tb.innerHTML = ''; em.style.display = 'block'; return; }
+  em.style.display = 'none';
+  const inicio  = (ubPagina - 1) * pageSize;
+  const pagData = ubDataFiltrada.slice(inicio, inicio + pageSize);
+  tb.innerHTML = pagData.map(u => {
+    const su  = INV.filter(i => i.ubicacion_codigo === u.codigo);
+    const st  = su.reduce((a,i) => a+i.stock_actual, 0);
+    const val = su.reduce((a,i) => a+(i.stock_actual*(SKUS_MAP[i.sku]?.costo||0)), 0);
+    return '<tr style="' + (!u.activo?'opacity:0.55':'') + '"><td class="td-mono" style="font-weight:500">' + u.codigo + '</td><td style="color:var(--muted)">' + (u.zona||'—') + '</td><td style="font-size:12px;color:var(--muted)">' + (u.descripcion||'—') + '</td><td style="text-align:right;font-family:var(--mono)">' + su.length + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(st) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--accent)">' + fmtCLP(val) + '</td><td><span class="badge badge-' + (u.activo?'activo':'inactivo') + '">' + (u.activo?'Activa':'Inactiva') + '</span></td><td><div style="display:flex;gap:6px;align-items:center"><button class="btn btn-ghost btn-sm" onclick="abrirModalUb(\'editar\',\'' + u.codigo + '\',\'' + (u.zona||'').replace(/'/g,"\\'") + '\',\'' + (u.descripcion||'').replace(/'/g,"\\'") + '\',\'' + u.id + '\')">Editar</button><label class="toggle"><input type="checkbox" ' + (u.activo?'checked':'') + ' onchange="toggleUb(\'' + u.id + '\',this)"/><div class="toggle-track"></div></label></div></td></tr>';
+  }).join('');
+  renderPaginador('ub', ubPagina, ubDataFiltrada.length, pageSize, 'irPagUb');
+}
+
+// ── CONSOLIDADO ─────────────────────────────────────────────
+let consPagina = 1;
+let consDataFiltrada = [];
 
 // ══════════════════════════════════════════════════════════
 //  ADMIN PRODUCTOS
@@ -1352,11 +1475,7 @@ function exportarKardex() {
 async function cargarTodosSkus() {
   return sbGet('maestro_sku', '?order=sku&limit=50000');
 }
-
-async function renderProductos() {
-  filtrarProductos();
-}
-
+async function renderProductos() { prodPagina = 1; filtrarProductos(); }
 let prodPagina = 1;
 
 async function filtrarProductos() {
@@ -1998,10 +2117,11 @@ async function cargarConsolidado() {
 }
 
 function filtrarConsolidado() {
+  consPagina = 1;
   const q  = document.getElementById('cons-search')?.value.toLowerCase() || '';
   const bd = document.getElementById('cons-bod-filter')?.value || '';
   const al = document.getElementById('cons-alerta-filter')?.value || '';
-  const data = CONS_DATA.filter(i => {
+  consDataFiltrada = CONS_DATA.filter(i => {
     if (bd && i.bodega_id !== bd) return false;
     const s = SKUS_MAP[i.sku] || {};
     const alerta = s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
@@ -2009,14 +2129,25 @@ function filtrarConsolidado() {
     if (q && !i.sku.toLowerCase().includes(q) && !(s.nombre||'').toLowerCase().includes(q)) return false;
     return true;
   });
-  document.getElementById('cons-count').textContent = data.length + ' registros';
+  document.getElementById('cons-count').textContent = consDataFiltrada.length + ' registros';
+  renderPaginaConsolidado();
+}
+
+function irPagCons(p) { consPagina = p; renderPaginaConsolidado(); }
+
+function renderPaginaConsolidado() {
+  const pageSize = Number(document.getElementById('cons-page-size')?.value || 25);
   const tb = document.getElementById('cons-tbody');
-  tb.innerHTML = data.map(i => {
+  if (!consDataFiltrada.length) { tb.innerHTML = ''; return; }
+  const inicio  = (consPagina - 1) * pageSize;
+  const pagData = consDataFiltrada.slice(inicio, inicio + pageSize);
+  tb.innerHTML = pagData.map(i => {
     const s = SKUS_MAP[i.sku] || {};
     const alerta = s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
     const valor  = i.stock_actual * (s.costo || 0);
-    return '<tr><td style="font-size:12px;font-weight:500">' + i.bodegaNombre + '</td><td><span class="badge badge-' + (i.bodegaTipo === 'consignacion' ? 'ajuste' : 'ok') + '">' + (i.bodegaTipo === 'consignacion' ? 'Consig.' : 'Bodega') + '</span></td><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + (s.nombre||'') + '</td><td style="color:var(--muted)">' + (s.unidad||'') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (alerta ? 'stock-low' : 'stock-ok') + '">' + fmt(i.stock_actual) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + (s.costo ? fmtCLP(s.costo) : '—') + '</td><td style="text-align:right;font-family:var(--mono);color:var(--accent)">' + (s.costo ? fmtCLP(valor) : '—') + '</td><td>' + (alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td></tr>';
+    return '<tr><td style="font-size:12px;font-weight:500">' + i.bodegaNombre + '</td><td><span class="badge badge-' + (i.bodegaTipo==='consignacion'?'ajuste':'ok') + '">' + (i.bodegaTipo==='consignacion'?'Consig.':'Bodega') + '</span></td><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + (s.nombre||'') + '</td><td style="color:var(--muted)">' + (s.unidad||'') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (alerta?'stock-low':'stock-ok') + '">' + fmt(i.stock_actual) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + (s.costo?fmtCLP(s.costo):'—') + '</td><td style="text-align:right;font-family:var(--mono);color:var(--accent)">' + (s.costo?fmtCLP(valor):'—') + '</td><td>' + (alerta?'<span class="badge badge-alerta">Bajo mínimo</span>':'<span class="badge badge-ok">OK</span>') + '</td></tr>';
   }).join('');
+  renderPaginador('cons', consPagina, consDataFiltrada.length, pageSize, 'irPagCons');
 }
 
 function renderValorizacionPorBodega(bodegas) {
