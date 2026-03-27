@@ -267,6 +267,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
           <div class="nav-item" onclick="goTo('kardex')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Kardex
           </div>
+          <div class="nav-item" onclick="goTo('consolidado')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Consolidado
+          </div>
           <div class="nav-section">Administración</div>
           <div class="nav-item" onclick="goTo('productos')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Productos
@@ -505,6 +508,95 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
             </div>
           </div>
 
+          <!-- CONSOLIDADO -->
+          <div class="view" id="view-consolidado">
+            <div class="card" style="margin-bottom:14px">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px" id="cons-stats">
+                <div class="val-stat"><div class="val-stat-label">Valor total todas las bodegas</div><div class="val-stat-value" id="cons-valor-total">—</div></div>
+                <div class="val-stat"><div class="val-stat-label">Total registros</div><div class="val-stat-value" id="cons-total-reg">—</div></div>
+                <div class="val-stat"><div class="val-stat-label">Bodegas activas</div><div class="val-stat-value" id="cons-total-bodegas">—</div></div>
+              </div>
+              <div class="filter-row">
+                <div class="search-bar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input type="text" id="cons-search" placeholder="Buscar SKU o nombre..." oninput="filtrarConsolidado()"/>
+                </div>
+                <select id="cons-bod-filter" onchange="filtrarConsolidado()"><option value="">Todas las bodegas</option></select>
+                <select id="cons-alerta-filter" onchange="filtrarConsolidado()"><option value="">Todos</option><option value="alerta">Solo alertas</option></select>
+                <span id="cons-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
+                <button class="btn btn-ghost btn-sm" onclick="cargarConsolidado()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Recargar
+                </button>
+                <button class="btn btn-success btn-sm" onclick="exportarConsolidado()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+                </button>
+              </div>
+              <div id="cons-loading" class="empty">Haz clic en Recargar para cargar datos de todas las bodegas</div>
+              <div class="table-wrap" id="cons-table-wrap" style="display:none"><table>
+                <thead><tr><th>Bodega</th><th>Tipo</th><th>Ubicación</th><th>SKU</th><th>Nombre</th><th>Unidad</th><th style="text-align:right">Stock</th><th style="text-align:right">Costo</th><th style="text-align:right">Valor</th><th>Estado</th></tr></thead>
+                <tbody id="cons-tbody"></tbody>
+              </table></div>
+            </div>
+            <!-- Valorización por bodega -->
+            <div class="card" id="cons-val-card" style="display:none">
+              <div class="card-title">Valorización por bodega</div>
+              <div id="cons-val-tabla"></div>
+            </div>
+            <!-- Kardex consolidado -->
+            <div class="card" style="margin-top:14px" id="cons-kardex-card" style="display:none">
+              <div class="card-title">
+                <span>Kardex consolidado</span>
+                <button class="btn btn-success btn-sm" onclick="exportarKardexConsolidado()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Excel
+                </button>
+              </div>
+              <div class="table-wrap"><table>
+                <thead><tr><th>Bodega</th><th>Fecha</th><th>Tipo</th><th>SKU</th><th>Origen</th><th>Destino</th><th style="text-align:right">Cant.</th><th>Referencia</th><th>Usuario</th></tr></thead>
+                <tbody id="cons-kardex-tbody"></tbody>
+              </table></div>
+            </div>
+            <!-- Traspaso entre bodegas -->
+            <div class="card" style="margin-top:14px">
+              <div class="card-title">Traspaso entre bodegas</div>
+              <div style="background:var(--warning-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:9px 12px;font-size:12px;color:var(--warning);margin-bottom:14px">
+                Genera una salida en la bodega origen y una entrada en la bodega destino. Ambas quedan registradas con la misma referencia.
+              </div>
+              <form class="form-grid" id="form-traspaso-ext" onsubmit="submitTraspasoExterno(event)">
+                <div class="form-grid form-grid-2">
+                  <div class="form-group"><label>Bodega origen *</label>
+                    <select id="te-bod-origen" required onchange="cargarSkusBodegaOrigen()"><option value="">Seleccionar...</option></select>
+                  </div>
+                  <div class="form-group"><label>Bodega destino *</label>
+                    <select id="te-bod-destino" required onchange="cargarUbsBodegaDestino()"><option value="">Seleccionar...</option></select>
+                  </div>
+                </div>
+                <div class="form-group"><label>SKU *</label><div id="ac-te-sku" class="ac-wrap"></div></div>
+                <div class="form-grid form-grid-2">
+                  <div class="form-group">
+                    <label>Ubicación origen *</label>
+                    <select id="te-ub-origen" required disabled><option value="">Primero selecciona SKU</option></select>
+                    <div id="te-stock-hint" style="font-size:11px;margin-top:3px;color:var(--muted)"></div>
+                  </div>
+                  <div class="form-group">
+                    <label>Ubicación destino *</label>
+                    <select id="te-ub-destino" required disabled><option value="">Primero selecciona bodega destino</option></select>
+                  </div>
+                </div>
+                <div class="form-grid form-grid-3">
+                  <div class="form-group"><label>Cantidad *</label><input type="number" id="te-cant" min="1" step="1" required placeholder="0"/></div>
+                  <div class="form-group"><label>Referencia</label><input type="text" id="te-ref" placeholder="Auto si no ingresas"/></div>
+                  <div class="form-group"><label>Usuario</label><input type="text" id="te-usr" placeholder="tu.nombre"/></div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <button class="btn btn-primary" type="submit" id="btn-te" style="background:var(--warning)">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4-4 4M3 12h18"/></svg>Registrar traspaso entre bodegas
+                  </button>
+                  <button class="btn btn-ghost" type="button" onclick="resetTraspasoExterno()">Limpiar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
           <!-- UBICACIONES -->
           <div class="view" id="view-ubicaciones">
             <div class="card">
@@ -632,9 +724,9 @@ let lineAC = { entrada: {}, salida: {} };
 const ACt = { sku: null, focusIdx: -1 };
 
 const PERFILES = {
-  admin:    { label:'Admin',    items:['dashboard','entrada','salida','traspaso','inventario','valorizacion','kardex','productos','ubicaciones'] },
-  operador: { label:'Operador', items:['dashboard','entrada','salida','traspaso','inventario','kardex'] },
-  lectura:  { label:'Lectura',  items:['dashboard','inventario','valorizacion','kardex'] },
+  admin:    { label:'Admin',    items:['dashboard','entrada','salida','traspaso','inventario','valorizacion','kardex','consolidado','productos','ubicaciones'] },
+  operador: { label:'Operador', items:['dashboard','entrada','salida','traspaso','inventario','kardex','consolidado'] },
+  lectura:  { label:'Lectura',  items:['dashboard','inventario','valorizacion','kardex','consolidado'] },
 };
 
 const TITLES = {
@@ -795,6 +887,7 @@ function goTo(v) {
   if (v === 'productos')    renderProductos();
   if (v === 'ubicaciones')  renderUbicaciones();
   if (v === 'valorizacion') cargarValorizacion();
+  if (v === 'consolidado')  {} // carga manual con botón Recargar
   if (v === 'entrada' && !Object.keys(lineAC.entrada).length) setTimeout(() => agregarLinea('entrada'), 80);
   if (v === 'salida'  && !Object.keys(lineAC.salida).length)  setTimeout(() => agregarLinea('salida'), 80);
   if (v === 'traspaso') inicAcTraspaso();
@@ -1592,7 +1685,218 @@ document.addEventListener('keydown', e => {
   document.getElementById(id).addEventListener('click', e => { if (e.target === e.currentTarget) cerrarModal(id); });
 });
 
-// ── INIT ───────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  CONSOLIDADO
+// ══════════════════════════════════════════════════════════
+let CONS_DATA = [], CONS_KARDEX = [];
+const ACte = { sku: null, focusIdx: -1, invOrigen: [] };
+
+async function cargarConsolidado() {
+  document.getElementById('cons-loading').style.display = 'block';
+  document.getElementById('cons-loading').textContent = 'Cargando bodegas...';
+  document.getElementById('cons-table-wrap').style.display = 'none';
+  try {
+    const bodegas = await sbGet('bodegas', '?activo=eq.true&order=nombre');
+    document.getElementById('cons-total-bodegas').textContent = bodegas.length;
+    // Poblar selectores de bodegas
+    const opts = bodegas.map(b => '<option value="' + b.id + '">' + b.nombre + '</option>').join('');
+    ['cons-bod-filter','te-bod-origen','te-bod-destino'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = (id === 'cons-bod-filter' ? '<option value="">Todas las bodegas</option>' : '<option value="">Seleccionar...</option>') + opts;
+    });
+    // Cargar inventario de todas las bodegas en paralelo
+    const resultados = await Promise.allSettled(
+      bodegas.map(b => sbGet('inventario', '?bodega_id=eq.' + b.id + '&order=ubicacion_codigo&limit=50000')
+        .then(inv => inv.map(i => ({ ...i, bodegaNombre: b.nombre, bodegaTipo: b.tipo })))
+      )
+    );
+    CONS_DATA = resultados.filter(r => r.status === 'fulfilled').flatMap(r => r.value);
+    // Cargar kardex de todas las bodegas
+    const kardexRes = await Promise.allSettled(
+      bodegas.map(b => sbGet('kardex', '?bodega_id=eq.' + b.id + '&order=fecha.desc&limit=200')
+        .then(k => k.map(m => ({ ...m, bodegaNombre: b.nombre })))
+      )
+    );
+    CONS_KARDEX = kardexRes.filter(r => r.status === 'fulfilled').flatMap(r => r.value)
+      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    // Stats
+    const valorTotal = CONS_DATA.reduce((a, i) => a + (i.stock_actual * (SKUS_MAP[i.sku]?.costo || 0)), 0);
+    document.getElementById('cons-valor-total').textContent = fmtCLP(valorTotal);
+    document.getElementById('cons-total-reg').textContent = CONS_DATA.length;
+    filtrarConsolidado();
+    renderValorizacionPorBodega(bodegas);
+    renderKardexConsolidado();
+    document.getElementById('cons-loading').style.display = 'none';
+    document.getElementById('cons-table-wrap').style.display = 'block';
+    document.getElementById('cons-val-card').style.display = 'block';
+    document.getElementById('cons-kardex-card').style.display = 'block';
+    inicAcTraspasoExterno();
+  } catch (e) {
+    document.getElementById('cons-loading').textContent = 'Error: ' + e.message;
+    toast(e.message, 'err');
+  }
+}
+
+function filtrarConsolidado() {
+  const q  = document.getElementById('cons-search')?.value.toLowerCase() || '';
+  const bd = document.getElementById('cons-bod-filter')?.value || '';
+  const al = document.getElementById('cons-alerta-filter')?.value || '';
+  const data = CONS_DATA.filter(i => {
+    if (bd && i.bodega_id !== bd) return false;
+    const s = SKUS_MAP[i.sku] || {};
+    const alerta = s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
+    if (al === 'alerta' && !alerta) return false;
+    if (q && !i.sku.toLowerCase().includes(q) && !(s.nombre||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.getElementById('cons-count').textContent = data.length + ' registros';
+  const tb = document.getElementById('cons-tbody');
+  tb.innerHTML = data.map(i => {
+    const s = SKUS_MAP[i.sku] || {};
+    const alerta = s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
+    const valor  = i.stock_actual * (s.costo || 0);
+    return '<tr><td style="font-size:12px;font-weight:500">' + i.bodegaNombre + '</td><td><span class="badge badge-' + (i.bodegaTipo === 'consignacion' ? 'ajuste' : 'ok') + '">' + (i.bodegaTipo === 'consignacion' ? 'Consig.' : 'Bodega') + '</span></td><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + (s.nombre||'') + '</td><td style="color:var(--muted)">' + (s.unidad||'') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500" class="' + (alerta ? 'stock-low' : 'stock-ok') + '">' + fmt(i.stock_actual) + '</td><td style="text-align:right;font-family:var(--mono);color:var(--muted)">' + (s.costo ? fmtCLP(s.costo) : '—') + '</td><td style="text-align:right;font-family:var(--mono);color:var(--accent)">' + (s.costo ? fmtCLP(valor) : '—') + '</td><td>' + (alerta ? '<span class="badge badge-alerta">Bajo mínimo</span>' : '<span class="badge badge-ok">OK</span>') + '</td></tr>';
+  }).join('');
+}
+
+function renderValorizacionPorBodega(bodegas) {
+  const porBodega = {};
+  CONS_DATA.forEach(i => {
+    if (!porBodega[i.bodega_id]) porBodega[i.bodega_id] = { nombre: i.bodegaNombre, valor: 0, skus: new Set(), registros: 0 };
+    const s = SKUS_MAP[i.sku] || {};
+    porBodega[i.bodega_id].valor += i.stock_actual * (s.costo || 0);
+    porBodega[i.bodega_id].skus.add(i.sku);
+    porBodega[i.bodega_id].registros++;
+  });
+  const totalValor = Object.values(porBodega).reduce((a, b) => a + b.valor, 0);
+  document.getElementById('cons-val-tabla').innerHTML = '<table style="width:100%"><thead><tr><th>Bodega</th><th style="text-align:right">SKUs</th><th style="text-align:right">Registros</th><th style="text-align:right">Valor total</th><th style="text-align:right">% del total</th></tr></thead><tbody>'
+    + Object.entries(porBodega).sort((a, b) => b[1].valor - a[1].valor).map(([id, b]) => {
+      const pct = totalValor > 0 ? ((b.valor / totalValor) * 100).toFixed(1) : '0.0';
+      return '<tr><td style="font-weight:500">' + b.nombre + '</td><td style="text-align:right;font-family:var(--mono)">' + b.skus.size + '</td><td style="text-align:right;font-family:var(--mono)">' + b.registros + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500;color:var(--accent)">' + fmtCLP(b.valor) + '</td><td style="text-align:right;font-size:12px;color:var(--muted)">' + pct + '%</td></tr>';
+    }).join('')
+    + '<tr style="border-top:2px solid var(--border)"><td style="font-weight:600">Total</td><td></td><td style="text-align:right;font-family:var(--mono)">' + CONS_DATA.length + '</td><td style="text-align:right;font-family:var(--mono);font-weight:600;color:var(--accent)">' + fmtCLP(totalValor) + '</td><td></td></tr>'
+    + '</tbody></table>';
+}
+
+function renderKardexConsolidado() {
+  document.getElementById('cons-kardex-tbody').innerHTML = CONS_KARDEX.slice(0, 100).map(m =>
+    '<tr><td style="font-size:12px;font-weight:500">' + m.bodegaNombre + '</td><td style="font-size:12px;white-space:nowrap">' + (m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '') + '</td><td><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></td><td class="td-mono">' + m.sku + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_origen||'—') + '</td><td class="td-mono" style="font-size:12px">' + (m.ubicacion_destino||'—') + '</td><td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(m.cantidad) + '</td><td style="font-size:12px;color:var(--muted)">' + (m.referencia||'—') + '</td><td style="font-size:12px;color:var(--muted)">' + (m.usuario||'—') + '</td></tr>'
+  ).join('');
+}
+
+function exportarConsolidado() {
+  if (!CONS_DATA.length) { toast('Sin datos. Haz clic en Recargar primero.', 'err'); return; }
+  const h = ['Bodega','Tipo','Ubicación','SKU','Nombre','Unidad','Stock','Costo','Valor','Alerta'];
+  const f = CONS_DATA.map(i => {
+    const s = SKUS_MAP[i.sku] || {};
+    const alerta = s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
+    return [i.bodegaNombre, i.bodegaTipo, i.ubicacion_codigo, i.sku, s.nombre||'', s.unidad||'', i.stock_actual, s.costo||0, i.stock_actual*(s.costo||0), alerta?'Sí':'No'];
+  });
+  const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Consolidado');
+  XLSX.writeFile(wb, 'consolidado_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  toast('Consolidado exportado');
+}
+
+function exportarKardexConsolidado() {
+  if (!CONS_KARDEX.length) { toast('Sin movimientos', 'err'); return; }
+  const h = ['Bodega','Fecha','Tipo','SKU','Origen','Destino','Cantidad','Referencia','Usuario'];
+  const f = CONS_KARDEX.map(m => [m.bodegaNombre, m.fecha?m.fecha.replace('T',' ').slice(0,16):'', m.tipo, m.sku, m.ubicacion_origen||'', m.ubicacion_destino||'', m.cantidad, m.referencia||'', m.usuario||'']);
+  const ws = XLSX.utils.aoa_to_sheet([h, ...f]);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Kardex consolidado');
+  XLSX.writeFile(wb, 'kardex_consolidado_' + new Date().toISOString().slice(0,10) + '.xlsx');
+  toast('Kardex consolidado exportado');
+}
+
+// ── TRASPASO ENTRE BODEGAS ─────────────────────────────────
+function inicAcTraspasoExterno() {
+  ACte.sku = null; ACte.focusIdx = -1; ACte.invOrigen = [];
+  crearAcSimple('ac-te-sku', ACte, sku => cargarUbsOrigenTE(sku));
+}
+
+async function cargarSkusBodegaOrigen() {
+  const bodId = document.getElementById('te-bod-origen').value;
+  if (!bodId) return;
+  ACte.invOrigen = await sbGet('inventario', '?bodega_id=eq.' + bodId + '&stock_actual=gt.0&limit=50000');
+  limpiarAcSimple('ac-te-sku', ACte);
+  document.getElementById('te-ub-origen').innerHTML = '<option value="">Primero selecciona SKU</option>';
+  document.getElementById('te-ub-origen').disabled = true;
+  document.getElementById('te-stock-hint').textContent = '';
+}
+
+async function cargarUbsBodegaDestino() {
+  const bodId = document.getElementById('te-bod-destino').value;
+  const sel   = document.getElementById('te-ub-destino');
+  if (!bodId) { sel.innerHTML = '<option value="">Seleccionar bodega primero</option>'; sel.disabled = true; return; }
+  sel.innerHTML = '<option value="">Cargando...</option>'; sel.disabled = true;
+  const ubs = await sbGet('ubicaciones', '?bodega_id=eq.' + bodId + '&activo=eq.true&order=codigo');
+  sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.codigo + '">' + u.codigo + (u.descripcion ? ' — ' + u.descripcion : '') + '</option>').join('');
+  sel.disabled = false;
+}
+
+async function cargarUbsOrigenTE(sku) {
+  ACte.sku = sku;
+  const sel  = document.getElementById('te-ub-origen');
+  const hint = document.getElementById('te-stock-hint');
+  const ubs  = ACte.invOrigen.filter(i => i.sku === sku && i.stock_actual > 0);
+  if (!ubs.length) {
+    sel.innerHTML = '<option value="">Sin stock disponible</option>';
+    hint.textContent = 'Sin stock en ninguna ubicación'; hint.style.color = 'var(--danger)';
+    sel.disabled = true; return;
+  }
+  sel.innerHTML = '<option value="">Seleccionar...</option>' + ubs.map(u => '<option value="' + u.ubicacion_codigo + '">' + u.ubicacion_codigo + ' — ' + fmt(u.stock_actual) + ' ' + (SKUS_MAP[sku]?.unidad||'') + '</option>').join('');
+  sel.disabled = false;
+  hint.textContent = ubs.length + ' ubicación' + (ubs.length > 1 ? 'es' : '') + ' con stock';
+  hint.style.color = 'var(--success)';
+}
+
+async function submitTraspasoExterno(e) {
+  e.preventDefault();
+  if (!puedeMover()) { toast('Sin permisos', 'err'); return; }
+  const bodOrigen  = document.getElementById('te-bod-origen').value;
+  const bodDestino = document.getElementById('te-bod-destino').value;
+  const ubOrigen   = document.getElementById('te-ub-origen').value;
+  const ubDestino  = document.getElementById('te-ub-destino').value;
+  const cant       = Number(document.getElementById('te-cant').value);
+  const ref        = document.getElementById('te-ref').value || ('TB-' + Date.now());
+  const usr        = document.getElementById('te-usr').value;
+  if (!ACte.sku)   { toast('Selecciona un SKU', 'err'); return; }
+  if (bodOrigen === bodDestino) { toast('Origen y destino no pueden ser la misma bodega', 'err'); return; }
+  const btn = document.getElementById('btn-te');
+  btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Registrando...';
+  try {
+    const lote = 'TB-' + Date.now();
+    const obs  = 'Traspaso entre bodegas · Ref: ' + ref;
+    // Salida en bodega origen
+    await sbRpc('registrar_movimiento', {
+      p_bodega_id: bodOrigen, p_tipo: 'SALIDA', p_sku: ACte.sku,
+      p_ubicacion_origen: ubOrigen, p_ubicacion_destino: null,
+      p_cantidad: cant, p_lote: lote, p_referencia: ref, p_usuario: usr, p_observacion: obs,
+    });
+    // Entrada en bodega destino
+    await sbRpc('registrar_movimiento', {
+      p_bodega_id: bodDestino, p_tipo: 'ENTRADA', p_sku: ACte.sku,
+      p_ubicacion_origen: null, p_ubicacion_destino: ubDestino,
+      p_cantidad: cant, p_lote: lote, p_referencia: ref, p_usuario: usr, p_observacion: obs,
+    });
+    toast('Traspaso registrado · Ref: ' + ref);
+    resetTraspasoExterno();
+    // Recargar si estamos en la bodega origen
+    if (bodOrigen === SESSION.bodegaId) { await Promise.all([cargarInventario(), cargarKardex()]); renderDashboard(); }
+  } catch (err) { toast(err.message, 'err'); }
+  btn.disabled = false; btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4-4 4M3 12h18"/></svg> Registrar traspaso entre bodegas';
+}
+
+function resetTraspasoExterno() {
+  document.getElementById('form-traspaso-ext').reset();
+  limpiarAcSimple('ac-te-sku', ACte);
+  ACte.invOrigen = [];
+  document.getElementById('te-ub-origen').innerHTML = '<option value="">Primero selecciona SKU</option>';
+  document.getElementById('te-ub-origen').disabled = true;
+  document.getElementById('te-ub-destino').innerHTML = '<option value="">Primero selecciona bodega destino</option>';
+  document.getElementById('te-ub-destino').disabled = true;
+  document.getElementById('te-stock-hint').textContent = '';
+}
 window.addEventListener('load', () => {
   cargarBodegasLogin();
   const saved = sessionStorage.getItem('bodegasi_session');
