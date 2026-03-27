@@ -905,12 +905,9 @@ function iniciarApp() {
   document.getElementById('bodega-dot').className = 'bodega-dot' + (SESSION.bodegaTipo === 'consignacion' ? ' consig' : SESSION.bodegaTipo === 'central' ? '' : '');
   aplicarPermisos();
   if (SESSION.bodegaTipo === 'central') {
-    // Vista consolidada: ir directo a consolidado, ocultar operaciones
     goTo('consolidado');
-    cargarConsolidado();
-  } else {
-    recargarTodo();
   }
+  recargarTodo();
 }
 
 function aplicarPermisos() {
@@ -961,8 +958,15 @@ function goTo(v) {
 async function recargarTodo() {
   const btn = document.getElementById('btn-reload');
   btn.innerHTML = '<span class="loader loader-dark"></span>'; btn.disabled = true;
-  try { await Promise.all([cargarSkus(), cargarUbicaciones(), cargarInventario(), cargarKardex()]); await renderDashboard(); }
-  catch (e) { toast(e.message, 'err'); }
+  try {
+    if (SESSION.bodegaTipo === 'central') {
+      await cargarSkus();
+      await cargarConsolidado();
+    } else {
+      await Promise.all([cargarSkus(), cargarUbicaciones(), cargarInventario(), cargarKardex()]);
+      await renderDashboard();
+    }
+  } catch (e) { toast(e.message, 'err'); }
   btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> Actualizar';
   btn.disabled = false;
 }
