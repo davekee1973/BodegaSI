@@ -215,6 +215,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
       <div class="form-group"><label>Contraseña</label><input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')submitLogin()"/></div>
       <button class="btn btn-primary" onclick="submitLogin()" id="btn-login" style="width:100%;justify-content:center">Ingresar</button>
     </div>
+    <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px">
+      <button class="btn btn-ghost" onclick="loginConsolidado()" style="width:100%;justify-content:center;gap:8px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Ver vista consolidada
+      </button>
+    </div>
   </div>
 </div>
 
@@ -284,15 +290,56 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 
 
           <!-- DASHBOARD -->
           <div class="view active" id="view-dashboard">
-            <div class="stats">
+            <!-- Selector de bodega del dashboard -->
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+              <span style="font-size:12px;font-weight:500;color:var(--muted)">Viendo:</span>
+              <div id="dash-bod-tabs" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+            </div>
+            <!-- Stats principales -->
+            <div class="stats" style="grid-template-columns:repeat(6,1fr)">
               <div class="stat"><div class="stat-label">SKUs activos</div><div class="stat-value" id="st-skus">—</div></div>
               <div class="stat"><div class="stat-label">Ubicaciones</div><div class="stat-value" id="st-ubs">—</div></div>
               <div class="stat"><div class="stat-label">Registros</div><div class="stat-value" id="st-inv">—</div></div>
-              <div class="stat"><div class="stat-label">Valor total stock</div><div class="stat-value" id="st-valor" style="font-size:18px;color:var(--accent)">—</div><div class="stat-sub" id="st-valor-sub"></div></div>
+              <div class="stat"><div class="stat-label">Valor total stock</div><div class="stat-value" id="st-valor" style="font-size:16px;color:var(--accent)">—</div></div>
+              <div class="stat" style="border-left:3px solid var(--success)"><div class="stat-label">Entradas hoy</div><div class="stat-value" id="st-ent-hoy" style="color:var(--success)">—</div><div class="stat-sub" id="st-ent-sem">esta semana: —</div></div>
+              <div class="stat" style="border-left:3px solid var(--danger)"><div class="stat-label">Salidas hoy</div><div class="stat-value" id="st-sal-hoy" style="color:var(--danger)">—</div><div class="stat-sub" id="st-sal-sem">esta semana: —</div></div>
             </div>
-            <div style="display:flex;gap:14px">
-              <div class="card" style="flex:2"><div class="card-title">Alertas de stock mínimo</div><div id="alertas-table"><div class="empty">Cargando...</div></div></div>
-              <div class="card" style="flex:1"><div class="card-title">Últimos movimientos</div><div id="ultimos-movs"><div class="empty">Cargando...</div></div></div>
+            <!-- Búsqueda por SKU con autocomplete -->
+            <div class="card" style="margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <span style="font-size:13px;font-weight:600">Consultar SKU</span>
+                <div id="dash-sku-ac" class="ac-wrap" style="flex:1;max-width:340px"></div>
+                <button class="btn btn-ghost btn-sm" onclick="limpiarDashSku()">Limpiar</button>
+              </div>
+              <div id="dash-sku-results" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+                <div id="dash-sku-hdr" style="margin-bottom:12px"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                  <div><div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Stock por ubicación</div><div id="dash-sku-stock"></div></div>
+                  <div><div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Últimos movimientos</div><div id="dash-sku-movs"></div></div>
+                </div>
+              </div>
+            </div>
+            <!-- Movimientos recientes + alertas -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+              <div class="card">
+                <div class="card-title" style="color:var(--success)">
+                  <span>Últimas 10 entradas</span>
+                  <span id="dash-ent-badge" class="badge badge-entrada" style="font-size:10px"></span>
+                </div>
+                <div id="dash-entradas"><div class="empty">Cargando...</div></div>
+              </div>
+              <div class="card">
+                <div class="card-title" style="color:var(--danger)">
+                  <span>Últimas 10 salidas</span>
+                  <span id="dash-sal-badge" class="badge badge-salida" style="font-size:10px"></span>
+                </div>
+                <div id="dash-salidas"><div class="empty">Cargando...</div></div>
+              </div>
+              <div class="card">
+                <div class="card-title">Alertas de stock mínimo</div>
+                <div id="alertas-table"><div class="empty">Cargando...</div></div>
+              </div>
             </div>
           </div>
 
@@ -811,6 +858,13 @@ async function cargarBodegasLogin() {
   } catch (e) { sel.innerHTML = '<option value="">Error: ' + e.message + '</option>'; }
 }
 
+function loginConsolidado() {
+  SESSION = { usuario: 'Consolidado', perfil: 'lectura', bodegaId: 'central',
+    bodegaNombre: 'Vista consolidada', bodegaTipo: 'central' };
+  sessionStorage.setItem('bodegasi_session', JSON.stringify(SESSION));
+  iniciarApp();
+}
+
 async function submitLogin() {
   const bodegaId = document.getElementById('login-bodega').value;
   const usr      = document.getElementById('login-usuario').value.trim();
@@ -848,17 +902,27 @@ function iniciarApp() {
   const p = PERFILES[SESSION.perfil] || PERFILES.lectura;
   badge.textContent = p.label; badge.className = 'perfil-badge perfil-' + SESSION.perfil;
   document.getElementById('bodega-nombre-top').textContent = SESSION.bodegaNombre;
-  document.getElementById('bodega-dot').className = 'bodega-dot' + (SESSION.bodegaTipo === 'consignacion' ? ' consig' : '');
+  document.getElementById('bodega-dot').className = 'bodega-dot' + (SESSION.bodegaTipo === 'consignacion' ? ' consig' : SESSION.bodegaTipo === 'central' ? '' : '');
   aplicarPermisos();
-  recargarTodo();
+  if (SESSION.bodegaTipo === 'central') {
+    // Vista consolidada: ir directo a consolidado, ocultar operaciones
+    goTo('consolidado');
+    cargarConsolidado();
+  } else {
+    recargarTodo();
+  }
 }
 
 function aplicarPermisos() {
   const p = PERFILES[SESSION.perfil] || PERFILES.lectura;
+  const esCentral = SESSION.bodegaTipo === 'central';
   document.querySelectorAll('.nav-item').forEach(n => {
     const m = (n.getAttribute('onclick') || '').match(/'(\w+)'/);
     const v = m ? m[1] : null;
-    n.classList.toggle('disabled', v && !p.items.includes(v));
+    if (!v) return;
+    const permitido = p.items.includes(v);
+    const esOperacion = ['entrada','salida','traspaso','productos','ubicaciones'].includes(v);
+    n.classList.toggle('disabled', !permitido || (esCentral && esOperacion));
   });
 }
 
@@ -897,7 +961,7 @@ function goTo(v) {
 async function recargarTodo() {
   const btn = document.getElementById('btn-reload');
   btn.innerHTML = '<span class="loader loader-dark"></span>'; btn.disabled = true;
-  try { await Promise.all([cargarSkus(), cargarUbicaciones(), cargarInventario(), cargarKardex()]); renderDashboard(); }
+  try { await Promise.all([cargarSkus(), cargarUbicaciones(), cargarInventario(), cargarKardex()]); await renderDashboard(); }
   catch (e) { toast(e.message, 'err'); }
   btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> Actualizar';
   btn.disabled = false;
@@ -940,30 +1004,182 @@ async function cargarKardex() {
 }
 
 // ── DASHBOARD ──────────────────────────────────────────────
-function renderDashboard() {
+let DASH_BODEGA_ID = null; // null = todas las bodegas
+let DASH_INV = [], DASH_KARDEX = [];
+const ACdash = { sku: null, focusIdx: -1 };
+
+async function renderDashboard() {
+  await construirTabsDashboard();
+  await cargarDatosDashboard();
+}
+
+async function construirTabsDashboard() {
+  const bodegas = await sbGet('bodegas', '?activo=eq.true&order=nombre');
+  const tabs = document.getElementById('dash-bod-tabs');
+  if (!tabs) return;
+  const items = [{ id: null, nombre: 'Todas las bodegas' }, ...bodegas];
+  tabs.innerHTML = items.map(b =>
+    '<button class="btn btn-sm ' + (DASH_BODEGA_ID === b.id ? 'btn-primary' : 'btn-ghost') + '" onclick="cambiarBodegaDash(' + JSON.stringify(b.id) + ')">' + b.nombre + '</button>'
+  ).join('');
+}
+
+async function cambiarBodegaDash(bodegaId) {
+  DASH_BODEGA_ID = bodegaId;
+  await construirTabsDashboard();
+  await cargarDatosDashboard();
+}
+
+async function cargarDatosDashboard() {
+  // Cargar inventario y kardex según bodega seleccionada
+  if (DASH_BODEGA_ID) {
+    DASH_INV    = INV.filter(i => i.bodega_id === DASH_BODEGA_ID);
+    DASH_KARDEX = KARDEX.filter(k => k.bodega_id === DASH_BODEGA_ID);
+  } else {
+    // Todas las bodegas — cargar de Supabase sin filtro de bodega
+    try {
+      const bodegas = await sbGet('bodegas', '?activo=eq.true');
+      const [invAll, kardexAll] = await Promise.all([
+        Promise.allSettled(bodegas.map(b => sbGet('inventario', '?bodega_id=eq.' + b.id + '&limit=50000').then(r => r.map(i => ({ ...i, bodegaNombre: b.nombre }))))),
+        Promise.allSettled(bodegas.map(b => sbGet('kardex', '?bodega_id=eq.' + b.id + '&order=fecha.desc&limit=200').then(r => r.map(k => ({ ...k, bodegaNombre: b.nombre })))))
+      ]);
+      DASH_INV    = invAll.filter(r => r.status === 'fulfilled').flatMap(r => r.value);
+      DASH_KARDEX = kardexAll.filter(r => r.status === 'fulfilled').flatMap(r => r.value)
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    } catch (e) {
+      DASH_INV = INV; DASH_KARDEX = KARDEX;
+    }
+  }
+  actualizarStatsDashboard();
+  renderMovimientosDashboard();
+  renderAlertasDashboard();
+  inicDashSkuAc();
+}
+
+function actualizarStatsDashboard() {
+  // Stats base
   document.getElementById('st-skus').textContent = SKUS.length;
-  document.getElementById('st-ubs').textContent  = UBS.length;
-  document.getElementById('st-inv').textContent  = INV.length;
-  // Valor total
-  const valorTotal = INV.reduce((a, i) => {
-    const sku = SKUS_MAP[i.sku];
-    return a + (i.stock_actual * (sku?.costo || 0));
-  }, 0);
+  document.getElementById('st-ubs').textContent  = DASH_BODEGA_ID ? UBS.length : DASH_INV.length > 0 ? [...new Set(DASH_INV.map(i => i.ubicacion_codigo))].length : '—';
+  document.getElementById('st-inv').textContent  = DASH_INV.length;
+  const valorTotal = DASH_INV.reduce((a, i) => a + (i.stock_actual * (SKUS_MAP[i.sku]?.costo || 0)), 0);
   document.getElementById('st-valor').textContent = fmtCLP(valorTotal);
-  document.getElementById('st-valor-sub').textContent = 'en ' + INV.length + ' registros';
-  // Alertas
-  const alertas = INV.filter(i => {
+
+  // Calcular entradas/salidas hoy y esta semana
+  const ahora  = new Date();
+  const hoy    = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+  const lunes  = new Date(hoy); lunes.setDate(hoy.getDate() - ((hoy.getDay() + 6) % 7));
+
+  const entHoy  = DASH_KARDEX.filter(m => m.tipo === 'ENTRADA' && new Date(m.fecha) >= hoy).reduce((a, m) => a + Number(m.cantidad), 0);
+  const entSem  = DASH_KARDEX.filter(m => m.tipo === 'ENTRADA' && new Date(m.fecha) >= lunes).reduce((a, m) => a + Number(m.cantidad), 0);
+  const salHoy  = DASH_KARDEX.filter(m => m.tipo === 'SALIDA'  && new Date(m.fecha) >= hoy).reduce((a, m) => a + Number(m.cantidad), 0);
+  const salSem  = DASH_KARDEX.filter(m => m.tipo === 'SALIDA'  && new Date(m.fecha) >= lunes).reduce((a, m) => a + Number(m.cantidad), 0);
+
+  document.getElementById('st-ent-hoy').textContent = fmt(entHoy) + ' un.';
+  document.getElementById('st-ent-sem').textContent = 'esta semana: ' + fmt(entSem);
+  document.getElementById('st-sal-hoy').textContent = fmt(salHoy) + ' un.';
+  document.getElementById('st-sal-sem').textContent = 'esta semana: ' + fmt(salSem);
+}
+
+function renderMovimientosDashboard() {
+  const entradas = DASH_KARDEX.filter(m => m.tipo === 'ENTRADA').slice(0, 10);
+  const salidas  = DASH_KARDEX.filter(m => m.tipo === 'SALIDA').slice(0, 10);
+
+  const renderMov = (movs) => !movs.length ? '<div class="empty" style="padding:16px">Sin registros</div>'
+    : movs.map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">'
+        + '<div style="min-width:0"><div style="font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + m.sku + (m.bodegaNombre ? ' · <span style="color:var(--muted);font-weight:400">' + m.bodegaNombre + '</span>' : '') + '</div>'
+        + '<div style="font-size:11px;color:var(--muted)">' + (m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '') + (m.referencia ? ' · ' + m.referencia : '') + '</div></div>'
+        + '<span style="font-family:var(--mono);font-size:12px;font-weight:600;margin-left:8px;white-space:nowrap">' + fmt(m.cantidad) + ' ' + (SKUS_MAP[m.sku]?.unidad || '') + '</span>'
+        + '</div>').join('');
+
+  document.getElementById('dash-entradas').innerHTML = renderMov(entradas);
+  document.getElementById('dash-salidas').innerHTML  = renderMov(salidas);
+  document.getElementById('dash-ent-badge').textContent = entradas.length;
+  document.getElementById('dash-sal-badge').textContent = salidas.length;
+}
+
+function renderAlertasDashboard() {
+  const alertas = DASH_INV.filter(i => {
     const s = SKUS_MAP[i.sku];
     return s && s.stock_minimo > 0 && i.stock_actual <= s.stock_minimo;
   });
-  document.getElementById('st-alertas') && (document.getElementById('st-alertas').textContent = alertas.length);
   const at = document.getElementById('alertas-table');
-  at.innerHTML = !alertas.length ? '<div class="empty">Sin alertas</div>'
-    : '<table><thead><tr><th>Ubicación</th><th>SKU</th><th>Nombre</th><th style="text-align:right">Stock</th></tr></thead><tbody>'
-      + alertas.map(i => '<tr><td class="td-mono">' + i.ubicacion_codigo + '</td><td class="td-mono">' + i.sku + '</td><td>' + (SKUS_MAP[i.sku]?.nombre || '') + '</td><td style="text-align:right;color:var(--warning);font-weight:600">' + fmt(i.stock_actual) + '</td></tr>').join('')
-      + '</tbody></table>';
-  document.getElementById('ultimos-movs').innerHTML = !KARDEX.length ? '<div class="empty">Sin movimientos</div>'
-    : KARDEX.slice(0, 8).map(m => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:500">' + m.sku + '</div><div style="font-size:11px;color:var(--muted)">' + (m.fecha ? m.fecha.replace('T', ' ').slice(0, 16) : '') + '</div></div><div style="display:flex;align-items:center;gap:7px"><span style="font-size:12px;font-family:var(--mono)">' + fmt(m.cantidad) + '</span><span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span></div></div>').join('');
+  at.innerHTML = !alertas.length ? '<div class="empty" style="padding:16px">Sin alertas</div>'
+    : alertas.map(i => '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">'
+        + '<div><div style="font-size:12px;font-weight:500">' + i.sku + '</div>'
+        + '<div style="font-size:11px;color:var(--muted)">' + (SKUS_MAP[i.sku]?.nombre || '') + (i.bodegaNombre ? ' · ' + i.bodegaNombre : '') + '</div></div>'
+        + '<span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--warning)">' + fmt(i.stock_actual) + '</span>'
+        + '</div>').join('');
+}
+
+// ── AUTOCOMPLETE SKU EN DASHBOARD ──────────────────────────
+function inicDashSkuAc() {
+  const cid = 'dash-sku-ac';
+  const c = document.getElementById(cid); if (!c || c._init) return;
+  c._init = true;
+  c.innerHTML = '<div class="ac-input-row"><input type="text" class="ac-input" placeholder="Escribe SKU o descripción..." autocomplete="off" id="' + cid + '-input" style="background:var(--bg)"/><button type="button" class="ac-clear" id="' + cid + '-clear">×</button></div><div class="ac-pill" id="' + cid + '-pill"></div><div class="ac-dropdown" id="' + cid + '-dd"></div>';
+  const inp = document.getElementById(cid + '-input');
+  const clr = document.getElementById(cid + '-clear');
+  const dd  = document.getElementById(cid + '-dd');
+  let dbt = null;
+  inp.addEventListener('input', () => { clearTimeout(dbt); dbt = setTimeout(() => renderSimpleDd(cid, inp.value, ACdash), 120); });
+  inp.addEventListener('keydown', e => {
+    const items = dd.querySelectorAll('.ac-item'); if (!items.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); ACdash.focusIdx = Math.min(ACdash.focusIdx + 1, items.length - 1); focusDd(items, ACdash.focusIdx); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); ACdash.focusIdx = Math.max(ACdash.focusIdx - 1, 0); focusDd(items, ACdash.focusIdx); }
+    else if (e.key === 'Enter') { e.preventDefault(); items[ACdash.focusIdx >= 0 ? ACdash.focusIdx : 0]?.click(); }
+    else if (e.key === 'Escape') dd.classList.remove('open');
+  });
+  inp.addEventListener('focus', () => { if (inp.value.length >= 1) renderSimpleDd(cid, inp.value, ACdash); });
+  clr.addEventListener('click', limpiarDashSku);
+  document.addEventListener('click', e => { if (!c.contains(e.target)) dd.classList.remove('open'); });
+  // Override onSelect para mostrar detalle del SKU
+  c._onSelect = (sku) => mostrarDetalleDashSku(sku);
+}
+
+function mostrarDetalleDashSku(sku) {
+  ACdash.sku = sku;
+  const s = SKUS_MAP[sku] || {};
+  document.getElementById('dash-sku-hdr').innerHTML =
+    '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
+    + '<span class="td-mono" style="font-size:13px;font-weight:500;color:var(--accent)">' + sku + '</span>'
+    + '<span style="font-size:13px">' + (s.nombre || '') + '</span>'
+    + (s.unidad ? '<span style="font-size:12px;color:var(--muted)">' + s.unidad + '</span>' : '')
+    + (s.categoria ? '<span class="badge" style="background:var(--surface2);color:var(--muted)">' + s.categoria + '</span>' : '')
+    + (s.costo ? '<span style="font-size:12px;color:var(--accent)">Costo: <strong>' + fmtCLP(s.costo) + '</strong></span>' : '')
+    + '</div>';
+
+  const invSku = DASH_INV.filter(i => i.sku === sku);
+  const movSku = DASH_KARDEX.filter(m => m.sku === sku).slice(0, 10);
+  const totalStock = invSku.reduce((a, i) => a + i.stock_actual, 0);
+
+  document.getElementById('dash-sku-stock').innerHTML = !invSku.length
+    ? '<div style="font-size:12px;color:var(--muted)">Sin stock en ninguna ubicación.</div>'
+    : '<div style="font-size:11px;color:var(--muted);margin-bottom:6px">Stock total: <strong style="color:var(--text);font-family:var(--mono)">' + fmt(totalStock) + '</strong> ' + (s.unidad || '') + (s.costo ? ' · Valor: <strong style="color:var(--accent)">' + fmtCLP(totalStock * s.costo) + '</strong>' : '') + '</div>'
+      + '<table style="width:100%"><thead><tr><th>Ubicación</th>' + (!DASH_BODEGA_ID ? '<th>Bodega</th>' : '') + '<th style="text-align:right">Stock</th></tr></thead><tbody>'
+      + invSku.sort((a, b) => b.stock_actual - a.stock_actual).map(i =>
+        '<tr><td class="td-mono" style="font-size:12px">' + i.ubicacion_codigo + '</td>'
+        + (!DASH_BODEGA_ID ? '<td style="font-size:11px;color:var(--muted)">' + (i.bodegaNombre || i.bodega_id) + '</td>' : '')
+        + '<td style="text-align:right;font-family:var(--mono);font-weight:500">' + fmt(i.stock_actual) + '</td></tr>'
+      ).join('') + '</tbody></table>';
+
+  document.getElementById('dash-sku-movs').innerHTML = !movSku.length
+    ? '<div style="font-size:12px;color:var(--muted)">Sin movimientos.</div>'
+    : movSku.map(m =>
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">'
+        + '<div><div style="font-size:12px;font-weight:500">' + (m.ubicacion_origen || m.ubicacion_destino || '—') + (m.bodegaNombre ? ' · <span style="color:var(--muted);font-weight:400">' + m.bodegaNombre + '</span>' : '') + ' · <span style="font-family:var(--mono)">' + fmt(m.cantidad) + '</span></div>'
+        + '<div style="font-size:11px;color:var(--muted)">' + (m.fecha ? m.fecha.replace('T',' ').slice(0,16) : '') + (m.referencia ? ' · ' + m.referencia : '') + '</div></div>'
+        + '<span class="badge badge-' + m.tipo.toLowerCase() + '">' + m.tipo + '</span>'
+        + '</div>'
+      ).join('');
+
+  document.getElementById('dash-sku-results').style.display = 'block';
+}
+
+function limpiarDashSku() {
+  ACdash.sku = null; ACdash.focusIdx = -1;
+  limpiarAcSimple('dash-sku-ac', ACdash);
+  document.getElementById('dash-sku-results').style.display = 'none';
+  const c = document.getElementById('dash-sku-ac'); if (c) c._init = false;
+  inicDashSkuAc();
 }
 
 // ── INVENTARIO ─────────────────────────────────────────────
